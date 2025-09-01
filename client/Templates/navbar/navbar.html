@@ -1,0 +1,266 @@
+<template name="navbar">
+<!-- style="background-color:#56a367" -->
+<!-- <div class="ui  segment pushable"> style="background-color:#00004d" style="background-color:#22104E"-->
+
+  <div class=" navbar navbar-expand-lg navbar-light bg-light sticky shadow mb-4" style="background-color:rgb(224, 161, 249);">
+  <a class="active item" href="/">
+
+    <i class="home icon"></i>
+    Accueil
+  </a>
+  <a class="item" href="/searchmedocs">
+  {{getGlobal 'navsearchtip'}}
+    <i class="emergency icon"></i>
+    <!-- Medicaments -->
+  </a>
+  <a class="item" href="/shoplist">
+    {{getGlobal 'shoptype'}}
+    <i class="hospital icon"></i>
+    <!-- Pharmacie -->
+  </a>
+  {{#if currentUser}}
+    {{#if isInRole 'admin,manager'}}
+      <a class="item" href="/Addshop">
+       {{getGlobal 'addingtext'}}
+          <i class="plus icon"></i>
+          <!-- Add Pharm -->
+        </a>
+    {{/if}}
+<!--  -->
+<!-- <div class="ui dropdown item">
+  <div id="cart">
+    <p><span id="in-cart-items-num">0</span> Articles</p>
+  </div>
+
+  <a id="cart-dropdown" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" hidden>
+    <li id="empty-cart-msg"><a>Votre panier est vide</a></li>
+    <li class="go-to-cart hidden"><a href="/panier/">Voir le panier</a></li>
+  </a>
+</div> -->
+<!--  -->
+
+    <div class="ui simple dropdown item right">
+        <a href="#" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true"><span>
+              <img src="{{profilepic}}" class ="img-circle" alt="..." style="width:mm ; height: 6mm"></span>
+                  {{name}}<i class="dropdown icon"></i></a>
+          <div class="menu">
+            <a href="{{pathFor route='Profile'}}" class="item"><i class="user icon"></i> User Profile</a>
+            {{#if isInRole 'admin'}}
+            <a href="{{pathFor route='userCtrlpanel'}}" class="item"><i class="users icon"></i> Users Control Panel</a>
+            <a href="/updateshop" class="btn-success item"><i class="database icon"></i>Manage Data</a>
+            {{/if}}
+            <a href="/" class="item" id="logout"><i class="sign out icon"></i>Logout</a>
+            <div class="divider"></div>
+            <div class="header">Header Item</div>
+            <div class="item">
+              <i class="dropdown icon"></i>
+              Sub Menu
+              <div class="menu">
+                <a class="item" href="#">Link Item</a>
+                <a class="item" href="#">Link Item</a>
+              </div>
+            </div>
+              <a class="item" href="#">Click here to change your password:{{> loginButtons}}</a>
+          </div>
+        </div>
+        {{else}}
+                          {{>loginDropDown align="center"}}
+     {{/ if}}
+     <a class="item ui mini icon input" href="#" align="right">
+       <input type="text" placeholder="Search...">
+       <!-- <i class="search icon"></i> -->
+     </a>
+     <a class="item" align="right" href="#" role="button" onclick="return show('Cart','Main');" data-toggle="modal" data-target="#myCartModal1">
+
+                  <i class="cart icon"></i>
+      </a>
+</div>
+
+<!-- <div class="pusher">
+    <div class="ui dimmed basic segment">
+      <br><br><br><br>
+
+        {{> yield}}
+  </div>
+    {{> footer}}
+</div> -->
+<!-- </div> -->
+<div class="modal fade " id="myCartModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+      <div class="modal-body">
+        <!-- <section  class="container">
+        <article class="form-inline pull-left col-xs-12">
+            <legend>Gestion du panier</legend>
+            <label class="col-lg-3">Identifiant</label> : <input type = "number" id = "id" style="width:120px" class="input-sm form-control"/><br><br>
+
+            <label class="col-lg-3" >Quantité</label> : <input type = "number" id = "qte" style="width:120px" class="input-sm form-control"/><br><br>
+            <label class="col-lg-3">Prix</label> : <input type = "number" id = "prix" style="width:120px" class="input-sm form-control"/><br><br>
+            <button class="btn btn-primary" type="submit" onclick="ajouter()"><span class="glyphicon glyphicon-shopping-cart"></span> Ajouter au panier</button>
+        </article>
+          </section> -->
+          <div class="ui page">
+              <div class=" ui form ">
+                  <div class="ui header" style="background-color:#F0F3F4 ">
+                    <h4 class="h4-responsive" style="color:#10894B;  padding: 18px 18px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif;">
+                      Online Prescription</h4>
+                  </div>
+                  <table id="tableau" class="table table-hover table-striped">
+                      <thead>
+                          <tr>
+                              <th>Medicaments</th>
+                              <th>Qte</th>
+                              <th>Prix unitaire</th>
+                              <th>Prix de la ligne</th>
+                              <th>Supprimer</th>
+                          </tr>
+                      </thead>
+                  </table>
+                  <br><label>Montant total du panier </label> : <label id = "prixTotal">&nbsp;FCFA</label>
+                  <label id = "nbreLignes" hidden>0</label>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer inline-block">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success btm-md">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+              function LignePanier (code, qte, prix)
+          {
+
+              this.codeArticle = code;
+              this.qteArticle = qte;
+              this.prixArticle = prix;
+              this.ajouterQte = function(qte)
+              {
+                  this.qteArticle += qte;
+              }
+              this.getPrixLigne = function()
+              {
+                  var resultat = this.prixArticle * this.qteArticle;
+                  return resultat;
+              }
+              this.getCode = function()
+              {
+                  return this.codeArticle;
+              }
+          }
+          function Panier()
+          {
+              this.liste = [];
+              this.ajouterArticle = function(code, qte, prix)
+              {
+                  var index = this.getArticle(code);
+                  //var dede = this.liste.indexOf(code);
+                  if (index == -1) this.liste.push(new LignePanier(code, qte, prix));
+                  else this.liste[index].ajouterQte(qte);
+              }
+              this.getPrixPanier = function()
+              {
+                  var total = 0;
+                  for(var i = 0 ; i < this.liste.length ; i++)
+                      total += this.liste[i].getPrixLigne();
+                  return total;
+              }
+              this.getArticle = function(code)
+              {
+                  for(var i = 0 ; i <this.liste.length ; i++)
+                      if (code == this.liste[i].getCode()) return i;
+                  return -1;
+              }
+              this.supprimerArticle = function(code)
+              {
+                  var index = this.getArticle(code);
+                  if (index > -1) this.liste.splice(index, 1);
+              }
+          }
+            function ajouter()
+            {
+
+                var code =document.getElementById("brand").innerHTML;
+                var qte = parseInt(document.getElementById("qte").value);
+                var prix = parseInt(document.getElementById("price").innerHTML);
+                var monPanier = new Panier();
+                monPanier.ajouterArticle(code, qte, prix);
+                var tableau = document.getElementById("tableau");
+                var longueurTab = parseInt(document.getElementById("nbreLignes").innerHTML);
+                if (longueurTab > 0)
+                {
+                    for(var i = longueurTab ; i > 0  ; i--)
+                    {
+                        monPanier.ajouterArticle(tableau.rows[i].cells[0].innerHTML, parseInt(tableau.rows[i].cells[1].innerHTML), parseInt(tableau.rows[i].cells[2].innerHTML));
+                        tableau.deleteRow(i);
+                    }
+                }
+                var longueur = monPanier.liste.length;
+                for(var i = 0 ; i < longueur ; i++)
+                {
+                    var ligne = monPanier.liste[i];
+                    var ligneTableau = tableau.insertRow(-1);
+                    var colonne1 = ligneTableau.insertCell(0);
+                    colonne1.innerHTML += ligne.getCode();
+                    var colonne2 = ligneTableau.insertCell(1);
+                    colonne2.innerHTML += ligne.qteArticle;
+                    var colonne3 = ligneTableau.insertCell(2);
+                    colonne3.innerHTML += ligne.prixArticle;
+                    var colonne4 = ligneTableau.insertCell(3);
+                    colonne4.innerHTML += ligne.getPrixLigne();
+                    var colonne5 = ligneTableau.insertCell(4);
+                    colonne5.innerHTML += "<button class=\"btn btn-primary\" type=\"submit\" onclick=\"supprimer(this.parentNode.parentNode.cells[0].innerHTML)\"><span class=\"glyphicon glyphicon-remove\"></span> Retirer</button>";
+                }
+                document.getElementById("prixTotal").innerHTML = monPanier.getPrixPanier();
+                document.getElementById("nbreLignes").innerHTML = longueur;
+            }
+
+            function supprimer(code)
+            {
+                var monPanier = new Panier();
+                var tableau = document.getElementById("tableau");
+                var longueurTab = parseInt(document.getElementById("nbreLignes").innerHTML);
+                if (longueurTab > 0)
+                {
+                    for(var i = longueurTab ; i > 0  ; i--)
+                    {
+                        monPanier.ajouterArticle(tableau.rows[i].cells[0].innerHTML, parseInt(tableau.rows[i].cells[1].innerHTML), parseInt(tableau.rows[i].cells[2].innerHTML));
+                        tableau.deleteRow(i);
+                    }
+                }
+                monPanier.supprimerArticle(code);
+                var longueur = monPanier.liste.length;
+                for(var i = 0 ; i < longueur ; i++)
+                {
+                    var ligne = monPanier.liste[i];
+                    var ligneTableau = tableau.insertRow(-1);
+                    var colonne1 = ligneTableau.insertCell(0);
+                    colonne1.innerHTML += ligne.getCode();
+                    var colonne2 = ligneTableau.insertCell(1);
+                    colonne2.innerHTML += ligne.qteArticle;
+                    var colonne3 = ligneTableau.insertCell(2);
+                    colonne3.innerHTML += ligne.prixArticle;
+                    var colonne4 = ligneTableau.insertCell(3);
+                    colonne4.innerHTML += ligne.getPrixLigne();
+                    var colonne5 = ligneTableau.insertCell(4);
+                    colonne5.innerHTML += "<button class=\"btn btn-primary\" type=\"submit\" onclick=\"supprimer(this.parentNode.parentNode.cells[0].innerHTML)\"><span class=\"glyphicon glyphicon-remove\"></span> Retirer</button>";
+                }
+                document.getElementById("prixTotal").innerHTML = monPanier.getPrixPanier();
+                document.getElementById("nbreLignes").innerHTML = longueur;
+            }
+        </script>
+</template>
+<template name="loginDropDown">
+
+    <a class=" item right" href="{{pathFor route='login'}}">
+      Sign In
+    </a>
+      <a class="ui dropdown item">
+      <i class="dropdown icon"></i>
+    </a>
+
+</template>

@@ -1,0 +1,39 @@
+<template name="visitsToday">
+  <div class="ui segment">
+    <h3 class="ui header">Statistiques de visites aujourd'hui</h3>
+    <!-- <p><strong>Total visiteurs uniques :</strong> {{totalVisitors}}</p>
+    <p><strong>Total du jour :</strong> {{todayVisits}}</p>
+
+    <table class="ui celled table">
+      <thead>
+        <tr>
+          <th>IP</th>
+          <th>Heure</th>
+          <th>Page visitée</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each visits}}
+          <tr>
+            <td>{{ip}}</td>
+            <td>{{formattedTime date}}</td>
+            <td>{{path}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table> -->
+  
+  <div class="summary-cards">
+      <div class="card bg-green">
+        <h3>Total aujourd'hui</h3>
+        <p>{{todayCount}}</p>
+      </div>
+      <div class="card bg-blue">
+        <h3>Total semaine</h3>
+        <p>{{weekCount}}</p>
+      </div>
+    </div>
+
+    <canvas id="visitChart" width="400" height="150"></canvas>
+  </div>
+</template>

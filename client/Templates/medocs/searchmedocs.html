@@ -1,0 +1,169 @@
+<template name="searchmedocs">
+  <div class="ui container">
+
+
+    <div class="loginbox" style="border-radius:2px;">
+      <h2 style="color:#ccc; border-radius: 3px; font-family: 'Open Sans', sans-serif; "></h2>
+       <img src="/monlogofin.png"  alt="QuickPharm" class="img-responsive">
+          <!-- <h4 style="border-radius: 7px; font-family: 'Open Sans', sans-serif; ">{{getGlobal 'searchinputslogan'}}</h4> -->
+
+      </div>
+        <!--linebreaker-->
+
+        <!--  -->
+        <div class="ui equal width center aligned padded grid">
+                  <!-- <div class="row">
+                    <div class="teal column">
+
+                    </div>
+                     <div class="blue column">
+
+                    </div>
+                  </div> -->
+                  <div class="row">
+                    <div class=" column">
+                      <form class="ui form" id="search" action="resultats.html" method="post">
+
+                            <input type="text" class="form-control" id="searchValue" name="searchValue" placeholder="Recherchez votre produit de santé et comparez le prix...">
+                              <br>
+                                  <!-- {{#linkTo route='searchresults'}}{{/linkTo}} -->
+                                  <button id="searchBtn" type="submit" class="ui button btn-outline-rounded success" onClick="testResults(this.form)">
+                                      <i class="search icon"></i>Search
+                                  </button>
+                                  <br>
+                                  
+                      </form>
+                      <form>
+                        <div class="ui twelve fields">
+                          <input id="search" type="search"  class="form-control" required=""/>
+                          <!-- <label for="search"><i class="material-icons">search</i></label> -->
+                          <!-- I've put "red-text" class to emphasize -->
+                          <i class="material-icons red-text">close</i>
+                        </div>
+                      </form>
+                    <!-- <div class="ui divider "></div> -->
+                  </div>
+                  </div>
+                  <div class="row">
+                    <div class="black column">
+                      <h3 style=" font-family: 'Open Sans', sans-serif; border-radius:4px;">
+                        <i class="compass icon"></i>Orientation</h3>
+                      <div class="ui divider "></div>
+                      <p style=" font-family: 'Open Sans', sans-serif; border-radius:4px;">
+                        {{getGlobal 'OrientationText'}}</p>
+                    </div>
+                    <div class="olive column">
+                      <h3 style=" font-family: 'Open Sans', sans-serif; border-radius:4px;">
+                        <i class="info circle icon"></i>Conseils</h3>
+                      <div class="ui divider"></div>
+                      <p style=" font-family: 'Open Sans', sans-serif; border-radius:4px;">
+                        {{getGlobal 'ConseilsText'}}</p>
+                    </div>
+                  </div>
+
+                <div class="row">
+                    <div class="black column">
+                      <h4 style="color:#fff;font-family: 'Open Sans', sans-serif; ">
+                        Exemples : Zentel Duo-cotexcin Bi-malaril</h4>
+                  </div>
+                  <div class="green column  header leresultat " id="leresultat">
+                    <h4 style="color:#fff; height:12px; font-family: 'Open Sans', sans-serif; ">
+                      ...Resultats de la recherche</h4>
+                  </div>
+                </div>
+
+        </div>
+        <!--  -->
+
+    <div class="ui equal width center aligned padded grid" >
+
+    <div class="row">
+
+      <!-- <div class="ui action input">
+        <input type="text" placeholder="Search...">
+        <button class="ui button">Search</button>
+      </div> -->
+      <div class="ui form column action input" >
+          <input type="text" class="form-control" id="input-search" placeholder="Filtrez vos résultats..." >
+          <button class="ui button">Search</button>
+        </div>
+      {{#if search}}
+      <div class="searchable-container col-xs-12" id="searchmedocitem" style="background-image:url()">
+          {{#each medicaments}}
+              <div class="ui cards items col-sm-6 col-md-4 searchmedocbox {{showbrand productid}}{{brand}}" >
+                
+                  <div class="card">
+                    <div class="content">
+                      <img class="right floated mini ui image" src="/images/avatar/large/elliot.jpg">
+                      <div class="header">
+                        Elliot Fu
+                      </div>
+                      <div class="meta">
+                        Friends of Veronika
+                      </div>
+                      <div class="description">
+                        Elliot requested permission to view your contact details
+                      </div>
+                    </div>
+                    <div class="extra content">
+                      <div class="ui two buttons">
+                        <div class="ui basic green button">Approve</div>
+                        <div class="ui basic red button">Decline</div>
+                      </div>
+                    </div>
+                  </div>
+                <div class="card ">
+                  <div class="header" style="background-color:#F0F3F4; border-radius: 3px;border:4px ; border-color:#34495E">
+                      <h4 style="color:#10894E; padding: 18px 18px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                        <span class="glyphicon glyphicon-plus pull-left" id="brand"></span><!--{{getGlobal 'shoptype'}}-->{{brand}}
+                        <span class="pull-right">{{currency price}}</span></h4>
+                  </div>
+                      <div class="content" >
+                        <h5 style="color:#10894E; padding: 10px 10px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                          {{truncate desc}}</h5>
+                            <h4 class="h4-responsive"><span class="glyphicon glyphicon-map-marker ">Pharmacie:</span><small>{{showlocation fileShopId}}{{location}}</small></h4>
+
+                      </div>
+                      <div class="ui two-button bottom attached segment ">
+                        {{#if isInRole 'basic'}}
+                        <a href="{{pathFor route='compare'}}" type="button" class="btn btn-default pull-right "  name="button">Comparer</a>
+                        {{/if}}
+                      </div>
+                    </div>
+              </div>
+          {{/each}}
+
+      </div>
+      <div class="extra content">
+        <div class="ui buttons">
+          <button class="prev-page ui labeled icon button">
+            <i class="left chevron icon"></i>
+            Back
+            </button>
+          <div class="ui button disabled"><span>Page</span></div>
+          
+          <button class="next-page ui right labeled icon button">
+            <i class="right chevron icon"></i>
+            Next
+            </button>
+        </div>
+      </div>
+      {{/if}}
+      
+    </div>
+    </div>
+    </div>
+  <br>
+  <script type="text/javascript">
+  function testResults (form) {
+      var TestVar = form.searchValue.value;
+      if(!TestVar)
+      {
+        toastr.warning ("Veuillez préciser votre recherche svp...");
+      }else{
+        toastr.info ("You want information about: " + TestVar);
+      }
+
+  }
+  </script>
+</template>

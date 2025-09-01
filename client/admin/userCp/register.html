@@ -1,0 +1,43 @@
+<template name="register">
+<div class=" ui container" >
+  <div class="ui page">
+    <div class="logo">
+        <img src="/monlogofin.png"  alt="QuickPharm"  >
+    </div>
+    <div class="row loginbox" >
+            <form class="ui form" id="regform">
+              <div class="col-lg-12">
+                  <span class="singtext" >Créer nouveau compte</span>
+              </div>
+
+               <div class=" col-lg-12 col-md-12 col-sm-12">
+                <label for = "regUsername">username</label>
+               <input  type="text" name="regUsername" class="form-control" id="regUsername">
+               </div>
+               <div class=" col-lg-12 col-md-12 col-sm-12">
+                <label for = "email">Email</label>
+                <input type="email" name="regEmail" id="regEmail" class="form-control">
+                </div>
+               <div class="col-lg-12 col-md-12 col-sm-12">
+                <label for = "password">Password</label>
+                <input type="password" name="regPassword" id="regPassword" class="form-control">
+               </div>
+
+               <div class="col-lg-12 col-md-12 col-sm-12">
+                <input type="submit" value="Register" class="form-control button btn-raised btn-success" >
+               </div>
+
+            </form>
+    </div>
+    <div class="row forGotPassword">
+        <br>
+        <p>
+
+        </p>
+
+    </div>
+
+  </div>
+</div>
+
+</template>

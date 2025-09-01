@@ -1,0 +1,189 @@
+<template name="searchEtablissements">
+  <div class="ui container" style="margin-top: 40px;">
+
+    <!-- Logo -->
+    <div class="ui section" style="text-align: center; ">
+      <img src="/TextlogoQP2-Photoroom.png" alt="MyDirectory" class="small">
+    </div>
+
+    <!-- Titre -->
+    <h2 class="ui header">Recherchez un établissement sanitaire</h2>
+
+    <!-- Formulaire de recherche -->
+    <form class="ui form" id="search-form">
+      <div class="fields">
+
+        <div class="twelve wide field">
+          <input type="text" name="searchQuery" placeholder="Spécialité..." required>
+        </div>
+
+        <div class="six wide field">
+          <select class="ui dropdown" name="typeSelect" id="typeSelect">
+            <option value="">-- Aucun --</option>
+            <option value="Hopital">Hopital</option>
+            <option value="Clinique">Clinique</option>
+            <option value="Centre de santé">Centre de santé</option>
+            <option value="Dispensaire">Dispensaire</option>
+            <option value="Laboratoire d’analyses">Laboratoire d’analyses</option>
+            <option value="Centre de diagnostic">Centre de diagnostic</option>
+            <option value="Centre de santé intégré">Centre de santé intégré</option>
+            <option value="Hôpital de district">Hôpital de district</option>
+            <option value="Centre d’imagerie">Centre d’imagerie</option>
+            <option value="Centre ophtalmologique">Centre ophtalmologique</option>
+            <option value="Maternité">Maternité</option>
+            <option value="Cabinet médical">Cabinet médical</option>
+            <option value="Cabinet dentaire">Cabinet dentaire</option>
+            <option value="Centre de rééducation">Centre de rééducation</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="four wide field">
+          <select class="ui dropdown" name="region" id="regionSelect">
+            {{#each regions}}
+              <option value="{{this}}">{{this}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="four wide field">
+          <div class="ui buttons">
+            <button class="ui primary button" type="submit">Rechercher</button>
+            <div class="or"></div>
+            <button class="ui button" type="button" id="reset-form">Réinitialiser</button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+    <!-- Résultats de recherche -->
+    <!-- <div class="ui container results"> -->
+      {{#if searchResults.length}}
+        <section class="services" >
+         {{#each searchResults}}
+            <div class="service-card">
+                    <div class="header" style="background-color:#a3dde0; border-radius: 3px;border:4px ; border-color:#34495E">
+                        <h4 style="color:#10894E; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                          <span class="glyphicon glyphicon-plus pull-left" id="brand"></span><!--{{getGlobal 'shoptype'}}-->
+                          <span class="pull-right">{{type}}</span></h4>
+                    </div>
+
+                <div class="content">
+                  <h3 style="color:#012b4b; padding: 10px;">
+                    <i class="thumbtack icon"></i> {{nom}}
+                  </h3>
+                </div>
+
+                <div class="content">
+                  <h4>Ville & Quartier : <span>{{ville}} - {{quartier}}</span></h4>
+                </div>
+
+                <div class="extra content">
+                  <div class="ui three buttons">
+                    <button class="ui button show-details"
+                      data-localisation.lat="{{localisation.lat}}"
+                      data-localisation.lng="{{localisation.lng}}"
+                      data-nom="{{nom}}"
+                      data-quartier="{{quartier}}"
+                      data-ville="{{ville}}"
+                      data-siteWeb="{{siteWeb}}"
+                      data-type="{{type}}"
+                      data-telephone="{{telephone}}"
+                      data-toggle="modal" data-target="#myDetailsModal1">
+                      Détails
+                    </button>
+
+                    <a href="https://wa.me/{{telephone}}" target="_blank" class="ui olive button btn-call-facility">
+                      <i class="phone icon"></i> Call
+                    </a>
+
+                    <button class="ui primary button show-road"
+                      data-localisation.lat="{{localisation.lat}}"
+                      data-localisation.lng="{{localisation.lng}}"
+                      data-toggle="modal" data-target="#myRoadModal1">
+                      Itinéraire
+                    </button>
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+          {{/each}}
+          </section>
+      {{else}}
+        <p>Aucun résultat trouvé.</p>
+      {{/if}}
+    <!-- </div> -->
+
+    <!-- Pagination -->
+    <div class="ui center aligned basic segment">
+      <div class="ui buttons">
+        <button class="ui button" id="prev-page" {{disabledPrev}}>Précédent</button>
+        <div class="or"></div>
+        <button class="ui button" id="next-page" {{disabledNext}}>Suivant</button>
+      </div>
+      <div style="margin-top: 10px;">
+        Page actuelle : <strong>{{currentPage}}</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal : Détails établissement -->
+  <div class="modal fade" id="myDetailsModal1" tabindex="-1" role="dialog" aria-labelledby="myDetailsModal1">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><b>Informations sur l'établissement</b></h3>
+        </div>
+        <div class="modal-body">
+          <div class="ui cards">
+            <div class="teal card">
+              <img src="/pharmacy-bgdesign.jpg" alt="healthsupport" class="img-responsive">
+            </div>
+          </div>
+          <div class="ui divider"></div>
+          <p><strong>Nom :</strong> <span id="modalNom"></span></p>
+          <p><strong>Adresse :</strong> <span id="modalQuartier"></span> ; <span id="modalVille"></span></p>
+          <p><strong>Site Web :</strong> <span id="modalSiteweb"></span></p>
+          <p><strong>Spécialité :</strong> <span id="modalSpecialite"></span></p>
+          <p><strong>Téléphone :</strong> <span id="modalTelephone"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal : Carte itinéraire -->
+  <div class="modal fade" id="myRoadModal1" tabindex="-1" role="dialog" aria-labelledby="myRoadModal1">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><b>Carte Itinéraire</b></h3>
+        </div>
+        <div class="modal-body">
+          <div class="ui page">
+            <strong>Évaluation de la distance</strong>
+            
+            <button id="toggle-mode" class="btn btn-warning" style="margin-bottom: 10px;">
+              Passer en mode piéton
+            </button>
+            <div id="map" style="height: 500px;"></div>
+            
+          </div>
+        </div>
+        <div class="modal-footer">
+            <div class="mt-2">
+              <p id="distance_estime">Distance : -</p>
+              <p id="duration_estime">Durée estimée : -</p>
+            </div>
+            <strong><p id="helpLatitud"></p></strong>
+            <strong><p id="helpLongitud"></p></strong>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

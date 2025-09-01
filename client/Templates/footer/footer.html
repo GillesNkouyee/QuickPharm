@@ -1,0 +1,115 @@
+<!-- <template name="footer">
+
+ 
+      
+      <hr>
+      <div class="page-footer" style="background-color:#10894B;">
+              <div class="header">
+                  <h2 style="text-align: center;">Bienvenue sur QuickPharm <h4>{{getGlobal 'appSlogan'}}</h4></h2>
+              </div>
+              <div class="row bs-wizard" style="border-bottom:0;">
+
+                  <div class="col-xs-3 bs-wizard-step complete">
+                    <div class="text-center bs-wizard-stepnum">Step 1</div>
+                    <div class="progress"><div class="progress-bar"></div></div>
+                    <a href="#" class="bs-wizard-dot"></a>
+
+                    <div class="bs-wizard-info text-center"><p>Inscrivez-vous sur QuickPharm en créant votre compte.</p></div>
+                  </div>
+
+                  <div class="col-xs-3 bs-wizard-step complete">
+                    <div class="text-center bs-wizard-stepnum">Step 2</div>
+                    <div class="progress"><div class="progress-bar"></div></div>
+                    <a href="#" class="bs-wizard-dot"></a>
+                    <div class="bs-wizard-info text-center">
+                      <p>Vous êtes professionnel de la santé et gérez une pharmacie? Mettez votre Store online et gérez votre espace entièrement personnalisable</p></div>
+                  </div>
+
+                  <div class="col-xs-3 bs-wizard-step active">
+                    <div class="text-center bs-wizard-stepnum">Step 3</div>
+                    <div class="progress"><div class="progress-bar"></div></div>
+                    <a href="#" class="bs-wizard-dot"></a>
+                    <div class="bs-wizard-info text-center"><p>Soyez plus près de vos de patients et délivrez un service fiable , rapide et sécurisé online</p></div>
+                  </div>
+
+                  <div class="col-xs-3 bs-wizard-step disabled">
+                    <div class="text-center bs-wizard-stepnum">Step 4</div>
+                    <div class="progress"><div class="progress-bar"></div></div>
+                    <a href="#" class="bs-wizard-dot"></a>
+                    <div class="bs-wizard-info text-center"><p> Grace à Quickpharm, nous restons près de vous.</p></div>
+                  </div>
+              </div>
+
+            </div>
+            
+            <script type="text/javascript" id="servicewb_136427">
+              (function() {
+              var cv = document.createElement("script"); cv.type = "text/javascript"; cv.async = true;
+              cv.src = "http://www.compteur-visite.com/service.php?v=1.1&id=136427&k=58c825d99228dbb793af343abcbd5f00&c="+document.cookie;
+              var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(cv, s);
+              })();
+              </script>
+ 
+
+</template> -->
+<template name="footer">
+  <div class="ui inverted vertical footer segment mt-auto">
+    <div class="ui center aligned container">
+      <div class="ui stackable inverted divided grid">
+        <!-- Logo et lien -->
+        <div class="four wide column" style="text-align: left;">
+          <img src="/monlogofin.png" alt="EGF-IT Consulting" style="height: 60px; margin-bottom: 10px;">
+          <div class="ui inverted link list">
+            <a href="#" class="item">Accueil</a>
+            <a href="#" class="item">À propos</a>
+            <a href="#" class="item">Mentions légales</a>
+          </div>
+        </div>
+
+        <!-- Mission -->
+        <div class="six wide column">
+          <h4 class="ui inverted header">Notre mission</h4>
+          <p>Faciliter l'accès à l'information sur les médicaments disponibles au Cameroun, en toute simplicité et transparence.</p>
+          
+          <!-- Réseaux sociaux -->
+          <div class="ui horizontal inverted list">
+            <a class="item" href="https://www.facebook.com/" target="_blank">
+              <i class="facebook f icon big"></i>
+            </a>
+            <a class="item" href="https://wa.me/237699103611" target="_blank">
+              <i class="whatsapp icon big"></i>
+            </a>
+            <a class="item" href="mailto:contact@egf-it-consulting.com">
+              <i class="envelope icon big"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact & carte -->
+        <div class="six wide column">
+          <h4 class="ui inverted header">Contact</h4>
+          <p>EGF-IT Consulting SARL<br>
+            Douala, Bonamoussadi<br>
+            Tél : 699 103 611<br>
+            Email : contact@egf-it-consulting.com</p>
+          
+          <!-- Carte Google Maps -->
+          <div class="ui segment">
+            <div id="map-footer" style="height: 200px; width: 100%; border-radius: 8px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui inverted section divider"></div>
+      <p>&copy; {{currentYear}} EGF-IT Consulting SARL — Tous droits réservés</p>
+
+      <!-- Bouton retour en haut -->
+      <div style="margin-top: 10px;">
+        <button class="ui circular icon button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+          <i class="angle up icon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+

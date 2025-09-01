@@ -1,0 +1,63 @@
+<template name="login">
+  <div class="ui middle aligned center aligned grid" style="height: 100vh;">
+    <div class="column" style="max-width: 400px;">
+      <div class="ui segment stacked">
+        <div class="ui center aligned">
+          <img src="/monlogo.png" class="ui small image" style="margin-bottom: 1rem;" alt="QuickPharm">
+        </div>
+
+        <form class="ui form" id="loginForm">
+          <div class="field">
+            <div class="ui left icon input">
+              <input type="email" name="loginemail" id="loginemail" placeholder="Adresse e-mail">
+              <i class="user icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <input type="password" name="loginpassword" id="loginpassword" placeholder="Mot de passe">
+              <i class="lock icon"></i>
+            </div>
+          </div>
+          <input type="submit" class="ui fluid large teal button" value="Connexion">
+        </form>
+
+        <div class="ui horizontal divider">Ou</div>
+
+        <div class="ui two column grid">
+          <div class="column">
+            <button class="ui fluid blue button" data-toggle="modal" data-target="#SignUp">
+              Pas encore inscrit ?
+            </button>
+          </div>
+          <div class="column">
+            <button class="ui fluid green button">
+              Mot de passe oublié
+            </button>
+          </div>
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div class="ui tiny horizontal divided link list center aligned">
+          <a href="#" class="item">Conditions d'utilisation</a>
+          <a href="#" class="item">Confidentialité</a>
+          <a href="#" class="item">Contact</a>
+        </div>
+        <p class="ui center aligned tiny text">© 2024 QuickPharm. Tous droits réservés.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal d'inscription -->
+  <div id="SignUp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myStockLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body" id="dodo">
+          <br><br>
+          {{> register}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

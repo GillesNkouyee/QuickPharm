@@ -1,0 +1,102 @@
+<template name="searchMedicaments">
+    <div class="ui container" style="margin-top: 40px;">
+        <div class="ui section" style="text-align: center; ">
+      <img src="/TextlogoQP2-Photoroom.png"  alt="MyDirectory" class="small">
+    </div>
+      <h2 class="ui header">Recherche de Médicaments</h2>
+      <form class="ui form" id="search-form">
+        <div class="fields">
+            <div class="twelve wide field">
+                <input type="text" name="searchQuery" placeholder="Nom du médicament..." required>
+            </div>
+            <div class="six wide field">
+                <select class="ui dropdown" name="categorieSelect" id="categorieSelect">
+                    
+                 <!-- {{#each categories}}
+                        <option value="{{this}}">{{this}}</option>
+                      {{/each}} -->
+                    <option value=''>-- Toutes les catégories --</option>
+                    <option value='Antibiotiques'>Antibiotique</option>
+                    <option value='Antifongiques'>Antifongique</option>
+                    <option value='Antalgiques'>Antalgique</option>
+                    <option value='Antipaludeens'>Antipaludéens</option>
+                    <option value='Antiparasitaires'>Antiparasitaires</option>
+                    <option value='Antiacides'>Antiacides</option>
+                    <option value='Antidiabetiques'>Antidiabétiques</option>
+                    <option value='Antitoussifs'>Antitoussifs</option>
+                    <option value='Antihemorragiques'>Antihémorragiques</option>
+                    <option value='Antihelmintiques'>Antihelmintiques</option>
+                    <option value='Antiagregants'>Antiagrégants</option>
+                    <option value='Antianémiques'>Antianemiques</option>
+                    <option value='Antiasteniques'>Antiasténiques</option>
+                    <option value='Diuretiques'>Diurétiques</option>
+                    <option value='Antifongiques'>Antifongique</option>
+            <!-- Ajoute d'autres catégories selon ta base -->
+                </select>
+            </div>
+            <div class="four wide field">
+                <select class="ui dropdown" name="priceOrder">
+                    <option value="">-- Tri par prix --</option>
+                    <option value="asc">Prix croissant</option>
+                    <option value="desc">Prix décroissant</option>
+                </select>
+            </div>
+            <div class="four wide field">
+              <div class="ui buttons">
+                <button class="ui primary button btn-call-searchDrug" type="submit">Rechercher</button>
+                <div class="or"></div>
+                <button class="ui button" type="button" id="reset-form">Réinitialiser</button>
+                </div>
+              </div>
+            </div>
+        </form>
+  
+      <!-- <div class="ui container results"> -->
+        {{#if searchResults.length}}
+        <div class="ui stackable three column grid">
+         {{#each searchResults}}
+         <div class="column">
+            <div class="ui fluid card" style="box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-top: 3px solid #1db3cd;">
+              <div class="card header" style="color: #6c9bb3;">
+                      <span class="pull-left"><h2>{{brand}}</h2></span>
+                        <span class="pull-right">{{currency price}}</span>
+                      
+                </div>
+                    <div class="content" >
+                      <div class="header" style="color: #00B5AD;">
+                        {{truncate desc}}
+                      </div>
+                        
+                        <h2 style="color: #00B5AD;"><i class="glyphicon glyphicon-map-marker ">Pharmacie:&nbsp;</i>{{showlocation fileShopId}}{{location}}</h2>
+                        <h2 style="color: #00B5AD;">Ordonnance exigée&nbsp;:<a class="ui label {{badgeColor}} ">{{onpresc}}</a></h2>
+                  </div>
+                   <div class="devided header "></div> 
+                    <div class="extra content show-details">
+                      <!-- {{#if isInRole 'basic'}} -->
+                      <a href="{{pathFor route='compare'}}" type="button" class="ui button btn-success  btn-call-comparison"  name="button">Comparer</a>
+                      <!-- {{/if}} -->
+                    </div>
+
+            </div>
+          </div>
+          {{/each}}
+                
+      </div>
+     
+
+      {{else}}
+          <p>Aucun résultat trouvé.</p>
+      {{/if}}
+    <!-- </div> -->
+     <!-- Pagination -->
+     <div class="ui center aligned basic segment">
+        <div class="ui buttons">
+          <button class="ui button" id="prev-page" {{disabledPrev}}>Précédent</button>
+          <div class="or"></div>
+          <button class="ui button" id="next-page" {{disabledNext}}>Suivant</button>
+        </div>
+        <div style="margin-top: 10px;">Page actuelle : <strong>{{currentPage}}</strong></div>
+      </div>
+    </div>
+  </template>
+  

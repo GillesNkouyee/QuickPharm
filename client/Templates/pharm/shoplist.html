@@ -1,0 +1,231 @@
+<template name="shoplist">
+  <div class="ui container" style="margin-top: 60px;background-color: #F3F4F6;">
+
+    <!-- Titre principal -->
+    <div class="ui teal huge header center aligned">
+      <i class="hospital icon"></i>
+      <div class="content">
+        Liste des Pharmacies
+        <div class="sub header" style="color: #555;">Trouvez rapidement une pharmacie autour de vous</div>
+      </div>
+    </div>
+
+    <div class="ui divider"></div>
+
+    <!-- Formulaire de recherche -->
+    <section class="ui segment" style="background-color: #F9F9F9; border-left: 5px solid #00B5AD;">
+      {{> searchshop}}
+    </section>
+
+    <!-- Liste des pharmacies -->
+    {{#if listItem}}
+      <div class="ui stackable three column grid">
+        {{#each shops}}
+          <div class="column">
+            <div class="ui fluid card" style="box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-top: 3px solid #00C896;">
+              <div class="card header">
+                <a class="ui {{pharmstatusClass}} ribbon teal label">De garde</a>
+              </div>
+              <div class="content">
+                
+                <div class="header" style="color: #00B5AD;">{{shopname}}</div>
+                <div class="meta" style="color: #888;">{{shopcategory}}</div>
+                <div class="description">
+                  <p><i class="map marker alternate icon"></i> {{shopadress}}</p>
+                </div>
+              </div>
+              <div class="extra content">
+                <div class="ui buttons">
+                  <a href="#" class="ui icon button teal" title="Like">
+                    <i class="thumbs up icon"></i>
+                  </a>
+                  <a class="ui basic teal label">{{votes}}</a>
+                  <a href="{{pathFor route='shopinfo'}}" class="ui icon button blue" title="Visitez notre espace">
+                    <i class="eye icon"></i>
+                  </a>
+                  <a class="ui icon button green" title="Commentaires">
+                    <i class="comments icon"></i> {{> count}}
+                  </a>
+                  <a class="ui icon button olive" title="Articles">
+                    <i class="file alternate icon"></i> {{> ArticleCount}}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="ui negative message">
+        <div class="header">Aucune pharmacie trouvée</div>
+        <p>Veuillez affiner vos critères de recherche ou réessayer plus tard.</p>
+      </div>
+    {{/if}}
+
+    <div class="ui divider"></div>
+
+    <!-- Navigation des pages -->
+    <div class="ui center aligned container" style="margin-top: 2rem;">
+      <div class="ui buttons">
+        <button class="prev-page ui labeled icon button teal">
+          <i class="left chevron icon"></i>
+          Précédent
+        </button>
+        <div class="ui button disabled">Page {{page}}</div>
+        <button class="next-page ui right labeled icon button teal">
+          Suivant
+          <i class="right chevron icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Carte interactive -->
+    <div class="ui segment" style="margin-top: 3rem; background-color: #F9F9F9;">
+      <h3 class="ui header teal">Carte des Pharmacies</h3>
+      <div class="field">
+        <label for="ville">Filtrer par ville :</label>
+        <select id="ville" class="ui dropdown">
+          <option value="ALL">Toutes les villes</option>
+          {{#each uniqueCities}}
+            <option value="{{this}}">{{this}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div id="searchMapContainer" style="width: 100%; height: 500px; border: 1px solid #ccc; margin-top: 1rem;"></div>
+    </div>
+  </div>
+</template>
+
+<template name="categories">
+  <div class="ui container">
+    <h3 class="ui dividing header"><i class="tags icon"></i>Catégories</h3>
+
+    <div class="ui fluid stackable buttons" id="categories">
+      {{#each shopcategory}}
+        <button class="ui teal button category">
+          {{category}}
+        </button>
+      {{/each}}
+    </div>
+  </div>
+</template>
+<template name="searchshop">
+  <div class="ui container" style="margin-top: 20px;">
+    <div class="ui raised segment">
+      <h3 class="ui header">
+        <i class="search icon"></i>
+        <div class="content">
+          {{getGlobal 'shoptype'}}
+        </div>
+      </h3>
+
+      <form class="ui form">
+        <div class="two fields">
+          <div class="field">
+            <label for="shopstyle">Catégorie</label>
+            <input type="text" id="shopstyle" name="shopstyle" placeholder="Ex: Pharmacie générale">
+          </div>
+
+          <div class="field">
+            <label for="shopadress">Adresse</label>
+            <input type="text" id="shopadress" name="shopadress" placeholder="Ex: Douala, Yaoundé...">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Statut de garde</label>
+          <div class="ui inline fields">
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="garde" id="gardeOui" value="OUI">
+                <label for="gardeOui">Oui</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="garde" id="gardeNon" value="NON">
+                <label for="gardeNon">Non</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="garde" id="gardeTous" value="" checked>
+                <label for="gardeTous">Tous</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<template name="map">
+	<div class="container">
+	  <h2>Carte des Pharmacies</h2>
+  
+	  <div class="form-group">
+		<label for="ville">Filtrer par ville :</label>
+		<select id="ville" class="form-control">
+		  <option value="ALL">Toutes les villes</option>
+		  {{#each uniqueCities}}
+			<option value="{{this}}">{{this}}</option>
+		  {{/each}}
+		</select>
+	  </div>
+  
+	  <div id="searchMapContainer" style="width: 100%; height: 500px; border: 1px solid #ccc;"></div>
+	</div>
+  </template>
+  
+<!--  <template name="map">
+	<div class="container">
+		<h2>Carte des Pharmacies</h2>
+		<div class="form-group">
+			<label for="ville">Filtrer par ville :</label>
+			<select id="ville" class="form-control">
+			  <option value="ALL">Toutes les villes</option>
+			  {{#each uniqueCities}}
+				<option value="{{this}}">{{this}}</option>
+			  {{/each}}
+			</select>
+		  </div>
+		<label for="ville">Filtrer par ville :</label>
+												<select id="ville" name="filtermarker" class="btn btn-cyan btn-sm">
+												    <option value="">Select a region</option>
+														<option value="all">ALL</option>
+												    <option value="Douala">Douala</option>
+												    <option value="Yaounde">Yaoundé</option>
+														<option value="Garoua">Garoua</option>
+														<option value="Bafoussam">Bafoussam</option>
+												</select>
+				
+
+										{{#unless geolocationError}}
+				 								<div class="map-canvas" id="searchMapContainer">
+				 									{{> googleMap name="map" options="options"}}
+				 							</div>
+				 									{{else}}
+				 									 Geolocation failed: {{geolocationError}}
+				 								{{/unless}}
+
+		</div>
+</template>
+ -->
+
+<template name="filter">
+	{{#each status}}
+		<label>De garde:
+			<input type="checkbox" value="{{.}}" {{checked}} /> {{.}}
+		</label>
+	{{/each}}
+</template>
+<template name="count">
+{{commentsCount}}
+</template>
+<template name="priority">
+	{{priority}}
+</template>
+<template name="ArticleCount">
+{{ShopArticlesCount}}
+</template>

@@ -1,0 +1,112 @@
+<template name="frnisseurList">
+
+  <div class="ui container">
+
+  <div class="ui two stackable  columns">
+
+          <div class="eight wide column ">
+            <div class="ui header">Liste de fournisseurs</div>
+            <div id="stripedTable " class="body collapse in">
+                          <table id="fsrtab" class="ui celled grey left aligned table " name="fsrtab">
+                              <!-- <caption>Titre du tableau</caption> -->
+                            <thead>
+                              <tr>
+                                <th >Désignation</th>
+                                <th >mobile</th>
+                                <th >Email</th>
+                                <th>Contact</th>
+                              </tr>
+                            </thead>
+                            {{#each fsseurlist}}
+                            <tbody>
+
+                              <tr style=" color:#151515; font-family: 'Open Sans', sans-serif; ">
+                                <td  style="text-align:left; font-family: 'Open Sans', sans-serif;">
+                                <div class="ui black horizontal label" style="background-color:#8A084B;">{{name}}</div></td>
+                                <td  style=" color:#151515; font-family: 'Open Sans', sans-serif; ">
+                                <div class="ui default horizontal label">{{mobile}}</div></td>
+                                <td  style=" color:#151515; font-family: 'Open Sans', sans-serif; ">
+                                <div class="ui default horizontal label">{{emails}}</div></td>
+                                <!-- <td  style=" color:#151515; font-family: 'Open Sans', sans-serif; ">
+                                <div class="ui red label horizontal" style="background-color:#8A084B"></div></td>
+                                <td  style=" color:#151515; font-family: 'Open Sans', sans-serif; ">
+                                <div class="ui default horizontal label">{{projet}}</div></td> -->
+                                <td  style=" color:#151515; font-family: 'Open Sans', sans-serif; ">
+                                 <button  class="ui button small"><i class="open envelope icon" ></i></button>
+                              </td>
+                              </tr>
+                            </tbody>
+                            {{/each}}
+
+                          </table>
+                          <div class="export">
+                            <a   href="#"  type="button" id="btnExport" class="ui button export default ">Export Table to Excel</a>
+                          </div>
+                        </div>
+          </div>
+
+          <div class="eight wide  column">
+            <hr>
+            <div class="ui header">Email au fournisseur</div>
+            <div class="ui divider"></div>
+            <div class="field">
+              <select class="ui search fluid dropdown" name="Fsseur" id="Fsseur" placeholder="-Select  Fournisseur-">
+                                  <option value=""></option>
+                              {{#each afficherfsr}}
+                                  <option value="{{name}}">{{name}}</option>
+
+                              {{/each}}
+              </select>
+            </div>
+            {{#if done}}
+          	<p>Email sent! Thank you for your interest in us.</p>
+          			{{else}}
+            <div class="ui form ">
+              <form id="newproforma" name="newproforma" class="form horizontal">
+                <div class="two fields">
+                <div class="field ">
+                  <label>Fournisseur</label>
+                  <input placeholder="fournisseur..." type="text" value="{{lefrnisseur}}" class=" field" id="FsrName">
+                </div>
+                <div class="field">
+                  <label>Mobile</label>
+                  <input placeholder="telephone du fournisseur..." value="{{mobilefrnisseur}}" type="text" class=" field" id="FsrMobile">
+                </div>
+                </div>
+                <div class="field ">
+                <label>Email</label>
+                <input placeholder="email du fournisseur..." id="FsrMails" value="{{mailfrnisseur}}" type="text" class=" field">
+                <!-- <div class="ui selection dropdown">
+                  <div class="default text">Select</div>
+                  <i class="dropdown icon"></i>
+                  <input type="hidden" name="gender">
+                  <div class="menu">
+                    <div class="item" data-value="male">Male</div>
+                    <div class="item" data-value="female">Female</div>
+                  </div>
+                </div> -->
+                <div class="editor  id  field " contenteditable="true">
+                  <label>Demande de Livraison</label>
+                     <div class="ui input "  >
+                       <textarea  row="4" name="newproform" placeholder="Text here..." id="message"></textarea>
+                </div>
+               </div>
+                </div>
+                <div class="inline field error">
+                <!-- <div class="ui checkbox">
+                  <input type="checkbox" tabindex="0" class="hidden">
+                  <label>I agree to the Terms and Conditions</label>
+                </div> -->
+                <button class="ui button newprof" type="submit">Send</button>
+                </div>
+              </form>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+</template>
+<!-- <template name="email">
+
+
+</template> -->

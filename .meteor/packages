@@ -1,0 +1,72 @@
+# Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-base@1.4.0             # Packages every Meteor app needs to have
+mobile-experience@1.0.5       # Packages for a great mobile UX
+mongo@1.5.0                   # The database Meteor supports right now
+blaze-html-templates@1.0.4 # Compile .html files into Meteor Blaze views
+reactive-var@1.0.11            # Reactive variable for tracker
+tracker@1.2.0                 # Meteor's client-side reactive programming library
+
+#standard-minifier-css@1.4.1   # CSS minifier run for production mode
+standard-minifier-js@2.3.4    # JS minifier run for production mode
+es5-shim@4.8.0                # ECMAScript 5 compatibility for older browsers
+ecmascript@0.11.1              # Enable ECMAScript2015+ syntax in app code
+shell-server@0.3.1            # Server-side component of the `meteor shell` command
+
+#autopublish@1.0.7             # Publish all data to the clients (for prototyping)
+
+session
+#materialize:materialize
+iron:router
+alanning:roles
+accounts-ui
+accounts-password
+accounts-facebook
+accounts-google
+service-configuration
+accounts-twitter
+aldeed:collection2
+aldeed:autoform
+cfs:autoform
+stef:import-export-excel
+flemay:less-autoprefixer
+momentjs:moment
+underscore
+#socialize:linkable-model
+ejson
+jss:spinner
+socialize:base-model
+#socialize:likeable
+dburles:google-maps
+mdg:geolocation
+abdj:autoform-google-places-input
+chrismbeckett:toastr
+aldeed:tabular
+email
+semantic:ui
+twbs:bootstrap
+joshowens:shareit
+check
+msavin:mongol
+helmy:smshelper
+inno:zoom
+tomi:upload-server
+harrison:papa-parse
+meteorhacks:ssr
+cfs:ejson-file
+fortawesome:fontawesome
+andruschka:bootstrap-image-gallery
+cesarve:simple-chat
+cfs:filesystem
+themeteorchef:bert
+webtempest:animate
+cfs:s3
+allow-deny
+cfs:graphicsmagick
+lbee:lunr
+tmeasday:paginated-subscription
+cfs:standard-packages

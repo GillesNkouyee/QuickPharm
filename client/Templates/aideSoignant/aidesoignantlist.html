@@ -1,0 +1,25 @@
+<template name="aidesoignantlist">
+    <div class="searchable-container ui container" >
+  
+        {{#each aidesoignantlist}}
+            <div class="ui cards items col-sm-6 col-md-4 " >
+              <div class="ui card text-xs-center">
+                <div class="header" style="background-color:#F0F3F4; border-radius: 3px;border:4px ; border-color:#34495E">
+                    <h4 style="color:#10894E; padding: 18px 18px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                      <span class="glyphicon glyphicon-plus pull-left" id="brand"></span><!--{{getGlobal 'shoptype'}}-->
+                      <span class="pull-right">{{nom}}&nbsp;{{prenom}}</span></h4>
+                </div>
+                    <div class="content" >
+                      <h5 style="color:#10894E; padding: 10px 10px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                        {{disponible}}</h5>
+                          <h4 class="h4-responsive"><span class="glyphicon glyphicon-map-marker ">Location:</span><small>{{location}}</small></h4>
+  
+                    </div>
+                    <div class="ui two-button bottom attached segment ">
+                      <a href="/aidesoignantlist" type="button" class="btn btn-warning pull-right"  name="button">Checker</a>
+                    </div>
+                  </div>
+            </div>
+        {{/each}}
+    </div>
+  </template>

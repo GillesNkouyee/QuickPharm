@@ -1,0 +1,60 @@
+<template name="formulaireEtablissement">
+  <div class="ui container" style="margin-top: 60px;">
+    <div class="ui section segment" style="text-align: center; ">
+
+        <h2 class="ui header">Ajouter un établissement</h2>
+                 
+
+      <div class="panel-body">
+        <div class="ui form ">
+
+         {{#autoForm collection="Etablissements" id="newEtsForm"  type="insert"  method="etablissements.insert" omitFields="dateAjout" resetOnSuccess=true}}
+
+                   <div class="ui three fields segment field">
+                     <div class=" field">
+                       {{> afQuickField name='nom'}}
+                     </div>
+                     <div class=" field">
+                        {{> afFormGroup name="type" options='allowed' firstOption="Please select category"}}
+                      </div>
+                     <div class=" field">
+                       {{> afQuickField name='ville'}}
+                     </div>
+                </div>
+                <div class="ui three fields segment field">
+                   <div class=" field">
+                     {{> afQuickField name='quartier'}}
+                   </div>
+                   <div class=" field">
+                    {{> afQuickField name='telephone'}}
+                  </div>
+                  <div class=" field">
+                    {{> afQuickField name='adresse'}}
+                  </div>
+                </div>
+                <div class="ui two fields segment field">
+                    <div class=" field">
+                        {{> afQuickField name='region'}}
+                    </div>
+                    <div class=" field">
+                        {{> afQuickField name='email'}}
+                    </div>
+                </div>
+                <div class="eight wide field ">
+                    {{> afQuickField name='siteWeb'}}
+                </div>
+                <div class="eight wide field ">
+                        {{> afQuickField name='localisation'}}
+                    </div>
+                 <div class="ui segment">
+                   <input type="submit" class="ui button teal" value="Insert"/>
+                 </div>
+
+           {{/autoForm}}
+         </div>
+       </div>
+    </div>
+  </div>
+</template>
+ 
+   

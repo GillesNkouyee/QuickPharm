@@ -1,0 +1,44 @@
+<template id="managepharm" name="managepharm">
+  <div class="ui cards stackable four grid center" >
+          {{#transition in="zoomIn:500" out="bounceOut:2000"}}
+          {{#each showAllpharm}}
+              <div class=" card" id="siteID">
+                <div class="content">
+                  <div class="header">{{shopname}}</div>
+                  <div class="description summary">
+                    <li>Group:{{shopadress}}</li>
+                    <!-- <li>Puissance: {{igc}}</li>
+                    <li>Energie pdte: {{nag}}</li> -->
+                    <!-- {{#with fuelStock}}
+                    <li>Fuel Level:{{quantity}}</li> -->
+                    <!--<li>Type:{{typeProduit}}</li>
+                    {{/with}}
+                    {{#with location}}
+                    <li>Location: {{lat}};{{lng}}</li>
+                    {{/with}} -->
+                  </div>
+                </div>
+                <div class="ui three bottom attached buttons">
+
+                  <button class="ui  button positive" data-target="#graph" data-toggle="modal" onfocus="this.blur()"><i class="line chart icon"></i>
+                  </button>
+
+
+                  <button class="ui button grey mdfysite" data-target="#{{this._id}}" data-toggle="modal" onfocus="this.blur()" ><i class="edit icon"></i>
+                  </button>
+
+                  <button class="ui button black"><i class="erase icon"></i></button>
+
+                </div>
+
+              </div>
+
+               <!-- {{> modifySite}} -->
+              <!--modify moadl start  -->
+                <!-- {{> actugraph}} -->
+              <!-- modify Modal end  -->
+            {{/each}}
+          {{/ transition}}
+          </div>
+
+</template>

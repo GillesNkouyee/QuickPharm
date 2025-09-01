@@ -1,0 +1,85 @@
+<template name="articlestore">
+
+	<div class="panel-body">
+		<ul class="nav nav-pills " id="filterOptions">
+    <li class="active"><a href="#" style="padding: 8px 8px 0px; border-radius: 4px; font-family: 'Open Sans', sans-serif;"
+			class="all">All</a></li>
+
+			{{#each distinctmedocType}}
+				<li role="presentation"><a href="#" style="padding: 8px 8px 0px; border-radius: 4px; font-family: 'Open Sans', sans-serif;"
+					class="{{tag}}">{{tag}}</a></li>
+			{{/each}}
+		</ul><br>
+
+		<div class="col-xs-12 stackable " id="medocitem">
+			<!-- <div class="ui form"> -->
+				{{# each articlestore}}
+
+				<div class="col-sm-6 col-md-4 productbox {{showtag productid}}{{tag}}" >
+					{{#if articleDeleteRights}}
+						<i class="remove circle icon articledel"></i>
+						{{/if}}
+
+					<div class="pull-right"><a class="ui orange badge {{newshoparticle}}">New</a></div>
+					<a id="price" class="ui teal right ribbon label pricetext">{{showdata productid}}{{Price}}<small>FCFA<span></span></small></a>
+
+						    <div class="ui fluid image">
+
+										<img src="{{url}}" class="img-responsive " alt="no picture available..." style=" height:4cm ;width:4cm ">
+
+								</div>
+						    <!-- <div class="producttitle" id="brand">
+									{{showbrand productid}}{{brand}}
+								</div> -->
+								<div class="ui divider"></div>
+						    <div class="card-footer">
+                    <!-- <a href="{{pathFor route='compare'}}" class="pull-right" role="button"><b>Comparer</b></a> -->
+										<a href="#" data-toggle="modal" data-target="#{{productid}}" role="button"><b>Details</b></a>
+										<!-- <a class="ui button small btn-outline-rounded pull-right"  role="button" type="submit" onclick="ajouter()"><i class="add to cart icon"></i></a>
+										<input type="Number" name="qte" id="qte" class="qty" value="1" placeholder="Quantity"/> -->
+								</div>
+								<div class="ui divider"></div>
+								<div id="{{productid}}" class="modal fade" role="dialog" tabindex="-1">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+								    <!-- Modal content-->
+								    <div class="modal-content">
+								      <div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+												<h2 class="modal-title" style=" padding: 8px 8px 0px; border-radius: 1px; font-family: 'Open Sans', sans-serif; ">
+											 <h4>Informations sur :</h4> {{showbrand productid}}{{Brand}} fabriqué par {{showlab productid}}{{Labo}}</h2>
+								      </div>
+								      <div class="modal-body">
+												<a class="ui green right ribbon label pricetext">{{showdata productid}}{{Price}}<small>FCFA<span></span></small></a>
+
+												<p>
+													{{showdesc productid}}{{Desc}}
+												</p>
+
+								      </div>
+											<div class="modal-footer">
+
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+			   </div>
+				{{/ each}}
+				<!-- <div class="ui divider">
+					<nav aria-label="...">
+						 <ul class="pager">
+							 <li class="previous"><a href="#">Previous</a></li>
+							 <li class="next"><a href="#">Next</a></li>
+						 </ul>
+
+					 </nav>
+
+				</div> -->
+
+				</div>
+				<!-- {{> defaultBootstrapPaginator pagination=templatePagination limit=10 containerClass="text-center" onClick=clickEvent}} -->
+      </div>
+
+      </template>

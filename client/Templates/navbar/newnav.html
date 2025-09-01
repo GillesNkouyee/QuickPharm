@@ -1,0 +1,251 @@
+<template name="newnav1">
+
+  <!-- SIDEBAR -->
+  <div class="ui sidebar vertical left menu inverted" style="background-color: #339c83; border-right: 5px solid #ccc;">
+    <a href="/" class="item" style="background-color: #fdfdfeaf;">
+      <img src="/monlogofin.svg" alt="QuickPharm" style="max-width: 100%;">
+    </a>
+
+    <a class="item" href="/shoplist" data-toggle="tooltip" title="Voir les pharmacies">
+      <i class="plus square icon"></i> Pharmacies
+    </a>
+    <a class="item" href="/findaidesoignant" data-toggle="tooltip" title="Voir le personnel soignant">
+      <i class="user md icon"></i> Soignants
+    </a>
+    <a class="item" href="/searchMedicaments" data-toggle="tooltip" title="Chercher un médicament">
+      <i class="pills icon"></i> Médicaments
+    </a>
+    <a class="item" href="/searchEtablissement" data-toggle="tooltip" title="Chercher un établissement sanitaire">
+      <i class="hospital symbol icon"></i> Établissements
+    </a>
+
+    {{#if isInRole 'admin,manager'}}
+      <a class="item" href="/Addshop" data-toggle="tooltip" title="Configuration">
+        <i class="wrench icon"></i> Admin
+      </a>
+    {{/if}}
+  </div>
+
+  <!-- NAVBAR -->
+  <div class="ui top fixed menu borderless" style="background-color: #ffffff;">
+    <a class="item openbtn">
+      <i class="bars icon"></i>
+    </a>
+
+    <div class="right menu">
+      <a class="item" data-toggle="modal" data-target="#myCartModal1">
+        <i class="cart icon"></i>
+      </a>
+       
+     {{#if currentUser}}
+      <!-- Dropdown utilisateur connecté -->
+      <div class="ui simple dropdown item">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+          <img src="{{profilepic}}" class="img-circle" alt="..." style="width: 6mm; height: 6mm;">
+          {{name}} <i class="dropdown icon"></i>
+        </a>
+        <div class="menu">
+          <a href="{{pathFor route='Profile'}}" class="item"><i class="user icon"></i> Profil</a>
+
+          {{#if isInRole 'admin'}}
+            <a href="{{pathFor route='userCtrlpanel'}}" class="item"><i class="users icon"></i> Panel Utilisateurs</a>
+            <a href="/updateshop" class="btn-success item"><i class="database icon"></i> Gérer les données</a>
+          {{/if}}
+
+          <a href="/" class="item" id="logout"><i class="sign out icon"></i> Déconnexion</a>
+
+          <!-- Sous-menu -->
+          <div class="item">
+            <i class="dropdown icon"></i> Sous-menu
+            <div class="menu">
+              {{#if isInRole 'admin'}}
+                <a href="" class="item"><i class="glyphicon glyphicon-cog"></i> Paramètres</a>
+              {{/if}}
+              <a class="item" href="#">Lien interne</a>
+            </div>
+          </div>
+
+          <a class="item" href="#">Changer de mot de passe : {{> loginButtons}}</a>
+        </div>
+      </div>
+    {{else}}
+      {{> loginDropDown align="center"}}
+    {{/if}}
+    </div>
+  </div>
+
+  <!-- MODAL PANIER -->
+  {{> cartModal}}
+
+</template>
+<template name="cartModal1">
+    <div class="modal fade" id="myCartModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="ui page">
+            <div class="ui form">
+              <i class="close icon"></i>
+              <div class="ui header">
+                Online Prescription
+            </div>
+              <table id="tableau" class="ui celled table">
+                <thead>
+                  <tbody></tbody>
+                  <tr>
+                    <th>Médicaments</th>
+                    <th>Qte</th>
+                    <th>Prix unitaire</th>
+                    <th>Prix de la ligne</th>
+                    <th>Supprimer</th>
+                  </tr>
+                </thead>
+              </table>
+              <br>
+              <label>Montant total du panier :</label>
+              <label id="prixTotal">&nbsp;FCFA</label>
+              <label id="nbreLignes" hidden>0</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer inline-block">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+          <button type="button" class="btn btn-success">Enregistrer</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+  <script type="text/javascript">
+          function LignePanier (code, qte, prix)
+                {
+
+                    this.codeArticle = code;
+                    this.qteArticle = qte;
+                    this.prixArticle = prix;
+                    this.ajouterQte = function(qte)
+                    {
+                        this.qteArticle += qte;
+                    }
+                    this.getPrixLigne = function()
+                    {
+                        var resultat = this.prixArticle * this.qteArticle;
+                        return resultat;
+                    }
+                    this.getCode = function()
+                    {
+                        return this.codeArticle;
+                    }
+                }
+                function Panier()
+                {
+                    this.liste = [];
+                    this.ajouterArticle = function(code, qte, prix)
+                    {
+                        var index = this.getArticle(code);
+                        //var dede = this.liste.indexOf(code);
+                        if (index == -1) this.liste.push(new LignePanier(code, qte, prix));
+                        else this.liste[index].ajouterQte(qte);
+                    }
+                    this.getPrixPanier = function()
+                    {
+                        var total = 0;
+                        for(var i = 0 ; i < this.liste.length ; i++)
+                            total += this.liste[i].getPrixLigne();
+                        return total;
+                    }
+                    this.getArticle = function(code)
+                    {
+                        for(var i = 0 ; i <this.liste.length ; i++)
+                            if (code == this.liste[i].getCode()) return i;
+                        return -1;
+                    }
+                    this.supprimerArticle = function(code)
+                    {
+                        var index = this.getArticle(code);
+                        if (index > -1) this.liste.splice(index, 1);
+                    }
+                }
+                  function ajouter()
+                  {
+
+                      var code =document.getElementById("brand").innerHTML;
+                      var qte = parseInt(document.getElementById("qte").value);
+                      var prix = parseInt(document.getElementById("price").innerHTML);
+                      var monPanier = new Panier();
+                      monPanier.ajouterArticle(code, qte, prix);
+                      var tableau = document.getElementById("tableau");
+                      var longueurTab = parseInt(document.getElementById("nbreLignes").innerHTML);
+                      if (longueurTab > 0)
+                      {
+                          for(var i = longueurTab ; i > 0  ; i--)
+                          {
+                              monPanier.ajouterArticle(tableau.rows[i].cells[0].innerHTML, parseInt(tableau.rows[i].cells[1].innerHTML), parseInt(tableau.rows[i].cells[2].innerHTML));
+                              tableau.deleteRow(i);
+                          }
+                      }
+                      var longueur = monPanier.liste.length;
+                      for(var i = 0 ; i < longueur ; i++)
+                      {
+                          var ligne = monPanier.liste[i];
+                          var ligneTableau = tableau.insertRow(-1);
+                          var colonne1 = ligneTableau.insertCell(0);
+                          colonne1.innerHTML += ligne.getCode();
+                          var colonne2 = ligneTableau.insertCell(1);
+                          colonne2.innerHTML += ligne.qteArticle;
+                          var colonne3 = ligneTableau.insertCell(2);
+                          colonne3.innerHTML += ligne.prixArticle;
+                          var colonne4 = ligneTableau.insertCell(3);
+                          colonne4.innerHTML += ligne.getPrixLigne();
+                          var colonne5 = ligneTableau.insertCell(4);
+                          colonne5.innerHTML += "<button class=\"btn btn-primary\" type=\"submit\" onclick=\"supprimer(this.parentNode.parentNode.cells[0].innerHTML)\"><span class=\"glyphicon glyphicon-remove\"></span> Retirer</button>";
+                      }
+                      document.getElementById("prixTotal").innerHTML = monPanier.getPrixPanier();
+                      document.getElementById("nbreLignes").innerHTML = longueur;
+                  }
+
+                  function supprimer(code)
+                  {
+                      var monPanier = new Panier();
+                      var tableau = document.getElementById("tableau");
+                      var longueurTab = parseInt(document.getElementById("nbreLignes").innerHTML);
+                      if (longueurTab > 0)
+                      {
+                          for(var i = longueurTab ; i > 0  ; i--)
+                          {
+                              monPanier.ajouterArticle(tableau.rows[i].cells[0].innerHTML, parseInt(tableau.rows[i].cells[1].innerHTML), parseInt(tableau.rows[i].cells[2].innerHTML));
+                              tableau.deleteRow(i);
+                          }
+                      }
+                      monPanier.supprimerArticle(code);
+                      var longueur = monPanier.liste.length;
+                      for(var i = 0 ; i < longueur ; i++)
+                      {
+                          var ligne = monPanier.liste[i];
+                          var ligneTableau = tableau.insertRow(-1);
+                          var colonne1 = ligneTableau.insertCell(0);
+                          colonne1.innerHTML += ligne.getCode();
+                          var colonne2 = ligneTableau.insertCell(1);
+                          colonne2.innerHTML += ligne.qteArticle;
+                          var colonne3 = ligneTableau.insertCell(2);
+                          colonne3.innerHTML += ligne.prixArticle;
+                          var colonne4 = ligneTableau.insertCell(3);
+                          colonne4.innerHTML += ligne.getPrixLigne();
+                          var colonne5 = ligneTableau.insertCell(4);
+                          colonne5.innerHTML += "<button class=\"btn btn-primary\" type=\"submit\" onclick=\"supprimer(this.parentNode.parentNode.cells[0].innerHTML)\"><span class=\"glyphicon glyphicon-remove\"></span> Retirer</button>";
+                      }
+                      document.getElementById("prixTotal").innerHTML = monPanier.getPrixPanier();
+                      document.getElementById("nbreLignes").innerHTML = longueur;
+                  }
+
+  </script>
+</template>

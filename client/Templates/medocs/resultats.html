@@ -1,0 +1,26 @@
+
+<template name="searchresults">
+  <div class="searchable-container ui container" >
+
+      {{#each mediclist}}
+          <div class="ui cards items col-sm-6 col-md-4 " >
+            <div class="ui card text-xs-center">
+              <div class="header" style="background-color:#F0F3F4; border-radius: 3px;border:4px ; border-color:#34495E">
+                  <h4 style="color:#10894E; padding: 18px 18px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                    <span class="glyphicon glyphicon-plus pull-left" id="brand"></span><!--{{getGlobal 'shoptype'}}-->{{brand}}
+                    <span class="pull-right">{{currency price}}</span></h4>
+              </div>
+                  <div class="content" >
+                    <h5 style="color:#10894E; padding: 10px 10px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                      {{truncate desc}}</h5>
+                        <h4 class="h4-responsive"><span class="glyphicon glyphicon-map-marker ">Pharmacie:</span><small>{{showlocation fileShopId}}{{location}}</small></h4>
+
+                  </div>
+                  <div class="ui two-button bottom attached segment ">
+                    <a href="/resultats" type="button" class="btn btn-warning pull-right"  name="button">Comparer</a>
+                  </div>
+                </div>
+          </div>
+      {{/each}}
+  </div>
+</template>

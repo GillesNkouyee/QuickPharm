@@ -1,0 +1,64 @@
+<template name="voiceRecognition">
+  <div class="ui container" style="margin-top: 40px;">
+    <div class="ui section" style="text-align: center; ">
+          <img src="/TextlogoQP2-Photoroom.png"  alt="MyDirectory" class="small">
+      </div>
+    <button class="ui positive basic button" id="start-rec">🎤 Démarrer la reconnaissance vocale</button>
+    <p>Texte reconnu :</p>
+    <div id="voice-result" style="font-weight: bold;"></div>
+    <h3>Résultats :</h3>
+    
+      <section class="services">
+        
+        {{#each results}}
+        <!-- {{#if hasItem}} -->
+        <div class="service-card" id="pharmacies">
+            <p>{{shopname}} - {{shopadress}}</p>
+            <button class="ui teal button btn-small " value="Details"><i class="icon plus"></i></button>
+            <a href="https://wa.me/{{shoptel}}"  class="ui olive button btn-call-soignant"  target="_blank" role="button">
+                              <i class="phone icon"></i>Call
+                            </a>
+        </div>
+          <!--   {{else}}
+          <div class="ui negative message">
+            <div class="header">Aucune pharmacie trouvée</div>
+            <p>Veuillez affiner vos critères de recherche ou réessayer plus tard.</p>
+          </div>
+        {{/if}} -->
+        <!-- {{#if hasInf}} -->
+        <div class="service-card" id="personnelSoignant">
+            <p>{{nom}} - {{prenom}}</p>
+            <p>{{ville}} - {{specialite}} - {{telephone}}</p>
+             <button class="ui teal button btn-small " value="Details"><i class="icon plus"></i></button>
+            <a href="https://wa.me/{{telephone}}"  class="ui olive button btn-call-soignant"  target="_blank" role="button">
+              <i class="phone icon"></i>Call
+            </a>
+        </div>
+          <!--   {{else}}
+          <div class="ui info message">
+            <div class="header">Aucun personnel soignant trouvé</div>
+            <p>Veuillez affiner vos critères de recherche ou réessayer plus tard.</p>
+          </div>
+        {{/if}} -->
+        <!-- {{#if hasEtab}} -->
+        <div class="service-card" id="etablissementSanitaire">
+        
+            <p>{{nom}} - {{specialite}}</p>
+            <p>{{telephone}} - {{ville}} - {{quartier}} - {{region}}</p>
+            <button class="ui teal button btn-small " value="Details"><i class="icon plus"></i></button>
+            <a href="https://wa.me/{{telephone}}"  class="ui olive button btn-call-soignant"  target="_blank" role="button">
+              <i class="phone icon"></i>Call
+            </a>
+        </div>
+       <!--  {{else}}
+          <div class="ui positive message">
+            <div class="header">Aucune formation sanitaire trouvé</div>
+            <p>Veuillez affiner vos critères de recherche ou réessayer plus tard.</p>
+          </div>
+        {{/if}}
+        {{/each}} -->
+        {{/each}}
+    </section>
+    
+  </div>
+</template>

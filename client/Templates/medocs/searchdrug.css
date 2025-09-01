@@ -1,0 +1,26 @@
+.search-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    width: 70%;
+    margin-right: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+  }
+  
+  .results ul {
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+  }
+  select {
+    padding: 10px;
+    margin-left: 10px;
+  }
+    

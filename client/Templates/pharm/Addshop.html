@@ -1,0 +1,41 @@
+<template name = "Addshop">
+{{#if currentUser}}
+  <div class="ui container" id="addshop">
+    <br><br>
+      <div class="ui huge header">Espace membre</div>
+
+      <div class="ui divider"></div>
+        <div class="ui secondary menu">
+            <a class="item active" data-tab="first"><i class="plus icon"></i> Pharmacie</a>
+            <a class="item active" data-tab="fifth"><i class="plus icon"></i> Personnel soignant</a>
+            <a class="item" data-tab="sixth">Etablisssement</a>
+            {{#if isInRole 'admin'}}
+            <a class="item" data-tab="second">Manage sites</a>
+            {{/if}}
+            <a class="item" data-tab="third"><i class="plus icon"></i>Fournisseurs</a>
+            <a class="item" data-tab="fourth"><i class="mail icon"></i>Liste de Fournisseurs</a>
+            {{#if isInRole 'admin'}}
+            <a class="item" data-tab="seventh">Import de Fichiers</a>
+            {{/if}}
+          </div>
+          <div class="ui bottom attached tab segment  form" data-tab="first">
+        <div class="ui form ">
+          {{> quickForm collection="Shop" id="shopform" type="insert"  omitFields="createdBy, updatedAt, createdAt, upvoters"
+                method="createnewPharm" resetOnSuccess=true}}
+        </div>
+      </div>
+      <div class="ui bottom attached  tab segment  " data-tab="second">{{> managepharm}}</div>
+      <div class="ui bottom attached tab segment" data-tab="sixth">{{> formulaireEtablissement}}</div>
+      <div class="ui bottom attached  tab segment  " data-tab="fifth">{{> newaidesoignant}}</div>
+      <div class="ui bottom attached tab segment  " data-tab="third">{{> addFournisseur}}</div>
+      <div class="ui page tab segment  " data-tab="fourth">{{> frnisseurList}}</div>
+      <div class="ui bottom attached tab segment  " data-tab="seventh">{{> uploadPharm}}</div>
+
+  </div>
+{{else}}
+<div class="ui container" >
+{{> accessDenied}}
+</div>
+{{/if}}
+
+</template>

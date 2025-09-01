@@ -1,0 +1,14 @@
+ <template name="pharmaciesPage">
+    <div class="container">
+        <section class="ui section" style="text-align: center; ">
+        
+        <img src="/TextlogoQP2-Photoroom.png"  alt="MyDirectory" class="small">
+        <div class="ui divider"></div>
+        <h2>Liste des Pharmacies</h2>
+            {{#each pharmacies}}
+                <p>{{name}} - {{address}} - {{garde}}</p>
+                {{#if garde}} (💡 De garde){{/if}}
+            {{/each}}
+        </section>
+    </div>
+</template>
