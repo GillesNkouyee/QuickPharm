@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: quickpharm
+    env: docker
+    plan: free
+    envVars:
+      - key: MONGO_URL
+        value: "mongodb+srv://...ton-url-atlas..."
+      - key: ROOT_URL
+        value: "https://quickpharm.onrender.com"
+      - key: PORT
+        value: "3000"
