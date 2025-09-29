@@ -5,7 +5,7 @@ services:
     plan: free
     envVars:
       - key: MONGO_URL
-        value: "mongodb+srv://...ton-url-atlas..."
+        value: "mongodb+srv://<Gilles-admin>:<Oathniel@Jnmm2024>@cluster0.bgt04et.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
       - key: ROOT_URL
         value: "https://quickpharm.onrender.com"
       - key: PORT
