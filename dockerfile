@@ -1,30 +1,30 @@
-# Étape 1 : Image Node compatible avec Meteor 1.7
+# 1️⃣ Base Node compatible Meteor 1.7
 FROM node:14-buster
 
-# Étape 2 : Installer Meteor 1.7 (pas la dernière)
-RUN curl https://install.meteor.com/ | RELEASE=1.7 sh
+# 2️⃣ Installer Meteor 1.7 (force la version)
+RUN curl https://install.meteor.com/ | sed s/RELEASE=.*/RELEASE=1.7/ | sh
 
-# Étape 3 : Définir le répertoire de travail
+# 3️⃣ Définir le répertoire de travail
 WORKDIR /app
 
-# Étape 4 : Copier les fichiers du projet
+# 4️⃣ Copier tous les fichiers de ton projet
 COPY . /app
 
-# Étape 5 : Installer les dépendances
-RUN meteor npm install
+# 5️⃣ Installer les dépendances Meteor côté projet
+RUN ~/.meteor/meteor npm install
 
-# Étape 6 : Builder l'application Meteor en bundle Node.js
-RUN meteor build --directory /opt/bundle --allow-incompatible-update
+# 6️⃣ Builder l'application Meteor en bundle Node.js
+RUN ~/.meteor/meteor build --directory /opt/bundle --allow-incompatible-update
 
-# Étape 7 : Installer les dépendances côté serveur du bundle
+# 7️⃣ Installer les dépendances du serveur du bundle
 WORKDIR /opt/bundle/bundle/programs/server
 RUN npm install
 
-# Étape 8 : Définir le répertoire de travail final
+# 8️⃣ Définir le répertoire final
 WORKDIR /opt/bundle/bundle
 
-# Étape 9 : Exposer le port utilisé par Render
+# 9️⃣ Exposer le port
 EXPOSE 3000
 
-# Étape 10 : Lancer l'application avec Node (production)
+# 🔟 Lancer l'application avec Node
 CMD ["node", "main.js"]
