@@ -2,7 +2,15 @@ services:
   - type: web
     name: quickpharm
     env: docker
-    plan: free
+    dockerfilePath: Dockerfile
+    branch: main
+    region: oregon
+    plan: starter
+    # Port exposé par le Dockerfile
+    ports:
+      - port: 3000
+        protocol: http
+    # Variables d'environnement nécessaires pour Meteor
     envVars:
       - key: MONGO_URL
         value: "mongodb+srv://<Gilles-admin>:<Oathniel@Jnmm2024>@cluster0.bgt04et.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -10,3 +18,5 @@ services:
         value: "https://quickpharm.onrender.com"
       - key: PORT
         value: "3000"
+      - key: METEOR_ALLOW_SUPERUSER
+        value: "1"
