@@ -1,4 +1,3 @@
-
 # 1️⃣ Base Node compatible avec Meteor 1.7
 FROM node:14-buster
 
