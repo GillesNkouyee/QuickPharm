@@ -19,10 +19,10 @@ RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list \
 RUN curl https://install.meteor.com/ | sed s/RELEASE=.*/RELEASE=1.7/ | sh
 
 # 4️⃣ Définir répertoire de travail
-WORKDIR /app
+WORKDIR /opt/bundle
 
 # 5️⃣ Copier ton projet (ou le bundle déjà généré dans deploy/bundle)
-COPY . /app
+COPY ./deploy/bundle/bundle ./bundle
 
 # 6️⃣ Définir variable pour exécution en superuser
 ENV METEOR_ALLOW_SUPERUSER=1
