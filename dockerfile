@@ -3,13 +3,17 @@
 FROM node:8.15.1
 
 # 2️⃣ Installer dépendances système pour compiler Meteor & Fibers
-RUN apt-get update && apt-get install -y \
+RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list \
+ && sed -i '/security.debian.org/d' /etc/apt/sources.list \
+ && apt-get update -o Acquire::Check-Valid-Until=false \
+ && apt-get install -y \
     python \
     make \
     g++ \
     build-essential \
     curl \
-    && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
+
 
 # 3️⃣ Installer Meteor 1.7
 RUN curl https://install.meteor.com/ | sed s/RELEASE=.*/RELEASE=1.7/ | sh
