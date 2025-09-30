@@ -1,43 +1,31 @@
 
-# 1️⃣ Base Node compatible avec Meteor 1.7
+# 1️⃣ Utiliser Node 8.15.1 compatible Meteor 1.7
 FROM node:8.15.1
 
-# 2️⃣ Installer dépendances système pour compiler Meteor & Fibers
-RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list \
- && sed -i '/security.debian.org/d' /etc/apt/sources.list \
- && apt-get update -o Acquire::Check-Valid-Until=false \
- && apt-get install -y \
-    python \
-    make \
-    g++ \
-    build-essential \
-    curl \
- && rm -rf /var/lib/apt/lists/*
-
-
-# 3️⃣ Installer Meteor 1.7
-RUN curl https://install.meteor.com/ | sed s/RELEASE=.*/RELEASE=1.7/ | sh
-
-# 4️⃣ Définir répertoire de travail
+# 2️⃣ Définir le dossier de travail
 WORKDIR /opt/bundle
 
-# 5️⃣ Copier ton projet (ou le bundle déjà généré dans deploy/bundle)
+# 3️⃣ Copier ton bundle déjà compilé
 COPY ./deploy/bundle/bundle ./bundle
 
-# 6️⃣ Définir variable pour exécution en superuser
+# 4️⃣ Installer les dépendances serveur
+WORKDIR /opt/bundle/bundle/programs/server
+RUN npm install --production
+
+# 5️⃣ Variables d’environnement Render
+WORKDIR /opt/bundle/bundle
+ENV PORT=3000
+ENV ROOT_URL=https://quickpharm-1.onrender.com
+ENV MONGO_URL=mongodb+srv://<Gilles-admin>:<Oathniel@Jnmm2024>@cluster0.bgt04et.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 ENV METEOR_ALLOW_SUPERUSER=1
 
-# 7️⃣ Builder l’application Meteor en bundle Node.js
-RUN ~/.meteor/meteor build --directory /opt/bundle --allow-superuser
+# 6️⃣ Exposer le port de l’app
+EXPOSE 3000
 
-# 8️⃣ Installer dépendances du serveur (bundle)
-WORKDIR /opt/bundle/bundle/programs/server
-RUN npm install --unsafe-perm
+# 7️⃣ Lancer Meteor
+CMD ["node", "main.js"]
 
-# 9️⃣ Définir répertoire final
-WORKDIR /opt/bundle/bundle
 
-# 🔟 Exposer le port 3000
 EXPOSE 3000
 
 # 1️⃣1️⃣ Démarrer l’application
