@@ -1,0 +1,48 @@
+
+/* ======= Modaux ======= */
+.modal-header h3 {
+  color: #046b27;
+  font-weight: 600;
+}
+
+.modal-body p {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+/* Image responsive dans le modal */
+.modal-body img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* ======= Carte itinéraire ======= */
+#map {
+  border: 2px solid #ddd;
+  border-radius: 10px;
+}
+
+/* ======= Bouton itinéraire ======= */
+#toggle-mode {
+  font-size: 14px;
+}
+
+/* ======= Responsive grid (mobile friendly) ======= */
+@media screen and (max-width: 768px) {
+  .fields {
+    flex-direction: column !important;
+  }
+
+  .ui.card {
+    width: 100% !important;
+  }
+
+  #search-form .ui.buttons {
+    flex-direction: column;
+  }
+
+  #search-form .ui.button {
+    margin-bottom: 10px;
+  }
+}
+ 

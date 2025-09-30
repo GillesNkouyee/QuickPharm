@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<!-- saved from url=(0095)http://www.curtismlarson.com/blog/2015/12/11/meteor-location-search-engine-mongodb-google-maps/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson's Blog
+    
+  </title>
+
+  <meta name="description" content="How to create a reactive location based search engine in Meteor using MongoDB and Google Maps">
+  <meta name="keywords" content="meteor, meteor mongodb, meteor mongodb location, meteor location search, mongodb location search, meteor google maps, google maps meteor, meteor google maps search, meteor location search google maps, meteor reactive, meteor reactive google maps, meteor reactive maps, google maps reactive search">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/poole.css">
+  <link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/syntax.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://www.curtismlarson.com/blog/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="http://www.curtismlarson.com/favicon.ico?v=2">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Curtis Larson&#39;s Blog" href="http://www.curtismlarson.com/blog/atom.xml">
+
+<!-- Mailchimp -->
+  <link href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/slim-081711.css" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+    /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+       We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+  </style>
+
+  <script async="" src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/analytics.js.téléchargement"></script><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61702644-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  <script type="text/javascript" charset="utf-8" src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/popup.js.téléchargement"></script><script type="text/javascript" src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/embed.js.téléchargement" data-dojo-config="usePlainJson: true, isDebug: false"></script><script type="text/javascript">require(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us11.list-manage.com","uuid":"1c8750215658512459a679f1e","lid":"29a072ab9b"}) })</script>
+<script type="text/javascript" async="" src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/embed.js(1).téléchargement"></script><link rel="stylesheet" type="text/css" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/modal.css" media="all"><style type="text/css"></style><link rel="preload" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.5d3e12b2c6dfd2d251a2140f75c4f7b9.css"><link rel="preload" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.94805df7d922d8c7efc1170776463a6c.js"><link rel="preload" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.d084be950e0f51ab6f06a54619af4c90.js"><link rel="preload" as="script" href="https://disqus.com/next/config.js"></head>
+
+
+  <body style="overflow: visible;">
+
+    <div class="container content">
+      <header class="masthead">
+        <h3 class="masthead-title">
+          <a href="http://www.curtismlarson.com/blog/" title="Blog">Curtis Larson's Blog</a>
+           &nbsp;&nbsp;&nbsp;<small><a href="http://www.curtismlarson.com/">Main Site</a></small>
+           &nbsp;&nbsp;&nbsp;<small><a href="http://www.curtismlarson.com/#portfolio">Portfolio</a></small>
+          
+           &nbsp;&nbsp;&nbsp;
+           <small><a href="http://www.curtismlarson.com/blog/archive">Archive</a></small>
+          
+           &nbsp;&nbsp;&nbsp;
+           <small><a href="http://www.curtismlarson.com/blog/atom.xml">Feed</a></small>
+          
+        </h3>
+      </header>
+
+      <main>
+        
+
+<article class="post">
+  <h1 class="post-title">Meteor - Reactive Location Search Engine with MongoDB and Google Maps</h1>
+  <time datetime="2015-12-11T00:00:00+00:00" class="page-date">11 Dec 2015</time>
+  <h2 id="introduction">Introduction</h2>
+
+<p>One cool feature that I have been adding a lot recently to my client’s websites is the ability to search for jobs, users, etc and have the search results display reactively in Google Maps. This is relatively easy to accomplish in Meteor if we combine a few useful packages and use MongoDB’s location searching functionality. In this tutorial we are going to create a simple website that allows us to add jobs with a title and location and then search for those jobs and have them display on an embedded Google Map. The full source code for this tutorial is available on <a href="https://github.com/quackware/meteor-location-search">My GitHub Page</a>. Let’s get started!</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<p>This tutorial requires quite a few Meteor packages that make our life easier. Below are the required ones that I will be referencing throughout the tutorial:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>meteor add aldeed:autoform
+meteor add aldeed:collection2
+meteor add dburles:google-maps
+meteor add ejson
+meteor add iron:router
+meteor add lukemadera:autoform-googleplace
+</code></pre>
+</div>
+
+<p>You can also include these optional dependencies. They are not 100% necessary to get your app working, but make your life easier and I will be using them throughout this tutorial.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>meteor add less
+meteor add nemo64:bootstrap
+meteor add reactive-var
+</code></pre>
+</div>
+
+<p><a href="https://github.com/aldeed/meteor-autoform">aldeed:autoform</a> and <a href="https://github.com/aldeed/meteor-collection2">aldeed:collection2</a> are used primarily to make it easy to create forms on the client and submit data to the server. Additionally they are required if we want to take advantage of the awesome <a href="https://github.com/lukemadera/meteor-autoform-googleplace/">lukemadera:autoform-googleplace</a> package which adds a Google places search input for autoform. autoform-googleplace requires <code class="highlighter-rouge">ejson</code> so we need to add that package also. <a href="https://github.com/dburles/meteor-google-maps">dburles:google-maps</a> is a great wrapper of the <a href="https://developers.google.com/maps/documentation/javascript/tutorial">Google Maps JavaScript API</a> that allows us to embed a live Google Maps display in our website. The final required dependency is <a href="https://github.com/iron-meteor/iron-router">iron:router</a> which allows us to set up our routes and configure when we want to load in the Google Maps code.</p>
+
+<p>The optional dependencies are <code class="highlighter-rouge">bootstrap</code>, <code class="highlighter-rouge">less</code>, and <code class="highlighter-rouge">reactive-var</code> which allow us to style our website very easily and take advantage of <code class="highlighter-rouge">ReactiveVars</code> so we can organize our JavaScript code in a clean manner.</p>
+
+<h2 id="additional-setup">Additional Setup</h2>
+
+<p>Besides the various packages we need to install we also need to obtain a <a href="https://developers.google.com/maps/signup?hl=en">Google Maps Key</a> that has been enabled for the <code class="highlighter-rouge">Google Maps JavaScript API</code> and <code class="highlighter-rouge">Google Places API Web Service</code>. This will allow us to access Google’s apis for location search and map embedding. You can setup your key in your settings.json file like below:</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/67fe8dcc60d9286f30e4.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28838342" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-settings-json" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-json">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-settings-json-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-settings-json-LC1" class="blob-code blob-code-inner js-file-line">{</td>
+      </tr>
+      <tr>
+        <td id="file-settings-json-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-settings-json-LC2" class="blob-code blob-code-inner js-file-line">  <span class="pl-s"><span class="pl-pds">"</span>public<span class="pl-pds">"</span></span>: {</td>
+      </tr>
+      <tr>
+        <td id="file-settings-json-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-settings-json-LC3" class="blob-code blob-code-inner js-file-line">    <span class="pl-s"><span class="pl-pds">"</span>google_maps_key<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>...<span class="pl-pds">"</span></span></td>
+      </tr>
+      <tr>
+        <td id="file-settings-json-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-settings-json-LC4" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-settings-json-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-settings-json-LC5" class="blob-code blob-code-inner js-file-line">}</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/67fe8dcc60d9286f30e4/raw/de6b1d336c0a49ff12a0ef17c38e89c134eae41b/settings.json" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/67fe8dcc60d9286f30e4#file-settings-json">settings.json</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<h2 id="setting-up-our-database-schema">Setting up our Database Schema</h2>
+
+<p>The first thing we need to do is setup our MongoDB and AutoForm schemas so that we can create our AutoForms and do location searches. The docs for <a href="https://github.com/lukemadera/meteor-autoform-googleplace/">lukemadera:autoform-googleplace</a> show the structure of the Google Places data that is returned from the search input, so we can use that to create our <code class="highlighter-rouge">Address</code> schema. Additionally we are going to create a <code class="highlighter-rouge">Job</code> schema that will hold our job title and the location of the job. Finally we need to create a <code class="highlighter-rouge">Search</code> schema for our search autoform. You can view the code for all the schemas below (Note: All this code should be included in a lib/ folder so it can be accessed from both the client and the server):</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/3d70789fa05556b80cec.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28838507" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-schemas-js" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-javascript">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-schemas-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-schemas-js-LC1" class="blob-code blob-code-inner js-file-line">Schemas <span class="pl-k">=</span> {};</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-schemas-js-LC2" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-schemas-js-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Schemas</span>.<span class="pl-smi">Address</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SimpleSchema</span>({</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-schemas-js-LC4" class="blob-code blob-code-inner js-file-line">  fullAddress<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-schemas-js-LC5" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">String</span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-schemas-js-LC6" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-schemas-js-LC7" class="blob-code blob-code-inner js-file-line">  lat<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-schemas-js-LC8" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">Number</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-schemas-js-LC9" class="blob-code blob-code-inner js-file-line">    decimal<span class="pl-k">:</span> <span class="pl-c1">true</span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-schemas-js-LC10" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-schemas-js-LC11" class="blob-code blob-code-inner js-file-line">  lng<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-schemas-js-LC12" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">Number</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-schemas-js-LC13" class="blob-code blob-code-inner js-file-line">    decimal<span class="pl-k">:</span> <span class="pl-c1">true</span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-schemas-js-LC14" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-schemas-js-LC15" class="blob-code blob-code-inner js-file-line">  geometry<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-schemas-js-LC16" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">Object</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-schemas-js-LC17" class="blob-code blob-code-inner js-file-line">    blackbox<span class="pl-k">:</span> <span class="pl-c1">true</span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-schemas-js-LC18" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-schemas-js-LC19" class="blob-code blob-code-inner js-file-line">  placeId<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-schemas-js-LC20" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">String</span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-schemas-js-LC21" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-schemas-js-LC22" class="blob-code blob-code-inner js-file-line">  street<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-schemas-js-LC23" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">String</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-schemas-js-LC24" class="blob-code blob-code-inner js-file-line">    max<span class="pl-k">:</span> <span class="pl-c1">100</span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-schemas-js-LC25" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-schemas-js-LC26" class="blob-code blob-code-inner js-file-line">  city<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-schemas-js-LC27" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">String</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-schemas-js-LC28" class="blob-code blob-code-inner js-file-line">    max<span class="pl-k">:</span> <span class="pl-c1">50</span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L29" class="blob-num js-line-number" data-line-number="29"></td>
+        <td id="file-schemas-js-LC29" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L30" class="blob-num js-line-number" data-line-number="30"></td>
+        <td id="file-schemas-js-LC30" class="blob-code blob-code-inner js-file-line">  state<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L31" class="blob-num js-line-number" data-line-number="31"></td>
+        <td id="file-schemas-js-LC31" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">String</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L32" class="blob-num js-line-number" data-line-number="32"></td>
+        <td id="file-schemas-js-LC32" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L33" class="blob-num js-line-number" data-line-number="33"></td>
+        <td id="file-schemas-js-LC33" class="blob-code blob-code-inner js-file-line">  zip<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L34" class="blob-num js-line-number" data-line-number="34"></td>
+        <td id="file-schemas-js-LC34" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">String</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L35" class="blob-num js-line-number" data-line-number="35"></td>
+        <td id="file-schemas-js-LC35" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L36" class="blob-num js-line-number" data-line-number="36"></td>
+        <td id="file-schemas-js-LC36" class="blob-code blob-code-inner js-file-line">  country<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L37" class="blob-num js-line-number" data-line-number="37"></td>
+        <td id="file-schemas-js-LC37" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">String</span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L38" class="blob-num js-line-number" data-line-number="38"></td>
+        <td id="file-schemas-js-LC38" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L39" class="blob-num js-line-number" data-line-number="39"></td>
+        <td id="file-schemas-js-LC39" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L40" class="blob-num js-line-number" data-line-number="40"></td>
+        <td id="file-schemas-js-LC40" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L41" class="blob-num js-line-number" data-line-number="41"></td>
+        <td id="file-schemas-js-LC41" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Schemas</span>.<span class="pl-smi">Job</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SimpleSchema</span>({</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L42" class="blob-num js-line-number" data-line-number="42"></td>
+        <td id="file-schemas-js-LC42" class="blob-code blob-code-inner js-file-line">  title<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L43" class="blob-num js-line-number" data-line-number="43"></td>
+        <td id="file-schemas-js-LC43" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">String</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L44" class="blob-num js-line-number" data-line-number="44"></td>
+        <td id="file-schemas-js-LC44" class="blob-code blob-code-inner js-file-line">    autoform<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L45" class="blob-num js-line-number" data-line-number="45"></td>
+        <td id="file-schemas-js-LC45" class="blob-code blob-code-inner js-file-line">      label<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L46" class="blob-num js-line-number" data-line-number="46"></td>
+        <td id="file-schemas-js-LC46" class="blob-code blob-code-inner js-file-line">      placeholder<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Title<span class="pl-pds">"</span></span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L47" class="blob-num js-line-number" data-line-number="47"></td>
+        <td id="file-schemas-js-LC47" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L48" class="blob-num js-line-number" data-line-number="48"></td>
+        <td id="file-schemas-js-LC48" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L49" class="blob-num js-line-number" data-line-number="49"></td>
+        <td id="file-schemas-js-LC49" class="blob-code blob-code-inner js-file-line">  location<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L50" class="blob-num js-line-number" data-line-number="50"></td>
+        <td id="file-schemas-js-LC50" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-smi">Schemas</span>.<span class="pl-smi">Address</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L51" class="blob-num js-line-number" data-line-number="51"></td>
+        <td id="file-schemas-js-LC51" class="blob-code blob-code-inner js-file-line">    autoform<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L52" class="blob-num js-line-number" data-line-number="52"></td>
+        <td id="file-schemas-js-LC52" class="blob-code blob-code-inner js-file-line">      label<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L53" class="blob-num js-line-number" data-line-number="53"></td>
+        <td id="file-schemas-js-LC53" class="blob-code blob-code-inner js-file-line">      placeholder<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Address<span class="pl-pds">"</span></span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L54" class="blob-num js-line-number" data-line-number="54"></td>
+        <td id="file-schemas-js-LC54" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L55" class="blob-num js-line-number" data-line-number="55"></td>
+        <td id="file-schemas-js-LC55" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L56" class="blob-num js-line-number" data-line-number="56"></td>
+        <td id="file-schemas-js-LC56" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L57" class="blob-num js-line-number" data-line-number="57"></td>
+        <td id="file-schemas-js-LC57" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L58" class="blob-num js-line-number" data-line-number="58"></td>
+        <td id="file-schemas-js-LC58" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Schemas</span>.<span class="pl-smi">Search</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SimpleSchema</span>({</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L59" class="blob-num js-line-number" data-line-number="59"></td>
+        <td id="file-schemas-js-LC59" class="blob-code blob-code-inner js-file-line">  location<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L60" class="blob-num js-line-number" data-line-number="60"></td>
+        <td id="file-schemas-js-LC60" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-smi">Schemas</span>.<span class="pl-smi">Address</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L61" class="blob-num js-line-number" data-line-number="61"></td>
+        <td id="file-schemas-js-LC61" class="blob-code blob-code-inner js-file-line">    autoform<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L62" class="blob-num js-line-number" data-line-number="62"></td>
+        <td id="file-schemas-js-LC62" class="blob-code blob-code-inner js-file-line">      label<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L63" class="blob-num js-line-number" data-line-number="63"></td>
+        <td id="file-schemas-js-LC63" class="blob-code blob-code-inner js-file-line">      placeholder<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Address<span class="pl-pds">"</span></span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L64" class="blob-num js-line-number" data-line-number="64"></td>
+        <td id="file-schemas-js-LC64" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L65" class="blob-num js-line-number" data-line-number="65"></td>
+        <td id="file-schemas-js-LC65" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L66" class="blob-num js-line-number" data-line-number="66"></td>
+        <td id="file-schemas-js-LC66" class="blob-code blob-code-inner js-file-line">  radius<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L67" class="blob-num js-line-number" data-line-number="67"></td>
+        <td id="file-schemas-js-LC67" class="blob-code blob-code-inner js-file-line">    type<span class="pl-k">:</span> <span class="pl-c1">Number</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L68" class="blob-num js-line-number" data-line-number="68"></td>
+        <td id="file-schemas-js-LC68" class="blob-code blob-code-inner js-file-line">    autoform<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L69" class="blob-num js-line-number" data-line-number="69"></td>
+        <td id="file-schemas-js-LC69" class="blob-code blob-code-inner js-file-line">      label<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L70" class="blob-num js-line-number" data-line-number="70"></td>
+        <td id="file-schemas-js-LC70" class="blob-code blob-code-inner js-file-line">      placeholder<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Radius (km)<span class="pl-pds">"</span></span></td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L71" class="blob-num js-line-number" data-line-number="71"></td>
+        <td id="file-schemas-js-LC71" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L72" class="blob-num js-line-number" data-line-number="72"></td>
+        <td id="file-schemas-js-LC72" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L73" class="blob-num js-line-number" data-line-number="73"></td>
+        <td id="file-schemas-js-LC73" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L74" class="blob-num js-line-number" data-line-number="74"></td>
+        <td id="file-schemas-js-LC74" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L75" class="blob-num js-line-number" data-line-number="75"></td>
+        <td id="file-schemas-js-LC75" class="blob-code blob-code-inner js-file-line">Jobs <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Mongo.Collection</span>(<span class="pl-s"><span class="pl-pds">"</span>jobs<span class="pl-pds">"</span></span>);</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L76" class="blob-num js-line-number" data-line-number="76"></td>
+        <td id="file-schemas-js-LC76" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-schemas-js-L77" class="blob-num js-line-number" data-line-number="77"></td>
+        <td id="file-schemas-js-LC77" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Jobs</span>.<span class="pl-en">attachSchema</span>(<span class="pl-smi">Schemas</span>.<span class="pl-smi">Job</span>);</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/3d70789fa05556b80cec/raw/dda8c22cc9328fef93e3e35a6ded49f22bcc69d6/schemas.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/3d70789fa05556b80cec#file-schemas-js">schemas.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>Some important things to note include the <code class="highlighter-rouge">geometry</code> object in our <code class="highlighter-rouge">Address</code> schema. This object will hold the geometry type and coordinates (lat and lon) that will be used by MongoDB for location searches. We also define our <code class="highlighter-rouge">Jobs</code> collection and attach it to our schema. This is the collection we will be inserting job data into and searching for jobs with.</p>
+
+<p>One additional step to ensure our schema works correctly with MongoDB location search is to define the correct index on our geometry data. This can be accomplished with an <code class="highlighter-rouge">_ensureIndex</code> call like below:</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/0a3e7750b74e21d5ad56.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28838603" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-startup-js" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-javascript">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-startup-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-startup-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Meteor</span>.<span class="pl-en">startup</span>(<span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-startup-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-startup-js-LC2" class="blob-code blob-code-inner js-file-line">  <span class="pl-smi">Jobs</span>.<span class="pl-en">_ensureIndex</span>({<span class="pl-s"><span class="pl-pds">"</span>location.geometry<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>2dsphere<span class="pl-pds">"</span></span>});</td>
+      </tr>
+      <tr>
+        <td id="file-startup-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-startup-js-LC3" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/0a3e7750b74e21d5ad56/raw/b485c52095b946400bea7ee40c90ed25a934396b/startup.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/0a3e7750b74e21d5ad56#file-startup-js">startup.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<h2 id="publisher-code">Publisher Code</h2>
+
+<p>Now that we have correctly defined our schemas we can implement the code that will perform the location search. We need to create a simple publisher that recieves search data from the client and uses a <a href="https://docs.mongodb.org/v3.0/reference/operator/query/near/">MongoDB $near query</a> on our <code class="highlighter-rouge">geometry</code> object we mentioned above. You can see the code for the publisher below (Note: This code should be included in the server/ folder):</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/667f8619b1dae4c99eed.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28838702" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-publishers-js" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-javascript">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-publishers-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-publishers-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Meteor</span>.<span class="pl-en">publish</span>(<span class="pl-s"><span class="pl-pds">"</span>jobSearch<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">searchData</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-publishers-js-LC2" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> (<span class="pl-k">!</span>searchData) {</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-publishers-js-LC3" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> [];</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-publishers-js-LC4" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-publishers-js-LC5" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-publishers-js-LC6" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> radius <span class="pl-k">=</span> <span class="pl-smi">searchData</span>.<span class="pl-smi">radius</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-publishers-js-LC7" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> centerLat <span class="pl-k">=</span> <span class="pl-smi">searchData</span>.<span class="pl-c1">location</span>.<span class="pl-smi">lat</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-publishers-js-LC8" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> centerLon <span class="pl-k">=</span> <span class="pl-smi">searchData</span>.<span class="pl-c1">location</span>.<span class="pl-smi">lng</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-publishers-js-LC9" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-publishers-js-LC10" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> selector <span class="pl-k">=</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-publishers-js-LC11" class="blob-code blob-code-inner js-file-line">    <span class="pl-s"><span class="pl-pds">"</span>location.geometry<span class="pl-pds">"</span></span><span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-publishers-js-LC12" class="blob-code blob-code-inner js-file-line">      $near<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-publishers-js-LC13" class="blob-code blob-code-inner js-file-line">        $geometry<span class="pl-k">:</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-publishers-js-LC14" class="blob-code blob-code-inner js-file-line">          type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Point<span class="pl-pds">"</span></span>,</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-publishers-js-LC15" class="blob-code blob-code-inner js-file-line">          coordinates<span class="pl-k">:</span> [centerLon, centerLat]</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-publishers-js-LC16" class="blob-code blob-code-inner js-file-line">        },</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-publishers-js-LC17" class="blob-code blob-code-inner js-file-line">        $maxDistance<span class="pl-k">:</span> radius <span class="pl-k">*</span> <span class="pl-c1">1000</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-publishers-js-LC18" class="blob-code blob-code-inner js-file-line">        $minDistance<span class="pl-k">:</span> <span class="pl-c1">0</span></td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-publishers-js-LC19" class="blob-code blob-code-inner js-file-line">      }</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-publishers-js-LC20" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-publishers-js-LC21" class="blob-code blob-code-inner js-file-line">  };</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-publishers-js-LC22" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-publishers-js-LC23" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-smi">Jobs</span>.<span class="pl-c1">find</span>(selector);</td>
+      </tr>
+      <tr>
+        <td id="file-publishers-js-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-publishers-js-LC24" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/667f8619b1dae4c99eed/raw/5e46da6d558c9e1c9471ee55bb8206be98490f7e/publishers.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/667f8619b1dae4c99eed#file-publishers-js">publishers.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p><code class="highlighter-rouge">searchData</code> just contains the data we defined in our <code class="highlighter-rouge">Schemas.Search</code> SimpleSchema. Now whenever we subscribe to our <code class="highlighter-rouge">jobSearch</code> publisher with correct data we will receive location based results.</p>
+
+<h2 id="database-insert-code">Database Insert Code</h2>
+
+<p>Thanks to the simplicity of AutoForm, our code for inserting a new job into the database is very simple (Note: This code should be included in the server/ folder).</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/f701543e946f40155a44.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28838812" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-jobs-js" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-javascript">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-jobs-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-jobs-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Meteor</span>.<span class="pl-en">methods</span>({</td>
+      </tr>
+      <tr>
+        <td id="file-jobs-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-jobs-js-LC2" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">addJob</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">job</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-jobs-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-jobs-js-LC3" class="blob-code blob-code-inner js-file-line">    <span class="pl-en">check</span>(job, <span class="pl-smi">Schemas</span>.<span class="pl-smi">Job</span>);</td>
+      </tr>
+      <tr>
+        <td id="file-jobs-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-jobs-js-LC4" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">Jobs</span>.<span class="pl-en">insert</span>(job);</td>
+      </tr>
+      <tr>
+        <td id="file-jobs-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-jobs-js-LC5" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-jobs-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-jobs-js-LC6" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/f701543e946f40155a44/raw/e6eef24be47e49ba9bd03260d5f275bfc5254e9f/jobs.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/f701543e946f40155a44#file-jobs-js">jobs.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>All we need to do is check the data passed into our <code class="highlighter-rouge">Meteor.method</code> with our <code class="highlighter-rouge">Schemas.Job</code> we defined above. If that data passes the check then we insert it into our <code class="highlighter-rouge">Jobs</code> collection so it can be searched for.</p>
+
+<h2 id="client-side-route">Client Side Route</h2>
+
+<p>Now that our server side code is complete, we need to add the client side code that will send job and location information to the server. To start out, we need to create a simple route in <code class="highlighter-rouge">iron:router</code> that will load our <code class="highlighter-rouge">index</code> template. Additionally we want to make sure that we load the <code class="highlighter-rouge">GoogleMaps</code> api exposed by <a href="https://github.com/dburles/meteor-google-maps">dburles:google-maps</a> so that we can render an embeded map in our template (Note: This code and the rest of the code in the tutorial should be included in the client/ folder).</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/742264d5b0f8644e7dcd.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28838974" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-routes-js" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-javascript">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-routes-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-routes-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Router</span>.<span class="pl-en">route</span>(<span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>, {</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-routes-js-LC2" class="blob-code blob-code-inner js-file-line">  name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>index<span class="pl-pds">"</span></span>,</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-routes-js-LC3" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">onBeforeAction</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-routes-js-LC4" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-smi">GoogleMaps</span>.<span class="pl-en">loaded</span>()) {</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-routes-js-LC5" class="blob-code blob-code-inner js-file-line">      <span class="pl-smi">GoogleMaps</span>.<span class="pl-c1">load</span>({</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-routes-js-LC6" class="blob-code blob-code-inner js-file-line">        key<span class="pl-k">:</span> <span class="pl-smi">Meteor</span>.<span class="pl-smi">settings</span>.<span class="pl-smi">public</span>.<span class="pl-smi">google_maps_key</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-routes-js-LC7" class="blob-code blob-code-inner js-file-line">        libraries<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>geometry,places<span class="pl-pds">"</span></span></td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-routes-js-LC8" class="blob-code blob-code-inner js-file-line">      });</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-routes-js-LC9" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-routes-js-LC10" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-c1">next</span>();</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-routes-js-LC11" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-routes-js-LC12" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">action</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-routes-js-LC13" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-en">render</span>(<span class="pl-s"><span class="pl-pds">"</span>index<span class="pl-pds">"</span></span>);</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-routes-js-LC14" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-routes-js-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-routes-js-LC15" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/742264d5b0f8644e7dcd/raw/4348cc1ea69aacecc7f2e405c3ce59ae95ac83fa/routes.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/742264d5b0f8644e7dcd#file-routes-js">routes.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>The route code is pretty straightforward. The most complicated part is the <code class="highlighter-rouge">onBeforeAction</code> hook where we check to see if the <code class="highlighter-rouge">GoogleMaps</code> api has already been loaded, and if it has not then we load it using our Google maps api key we defined in our <code class="highlighter-rouge">settings.json</code> file. Additionally make sure to specify the correct <code class="highlighter-rouge">geometry</code> and <code class="highlighter-rouge">places</code> library so that we can both search for locations and embed our Google Map.</p>
+
+<h2 id="client-side-templates-add-job">Client Side Templates (Add Job)</h2>
+
+<p>Our client side html template will be composed of four parts. The first part is a simple AutoForm that allows us to submit a job title and location to the database.</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/2e9316fc2b2a6f9b8fa5.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28839071" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-index-html" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-html">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-index-html-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-index-html-LC1" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row medium-margin<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-index-html-LC2" class="blob-code blob-code-inner js-file-line">      {{#autoForm schema=jobSchema id="addJob" type="method" meteormethod="addJob"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-index-html-LC3" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-index-html-LC4" class="blob-code blob-code-inner js-file-line">          {{&gt; afQuickField name="title"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-index-html-LC5" class="blob-code blob-code-inner js-file-line">        &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-index-html-LC6" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-index-html-LC7" class="blob-code blob-code-inner js-file-line">          {{#if googleMapsReady}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-index-html-LC8" class="blob-code blob-code-inner js-file-line">            {{&gt; afQuickField name="location" type="googleplace" class="form-control" autocomplete="off"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-index-html-LC9" class="blob-code blob-code-inner js-file-line">          {{/if}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-index-html-LC10" class="blob-code blob-code-inner js-file-line">        &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-index-html-LC11" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-index-html-LC12" class="blob-code blob-code-inner js-file-line">          &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>btn btn-default<span class="pl-pds">"</span></span>&gt;Add Job&lt;/<span class="pl-ent">button</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-index-html-LC13" class="blob-code blob-code-inner js-file-line">        &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-index-html-LC14" class="blob-code blob-code-inner js-file-line">      {{/autoForm}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-index-html-LC15" class="blob-code blob-code-inner js-file-line">    &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/2e9316fc2b2a6f9b8fa5/raw/a5c7cea1add3c8585e9c38393474081d8992b7ae/index.html" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/2e9316fc2b2a6f9b8fa5#file-index-html">index.html</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>The first thing to notice is our AutoForm schema <code class="highlighter-rouge">jobSchema</code> which is just a helper that returns <code class="highlighter-rouge">Schemas.Job</code></p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/878c1fa83be337bcd714.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28839111" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-index-js" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-javascript">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-index-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-index-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Template</span>.<span class="pl-c1">index</span>.<span class="pl-en">helpers</span>({</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-index-js-LC2" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">jobSchema</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-index-js-LC3" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-smi">Schemas</span>.<span class="pl-smi">Job</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-index-js-LC4" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-index-js-LC5" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/878c1fa83be337bcd714/raw/aff0e9b03032e0deba1cb116cc42e0260534708a/index.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/878c1fa83be337bcd714#file-index-js">index.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>This will allow us to specify our <code class="highlighter-rouge">title</code> and <code class="highlighter-rouge">location</code> quickfields. Also notice the <code class="highlighter-rouge">addJob</code> meteormethod which maps to our <code class="highlighter-rouge">addJob</code> database insert code we defined above. No extra code is needed to connect this form to that Meteor method, it’s all handled automatically by AutoForm. We also define a global template helper called <code class="highlighter-rouge">googleMapsReady</code> which ensures that the Google api is correctly loaded before we attempt to render our <code class="highlighter-rouge">googleplace</code> input.</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/a438b443ef483baf8c49.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28839183" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-global-js" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-javascript">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-global-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-global-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Template</span>.<span class="pl-en">registerHelper</span>(<span class="pl-s"><span class="pl-pds">"</span>googleMapsReady<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-global-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-global-js-LC2" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-smi">GoogleMaps</span>.<span class="pl-en">loaded</span>();</td>
+      </tr>
+      <tr>
+        <td id="file-global-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-global-js-LC3" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/a438b443ef483baf8c49/raw/ec19b53927f269a399ae9cc3c1708582f7a0570a/global.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/a438b443ef483baf8c49#file-global-js">global.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>Don’t forget to specify <code class="highlighter-rouge">type="googleplace"</code> for the location quickfield, or else the google places api will not be loaded!</p>
+
+<h2 id="client-side-templates-search">Client Side Templates (Search)</h2>
+
+<p>The second part of our client side template is another simple autoform that will perform the location search using another <code class="highlighter-rouge">googleplace</code> input along with a radius field.</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/3946d1a6540e84b4669f.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28839307" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-index-html" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-html">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-index-html-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-index-html-LC1" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row medium-margin<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-index-html-LC2" class="blob-code blob-code-inner js-file-line">      {{#autoForm schema=searchSchema id="searchJob" type="normal"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-index-html-LC3" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-index-html-LC4" class="blob-code blob-code-inner js-file-line">        {{#if googleMapsReady}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-index-html-LC5" class="blob-code blob-code-inner js-file-line">          {{&gt; afQuickField name="location" type="googleplace" class="form-control" autocomplete="off"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-index-html-LC6" class="blob-code blob-code-inner js-file-line">        {{/if}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-index-html-LC7" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-index-html-LC8" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-index-html-LC9" class="blob-code blob-code-inner js-file-line">        {{&gt; afQuickField name="radius"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-index-html-LC10" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-index-html-LC11" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-index-html-LC12" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>btn btn-default<span class="pl-pds">"</span></span>&gt;Search&lt;/<span class="pl-ent">button</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-index-html-LC13" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-index-html-LC14" class="blob-code blob-code-inner js-file-line">      {{/autoForm}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-index-html-LC15" class="blob-code blob-code-inner js-file-line">    &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/3946d1a6540e84b4669f/raw/2b380cbccb68f2a5159597340c459376be200aff/index.html" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/3946d1a6540e84b4669f#file-index-html">index.html</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>Notice these fields match the <code class="highlighter-rouge">Schemas.Search</code> SimpleSchema we defined earlier in the tutorial, and the <code class="highlighter-rouge">searchSchema</code> template helper should return that SimpleSchema object (similar to how the <code class="highlighter-rouge">jobSchema</code> template helper did above). This AutoForm template does not use <code class="highlighter-rouge">meteormethod</code> and instead uses <code class="highlighter-rouge">normal</code> which means we will be treating it as a normal form submit. Why we do that will be explained when we move on to the JavaScript portion of the client side templates.</p>
+
+<h2 id="client-side-templates-display">Client Side Templates (Display)</h2>
+
+<p>The third and fourth part of our client side templates is just to display the search results.</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/8e62f53ebcb045def220.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28839388" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-index-html" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-html">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-index-html-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-index-html-LC1" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-index-html-LC2" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-12<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-index-html-LC3" class="blob-code blob-code-inner js-file-line">        {{#each jobs}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-index-html-LC4" class="blob-code blob-code-inner js-file-line">          &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-index-html-LC5" class="blob-code blob-code-inner js-file-line">            &lt;<span class="pl-ent">h4</span>&gt;Job Title: {{title}} | Address: {{location.fullAddress}}&lt;/<span class="pl-ent">h4</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-index-html-LC6" class="blob-code blob-code-inner js-file-line">          &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-index-html-LC7" class="blob-code blob-code-inner js-file-line">        {{/each}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-index-html-LC8" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-index-html-LC9" class="blob-code blob-code-inner js-file-line">    &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-index-html-LC10" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-index-html-LC11" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-12<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-index-html-LC12" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>searchMapContainer<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-index-html-LC13" class="blob-code blob-code-inner js-file-line">        &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-index-html-LC14" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-index-html-LC15" class="blob-code blob-code-inner js-file-line">    &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-index-html-LC16" class="blob-code blob-code-inner js-file-line">  &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/8e62f53ebcb045def220/raw/f9f7c5c92adc9c3009f6d2e9804a2bd939fb4e94/index.html" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/8e62f53ebcb045def220#file-index-html">index.html</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>Notice for the first row we iterate over a <code class="highlighter-rouge">jobs</code> template helper and display the title of the job and the address where the job is located. In the second row we just add a div with id <code class="highlighter-rouge">searchMapContainer</code>. This is where we will be rendering our embedded Google Map. Adding all the html together produces the following template:</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/fc073273309b64abcfc3.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28839432" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-index-html" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-html">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-index-html-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-index-html-LC1" class="blob-code blob-code-inner js-file-line">&lt;<span class="pl-ent">template</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>index<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-index-html-LC2" class="blob-code blob-code-inner js-file-line">  &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>container<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-index-html-LC3" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row medium-margin<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-index-html-LC4" class="blob-code blob-code-inner js-file-line">      {{#autoForm schema=jobSchema id="addJob" type="method" meteormethod="addJob"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-index-html-LC5" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-index-html-LC6" class="blob-code blob-code-inner js-file-line">          {{&gt; afQuickField name="title"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-index-html-LC7" class="blob-code blob-code-inner js-file-line">        &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-index-html-LC8" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-index-html-LC9" class="blob-code blob-code-inner js-file-line">          {{#if googleMapsReady}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-index-html-LC10" class="blob-code blob-code-inner js-file-line">            {{&gt; afQuickField name="location" type="googleplace" class="form-control" autocomplete="off"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-index-html-LC11" class="blob-code blob-code-inner js-file-line">          {{/if}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-index-html-LC12" class="blob-code blob-code-inner js-file-line">        &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-index-html-LC13" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-index-html-LC14" class="blob-code blob-code-inner js-file-line">          &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>btn btn-default<span class="pl-pds">"</span></span>&gt;Add Job&lt;/<span class="pl-ent">button</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-index-html-LC15" class="blob-code blob-code-inner js-file-line">        &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-index-html-LC16" class="blob-code blob-code-inner js-file-line">      {{/autoForm}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-index-html-LC17" class="blob-code blob-code-inner js-file-line">    &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-index-html-LC18" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row medium-margin<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-index-html-LC19" class="blob-code blob-code-inner js-file-line">      {{#autoForm schema=searchSchema id="searchJob" type="normal"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-index-html-LC20" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-index-html-LC21" class="blob-code blob-code-inner js-file-line">        {{#if googleMapsReady}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-index-html-LC22" class="blob-code blob-code-inner js-file-line">          {{&gt; afQuickField name="location" type="googleplace" class="form-control" autocomplete="off"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-index-html-LC23" class="blob-code blob-code-inner js-file-line">        {{/if}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-index-html-LC24" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-index-html-LC25" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-index-html-LC26" class="blob-code blob-code-inner js-file-line">        {{&gt; afQuickField name="radius"}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-index-html-LC27" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-index-html-LC28" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-4<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L29" class="blob-num js-line-number" data-line-number="29"></td>
+        <td id="file-index-html-LC29" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>btn btn-default<span class="pl-pds">"</span></span>&gt;Search&lt;/<span class="pl-ent">button</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L30" class="blob-num js-line-number" data-line-number="30"></td>
+        <td id="file-index-html-LC30" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L31" class="blob-num js-line-number" data-line-number="31"></td>
+        <td id="file-index-html-LC31" class="blob-code blob-code-inner js-file-line">      {{/autoForm}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L32" class="blob-num js-line-number" data-line-number="32"></td>
+        <td id="file-index-html-LC32" class="blob-code blob-code-inner js-file-line">    &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L33" class="blob-num js-line-number" data-line-number="33"></td>
+        <td id="file-index-html-LC33" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L34" class="blob-num js-line-number" data-line-number="34"></td>
+        <td id="file-index-html-LC34" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-12<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L35" class="blob-num js-line-number" data-line-number="35"></td>
+        <td id="file-index-html-LC35" class="blob-code blob-code-inner js-file-line">        {{#each jobs}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L36" class="blob-num js-line-number" data-line-number="36"></td>
+        <td id="file-index-html-LC36" class="blob-code blob-code-inner js-file-line">          &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L37" class="blob-num js-line-number" data-line-number="37"></td>
+        <td id="file-index-html-LC37" class="blob-code blob-code-inner js-file-line">            &lt;<span class="pl-ent">h4</span>&gt;Job Title: {{title}} | Address: {{location.fullAddress}}&lt;/<span class="pl-ent">h4</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L38" class="blob-num js-line-number" data-line-number="38"></td>
+        <td id="file-index-html-LC38" class="blob-code blob-code-inner js-file-line">          &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L39" class="blob-num js-line-number" data-line-number="39"></td>
+        <td id="file-index-html-LC39" class="blob-code blob-code-inner js-file-line">        {{/each}}</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L40" class="blob-num js-line-number" data-line-number="40"></td>
+        <td id="file-index-html-LC40" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L41" class="blob-num js-line-number" data-line-number="41"></td>
+        <td id="file-index-html-LC41" class="blob-code blob-code-inner js-file-line">    &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L42" class="blob-num js-line-number" data-line-number="42"></td>
+        <td id="file-index-html-LC42" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L43" class="blob-num js-line-number" data-line-number="43"></td>
+        <td id="file-index-html-LC43" class="blob-code blob-code-inner js-file-line">      &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-12<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L44" class="blob-num js-line-number" data-line-number="44"></td>
+        <td id="file-index-html-LC44" class="blob-code blob-code-inner js-file-line">        &lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>searchMapContainer<span class="pl-pds">"</span></span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L45" class="blob-num js-line-number" data-line-number="45"></td>
+        <td id="file-index-html-LC45" class="blob-code blob-code-inner js-file-line">        &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L46" class="blob-num js-line-number" data-line-number="46"></td>
+        <td id="file-index-html-LC46" class="blob-code blob-code-inner js-file-line">      &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L47" class="blob-num js-line-number" data-line-number="47"></td>
+        <td id="file-index-html-LC47" class="blob-code blob-code-inner js-file-line">    &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L48" class="blob-num js-line-number" data-line-number="48"></td>
+        <td id="file-index-html-LC48" class="blob-code blob-code-inner js-file-line">  &lt;/<span class="pl-ent">div</span>&gt;</td>
+      </tr>
+      <tr>
+        <td id="file-index-html-L49" class="blob-num js-line-number" data-line-number="49"></td>
+        <td id="file-index-html-LC49" class="blob-code blob-code-inner js-file-line">&lt;/<span class="pl-ent">template</span>&gt;</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/fc073273309b64abcfc3/raw/ba99ee448bcec554649b428df99122067e1691b5/index.html" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/fc073273309b64abcfc3#file-index-html">index.html</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>We also need to add a small css file to ensure our <code class="highlighter-rouge">searchMapContainer</code> is correctly sized</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/0f48399bb59294f9e966.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28839445" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-index-css" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-css">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-index-css-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-index-css-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-e">#searchMapContainer</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-index-css-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-index-css-LC2" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1"><span class="pl-c1">position</span></span>:<span class="pl-c1">absolute</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-css-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-index-css-LC3" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1"><span class="pl-c1">width</span></span>: <span class="pl-c1">100<span class="pl-k">%</span></span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-css-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-index-css-LC4" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1"><span class="pl-c1">height</span></span>: <span class="pl-c1">600<span class="pl-k">px</span></span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-css-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-index-css-LC5" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1"><span class="pl-c1">z-index</span></span>: <span class="pl-c1">0</span></td>
+      </tr>
+      <tr>
+        <td id="file-index-css-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-index-css-LC6" class="blob-code blob-code-inner js-file-line">}</td>
+      </tr>
+      <tr>
+        <td id="file-index-css-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-index-css-LC7" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-css-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-index-css-LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-e">.medium-margin</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-index-css-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-index-css-LC9" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1"><span class="pl-c1">margin-top</span></span>: <span class="pl-c1">50<span class="pl-k">px</span></span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-css-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-index-css-LC10" class="blob-code blob-code-inner js-file-line">}</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/0f48399bb59294f9e966/raw/c4cbd504531370317375e1dd7feaf85eef529be4/index.css" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/0f48399bb59294f9e966#file-index-css">index.css</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>That’s it for the html/css code. We can now move on to the JavaScript portion of the client side code!</p>
+
+<h2 id="client-side-javascript-rendering-our-google-map">Client Side JavaScript (Rendering our Google Map)</h2>
+
+<p>The first part of our <code class="highlighter-rouge">index.js</code> file will focus on rendering the Google Map in our website so that we can later add markers to it based on the job location. We can accomplish this with the following code:</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/9e0f664259dd7da3e957.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28839576" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-index-js" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-javascript">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-index-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-index-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-k">var</span> <span class="pl-c1">Map</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-index-js-LC2" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-index-js-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-k">var</span> <span class="pl-en">createMap</span> <span class="pl-k">=</span> <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-index-js-LC4" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> lat <span class="pl-k">=</span> <span class="pl-c1">48.864716</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-index-js-LC5" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> lng <span class="pl-k">=</span> <span class="pl-c1">2.349014</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-index-js-LC6" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> latlng <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">google.maps.LatLng</span>(lat, lng);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-index-js-LC7" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> options <span class="pl-k">=</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-index-js-LC8" class="blob-code blob-code-inner js-file-line">    zoom<span class="pl-k">:</span> <span class="pl-c1">14</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-index-js-LC9" class="blob-code blob-code-inner js-file-line">    streetViewControl<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-index-js-LC10" class="blob-code blob-code-inner js-file-line">    scaleControl<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-index-js-LC11" class="blob-code blob-code-inner js-file-line">    draggable<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-index-js-LC12" class="blob-code blob-code-inner js-file-line">    disableDefaultUI<span class="pl-k">:</span> <span class="pl-c1">true</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-index-js-LC13" class="blob-code blob-code-inner js-file-line">    disableDoubleClickZoom<span class="pl-k">:</span> <span class="pl-c1">true</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-index-js-LC14" class="blob-code blob-code-inner js-file-line">    mapTypeId<span class="pl-k">:</span> <span class="pl-smi">google</span>.<span class="pl-smi">maps</span>.<span class="pl-smi">MapTypeId</span>.<span class="pl-c1">ROADMAP</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-index-js-LC15" class="blob-code blob-code-inner js-file-line">    center<span class="pl-k">:</span> latlng</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-index-js-LC16" class="blob-code blob-code-inner js-file-line">  };</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-index-js-LC17" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-index-js-LC18" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">Map</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">google.maps.Map</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">"</span>searchMapContainer<span class="pl-pds">"</span></span>),</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-index-js-LC19" class="blob-code blob-code-inner js-file-line">                            options);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-index-js-LC20" class="blob-code blob-code-inner js-file-line">};</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-index-js-LC21" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-index-js-LC22" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Template</span>.<span class="pl-c1">index</span>.<span class="pl-en">onRendered</span>(<span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-index-js-LC23" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-en">autorun</span>(<span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-index-js-LC24" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span> (<span class="pl-smi">GoogleMaps</span>.<span class="pl-en">loaded</span>()) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-index-js-LC25" class="blob-code blob-code-inner js-file-line">      <span class="pl-en">createMap</span>();</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-index-js-LC26" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-index-js-LC27" class="blob-code blob-code-inner js-file-line">  });</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-index-js-LC28" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/9e0f664259dd7da3e957/raw/bd8f0b2a5b109263d01dae63f50dd42fef018cc5/index.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/9e0f664259dd7da3e957#file-index-js">index.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>In our <code class="highlighter-rouge">onRendered</code> function we create a simple <code class="highlighter-rouge">autorun</code> function that waits until the <code class="highlighter-rouge">GoogleMaps</code> api has been loaded before calling our <code class="highlighter-rouge">createMap</code> function. The <code class="highlighter-rouge">createMap</code> function just creates a <code class="highlighter-rouge">latlng</code> object using some default coordinates and renders a map to our <code class="highlighter-rouge">searchMapContainer</code> div we created in our template html code. Once this code has been added to your <code class="highlighter-rouge">index.js</code> you should see a page similar to below:</p>
+
+<p><img src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/JOC8bWu.png" alt="Google Maps embedded"></p>
+
+<h2 id="client-side-javascript-search-code">Client side JavaScript (Search Code)</h2>
+
+<p>Now that our Google Map is rendered on our website we can add the code that will subscribe to our <code class="highlighter-rouge">jobSearch</code> pubication and render markers on our map and populate our <code class="highlighter-rouge">jobs</code> template helper.</p>
+
+<script src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/4e2dbb0d16de90fbb489.js.téléchargement"></script><link rel="stylesheet" href="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/gist-embed-9f0a4ad9c85ca776e669003688baa9d55f9db315562ce4d231d37dab2714c70a.css"><div id="gist28839770" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-index-js" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-javascript">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-index-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-index-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-k">var</span> SearchData <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ReactiveVar</span>(<span class="pl-c1">null</span>);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-index-js-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">var</span> <span class="pl-c1">Map</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-index-js-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-k">var</span> Markers <span class="pl-k">=</span> [];</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-index-js-LC4" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-index-js-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-k">var</span> <span class="pl-en">createMap</span> <span class="pl-k">=</span> <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-index-js-LC6" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> lat <span class="pl-k">=</span> <span class="pl-c1">48.864716</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-index-js-LC7" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> lng <span class="pl-k">=</span> <span class="pl-c1">2.349014</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-index-js-LC8" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> latlng <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">google.maps.LatLng</span>(lat, lng);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-index-js-LC9" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> options <span class="pl-k">=</span> {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-index-js-LC10" class="blob-code blob-code-inner js-file-line">    zoom<span class="pl-k">:</span> <span class="pl-c1">14</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-index-js-LC11" class="blob-code blob-code-inner js-file-line">    streetViewControl<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-index-js-LC12" class="blob-code blob-code-inner js-file-line">    scaleControl<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-index-js-LC13" class="blob-code blob-code-inner js-file-line">    draggable<span class="pl-k">:</span> <span class="pl-c1">false</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-index-js-LC14" class="blob-code blob-code-inner js-file-line">    disableDefaultUI<span class="pl-k">:</span> <span class="pl-c1">true</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-index-js-LC15" class="blob-code blob-code-inner js-file-line">    disableDoubleClickZoom<span class="pl-k">:</span> <span class="pl-c1">true</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-index-js-LC16" class="blob-code blob-code-inner js-file-line">    mapTypeId<span class="pl-k">:</span> <span class="pl-smi">google</span>.<span class="pl-smi">maps</span>.<span class="pl-smi">MapTypeId</span>.<span class="pl-c1">ROADMAP</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-index-js-LC17" class="blob-code blob-code-inner js-file-line">    center<span class="pl-k">:</span> latlng</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-index-js-LC18" class="blob-code blob-code-inner js-file-line">  };</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-index-js-LC19" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-index-js-LC20" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">Map</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">google.maps.Map</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">"</span>searchMapContainer<span class="pl-pds">"</span></span>),</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-index-js-LC21" class="blob-code blob-code-inner js-file-line">                            options);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-index-js-LC22" class="blob-code blob-code-inner js-file-line">};</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-index-js-LC23" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-index-js-LC24" class="blob-code blob-code-inner js-file-line"><span class="pl-k">var</span> <span class="pl-en">addMarkersToMap</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">jobs</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-index-js-LC25" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-c1">Map</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-index-js-LC26" class="blob-code blob-code-inner js-file-line">    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>Map not initialized!<span class="pl-pds">"</span></span>);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-index-js-LC27" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-index-js-LC28" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L29" class="blob-num js-line-number" data-line-number="29"></td>
+        <td id="file-index-js-LC29" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L30" class="blob-num js-line-number" data-line-number="30"></td>
+        <td id="file-index-js-LC30" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Remove existing markers</span></td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L31" class="blob-num js-line-number" data-line-number="31"></td>
+        <td id="file-index-js-LC31" class="blob-code blob-code-inner js-file-line">  <span class="pl-smi">Markers</span>.<span class="pl-c1">forEach</span>(<span class="pl-k">function</span>(<span class="pl-smi">marker</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L32" class="blob-num js-line-number" data-line-number="32"></td>
+        <td id="file-index-js-LC32" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">marker</span>.<span class="pl-en">setMap</span>(<span class="pl-c1">null</span>);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L33" class="blob-num js-line-number" data-line-number="33"></td>
+        <td id="file-index-js-LC33" class="blob-code blob-code-inner js-file-line">  });</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L34" class="blob-num js-line-number" data-line-number="34"></td>
+        <td id="file-index-js-LC34" class="blob-code blob-code-inner js-file-line">  Markers <span class="pl-k">=</span> [];</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L35" class="blob-num js-line-number" data-line-number="35"></td>
+        <td id="file-index-js-LC35" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L36" class="blob-num js-line-number" data-line-number="36"></td>
+        <td id="file-index-js-LC36" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> center <span class="pl-k">=</span> <span class="pl-c1">true</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L37" class="blob-num js-line-number" data-line-number="37"></td>
+        <td id="file-index-js-LC37" class="blob-code blob-code-inner js-file-line">  <span class="pl-smi">jobs</span>.<span class="pl-c1">forEach</span>(<span class="pl-k">function</span>(<span class="pl-smi">job</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L38" class="blob-num js-line-number" data-line-number="38"></td>
+        <td id="file-index-js-LC38" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> lat <span class="pl-k">=</span> <span class="pl-smi">job</span>.<span class="pl-c1">location</span>.<span class="pl-smi">lat</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L39" class="blob-num js-line-number" data-line-number="39"></td>
+        <td id="file-index-js-LC39" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> lng <span class="pl-k">=</span> <span class="pl-smi">job</span>.<span class="pl-c1">location</span>.<span class="pl-smi">lng</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L40" class="blob-num js-line-number" data-line-number="40"></td>
+        <td id="file-index-js-LC40" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L41" class="blob-num js-line-number" data-line-number="41"></td>
+        <td id="file-index-js-LC41" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span> (center) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L42" class="blob-num js-line-number" data-line-number="42"></td>
+        <td id="file-index-js-LC42" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">Map</span>.<span class="pl-en">setCenter</span>(<span class="pl-k">new</span> <span class="pl-en">google.maps.LatLng</span>(lat, lng));</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L43" class="blob-num js-line-number" data-line-number="43"></td>
+        <td id="file-index-js-LC43" class="blob-code blob-code-inner js-file-line">      center <span class="pl-k">=</span> <span class="pl-c1">false</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L44" class="blob-num js-line-number" data-line-number="44"></td>
+        <td id="file-index-js-LC44" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L45" class="blob-num js-line-number" data-line-number="45"></td>
+        <td id="file-index-js-LC45" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L46" class="blob-num js-line-number" data-line-number="46"></td>
+        <td id="file-index-js-LC46" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> marker <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">google.maps.Marker</span>({</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L47" class="blob-num js-line-number" data-line-number="47"></td>
+        <td id="file-index-js-LC47" class="blob-code blob-code-inner js-file-line">      position<span class="pl-k">:</span> {lat<span class="pl-k">:</span> lat, lng<span class="pl-k">:</span> lng},</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L48" class="blob-num js-line-number" data-line-number="48"></td>
+        <td id="file-index-js-LC48" class="blob-code blob-code-inner js-file-line">      map<span class="pl-k">:</span> <span class="pl-c1">Map</span></td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L49" class="blob-num js-line-number" data-line-number="49"></td>
+        <td id="file-index-js-LC49" class="blob-code blob-code-inner js-file-line">    });</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L50" class="blob-num js-line-number" data-line-number="50"></td>
+        <td id="file-index-js-LC50" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">marker</span>.<span class="pl-en">addListener</span>(<span class="pl-s"><span class="pl-pds">"</span>click<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L51" class="blob-num js-line-number" data-line-number="51"></td>
+        <td id="file-index-js-LC51" class="blob-code blob-code-inner js-file-line">      <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>clicked on <span class="pl-pds">"</span></span>, job);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L52" class="blob-num js-line-number" data-line-number="52"></td>
+        <td id="file-index-js-LC52" class="blob-code blob-code-inner js-file-line">    });</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L53" class="blob-num js-line-number" data-line-number="53"></td>
+        <td id="file-index-js-LC53" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">Markers</span>.<span class="pl-c1">push</span>(marker);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L54" class="blob-num js-line-number" data-line-number="54"></td>
+        <td id="file-index-js-LC54" class="blob-code blob-code-inner js-file-line">  });</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L55" class="blob-num js-line-number" data-line-number="55"></td>
+        <td id="file-index-js-LC55" class="blob-code blob-code-inner js-file-line">};</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L56" class="blob-num js-line-number" data-line-number="56"></td>
+        <td id="file-index-js-LC56" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L57" class="blob-num js-line-number" data-line-number="57"></td>
+        <td id="file-index-js-LC57" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Template</span>.<span class="pl-c1">index</span>.<span class="pl-en">onRendered</span>(<span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L58" class="blob-num js-line-number" data-line-number="58"></td>
+        <td id="file-index-js-LC58" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-en">autorun</span>(<span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L59" class="blob-num js-line-number" data-line-number="59"></td>
+        <td id="file-index-js-LC59" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> searchData <span class="pl-k">=</span> <span class="pl-smi">SearchData</span>.<span class="pl-c1">get</span>();</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L60" class="blob-num js-line-number" data-line-number="60"></td>
+        <td id="file-index-js-LC60" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span> (searchData) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L61" class="blob-num js-line-number" data-line-number="61"></td>
+        <td id="file-index-js-LC61" class="blob-code blob-code-inner js-file-line">      <span class="pl-smi">Meteor</span>.<span class="pl-en">subscribe</span>(<span class="pl-s"><span class="pl-pds">"</span>jobSearch<span class="pl-pds">"</span></span>, searchData);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L62" class="blob-num js-line-number" data-line-number="62"></td>
+        <td id="file-index-js-LC62" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L63" class="blob-num js-line-number" data-line-number="63"></td>
+        <td id="file-index-js-LC63" class="blob-code blob-code-inner js-file-line">  });</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L64" class="blob-num js-line-number" data-line-number="64"></td>
+        <td id="file-index-js-LC64" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L65" class="blob-num js-line-number" data-line-number="65"></td>
+        <td id="file-index-js-LC65" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-en">autorun</span>(<span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L66" class="blob-num js-line-number" data-line-number="66"></td>
+        <td id="file-index-js-LC66" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span> (<span class="pl-smi">GoogleMaps</span>.<span class="pl-en">loaded</span>()) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L67" class="blob-num js-line-number" data-line-number="67"></td>
+        <td id="file-index-js-LC67" class="blob-code blob-code-inner js-file-line">      <span class="pl-en">createMap</span>();</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L68" class="blob-num js-line-number" data-line-number="68"></td>
+        <td id="file-index-js-LC68" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L69" class="blob-num js-line-number" data-line-number="69"></td>
+        <td id="file-index-js-LC69" class="blob-code blob-code-inner js-file-line">  });</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L70" class="blob-num js-line-number" data-line-number="70"></td>
+        <td id="file-index-js-LC70" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L71" class="blob-num js-line-number" data-line-number="71"></td>
+        <td id="file-index-js-LC71" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-en">autorun</span>(<span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L72" class="blob-num js-line-number" data-line-number="72"></td>
+        <td id="file-index-js-LC72" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> jobs <span class="pl-k">=</span> <span class="pl-smi">Jobs</span>.<span class="pl-c1">find</span>({});</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L73" class="blob-num js-line-number" data-line-number="73"></td>
+        <td id="file-index-js-LC73" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span> (<span class="pl-smi">jobs</span>.<span class="pl-en">count</span>() <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L74" class="blob-num js-line-number" data-line-number="74"></td>
+        <td id="file-index-js-LC74" class="blob-code blob-code-inner js-file-line">      <span class="pl-en">addMarkersToMap</span>(<span class="pl-smi">jobs</span>.<span class="pl-en">fetch</span>());</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L75" class="blob-num js-line-number" data-line-number="75"></td>
+        <td id="file-index-js-LC75" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L76" class="blob-num js-line-number" data-line-number="76"></td>
+        <td id="file-index-js-LC76" class="blob-code blob-code-inner js-file-line">  });</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L77" class="blob-num js-line-number" data-line-number="77"></td>
+        <td id="file-index-js-LC77" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L78" class="blob-num js-line-number" data-line-number="78"></td>
+        <td id="file-index-js-LC78" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L79" class="blob-num js-line-number" data-line-number="79"></td>
+        <td id="file-index-js-LC79" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">Template</span>.<span class="pl-c1">index</span>.<span class="pl-en">helpers</span>({</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L80" class="blob-num js-line-number" data-line-number="80"></td>
+        <td id="file-index-js-LC80" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">jobSchema</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L81" class="blob-num js-line-number" data-line-number="81"></td>
+        <td id="file-index-js-LC81" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-smi">Schemas</span>.<span class="pl-smi">Job</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L82" class="blob-num js-line-number" data-line-number="82"></td>
+        <td id="file-index-js-LC82" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L83" class="blob-num js-line-number" data-line-number="83"></td>
+        <td id="file-index-js-LC83" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">searchSchema</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L84" class="blob-num js-line-number" data-line-number="84"></td>
+        <td id="file-index-js-LC84" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-smi">Schemas</span>.<span class="pl-smi">Search</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L85" class="blob-num js-line-number" data-line-number="85"></td>
+        <td id="file-index-js-LC85" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L86" class="blob-num js-line-number" data-line-number="86"></td>
+        <td id="file-index-js-LC86" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">jobs</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L87" class="blob-num js-line-number" data-line-number="87"></td>
+        <td id="file-index-js-LC87" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-smi">Jobs</span>.<span class="pl-c1">find</span>({});</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L88" class="blob-num js-line-number" data-line-number="88"></td>
+        <td id="file-index-js-LC88" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L89" class="blob-num js-line-number" data-line-number="89"></td>
+        <td id="file-index-js-LC89" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L90" class="blob-num js-line-number" data-line-number="90"></td>
+        <td id="file-index-js-LC90" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L91" class="blob-num js-line-number" data-line-number="91"></td>
+        <td id="file-index-js-LC91" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">AutoForm</span>.<span class="pl-en">addHooks</span>(<span class="pl-s"><span class="pl-pds">"</span>searchJob<span class="pl-pds">"</span></span>, {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L92" class="blob-num js-line-number" data-line-number="92"></td>
+        <td id="file-index-js-LC92" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">onSubmit</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">insertDoc</span>, <span class="pl-smi">updateDoc</span>, <span class="pl-smi">currentDoc</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L93" class="blob-num js-line-number" data-line-number="93"></td>
+        <td id="file-index-js-LC93" class="blob-code blob-code-inner js-file-line">    <span class="pl-en">check</span>(insertDoc, <span class="pl-smi">Schemas</span>.<span class="pl-smi">Search</span>);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L94" class="blob-num js-line-number" data-line-number="94"></td>
+        <td id="file-index-js-LC94" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">SearchData</span>.<span class="pl-c1">set</span>(insertDoc);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L95" class="blob-num js-line-number" data-line-number="95"></td>
+        <td id="file-index-js-LC95" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-en">done</span>();</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L96" class="blob-num js-line-number" data-line-number="96"></td>
+        <td id="file-index-js-LC96" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">false</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L97" class="blob-num js-line-number" data-line-number="97"></td>
+        <td id="file-index-js-LC97" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L98" class="blob-num js-line-number" data-line-number="98"></td>
+        <td id="file-index-js-LC98" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L99" class="blob-num js-line-number" data-line-number="99"></td>
+        <td id="file-index-js-LC99" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">onSuccess</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">formType</span>, <span class="pl-smi">result</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L100" class="blob-num js-line-number" data-line-number="100"></td>
+        <td id="file-index-js-LC100" class="blob-code blob-code-inner js-file-line">  },</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L101" class="blob-num js-line-number" data-line-number="101"></td>
+        <td id="file-index-js-LC101" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L102" class="blob-num js-line-number" data-line-number="102"></td>
+        <td id="file-index-js-LC102" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">onError</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">formType</span>, <span class="pl-smi">error</span>) {</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L103" class="blob-num js-line-number" data-line-number="103"></td>
+        <td id="file-index-js-LC103" class="blob-code blob-code-inner js-file-line">    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>, formType, error);</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L104" class="blob-num js-line-number" data-line-number="104"></td>
+        <td id="file-index-js-LC104" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+      <tr>
+        <td id="file-index-js-L105" class="blob-num js-line-number" data-line-number="105"></td>
+        <td id="file-index-js-LC105" class="blob-code blob-code-inner js-file-line">});</td>
+      </tr>
+</tbody></table>
+
+  </div>
+
+  </div>
+  
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/quackware/4e2dbb0d16de90fbb489/raw/4145b2a632bf79267d100be747abe7c677aee32b/index.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/quackware/4e2dbb0d16de90fbb489#file-index-js">index.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+
+<p>Starting from our <code class="highlighter-rouge">onRendered</code> function we see that we have added two new <code class="highlighter-rouge">autorun</code> functions. The first one waits on the reactive-var <code class="highlighter-rouge">SearchData</code> and subscribes to our <code class="highlighter-rouge">jobSearch</code> publisher we created before. The second one waits on the reactive <code class="highlighter-rouge">Jobs.find({})</code> which when populated with data (which will occur when our <code class="highlighter-rouge">jobSearch</code> subscription completes) will call our <code class="highlighter-rouge">addMarkersToMap</code> function to render markers in the location where the job was specified.</p>
+
+<p>Our <code class="highlighter-rouge">addMarkersToMap</code> function simply removes the existing markers that were added and iterates through the passed in jobs, added a new marker for each job based on the job’s lat and lon values. We also added a <code class="highlighter-rouge">click</code> listener for when you click on one of the markers. You could do something like open a popup with job information or highlight the job in a list, but for now we simply output the job to the console.</p>
+
+<p>Additionally we add our <code class="highlighter-rouge">searchJob</code> AutoForm hook that sets the <code class="highlighter-rouge">SearchData</code> reactive-var with data from our search form. This way when someone performs a search the <code class="highlighter-rouge">SearchData</code> variable is changed which triggers a new search subscription, returning our search data. That subscription then triggers the new <code class="highlighter-rouge">Jobs.find({})</code> which populates both the template helper and our map markers.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That’s it for the tutorial. We accomplished a lot in this long tutorial. The end goal is that we were able to reactively update an embeded Google Map widget based on a locaiton search we performed. If you have any questions or suggestions make sure to leave a comment! Again the full source code for this tutorial is available on <a href="https://github.com/quackware/meteor-location-search">My GitHub Page</a>.</p>
+
+  <hr>
+  
+    <span>
+      <a href="http://www.curtismlarson.com/" target="_blank">Curtis Larson</a> is a NYC based freelance software developer. <a href="https://twitter.com/quackware" target="_blank">Follow him on Twitter</a> or <a href="mailto:curtis@curtismlarson.com" target="_blank">send him an email</a> if you're looking for a talented developer.
+    </span>
+  
+  <br>
+  <div id="mc_embed_signup">
+<form action="http://curtismlarson.us11.list-manage.com/subscribe/post?u=1c8750215658512459a679f1e&amp;id=29a072ab9b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+    <div id="mc_embed_signup_scroll">
+  <label for="mce-EMAIL">Subscribe to our mailing list</label>
+  <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required="">
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;"><input type="text" name="b_1c8750215658512459a679f1e_29a072ab9b" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+</article>
+
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"><iframe id="dsq-app1" name="dsq-app1" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 481px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'curtismlarson';
+  var disqus_identifier = "3699097/2015/12/11/meteor-location-search-engine-mongodb-google-maps/";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript" rel="nofollow"&gt;comments powered by Disqus.&lt;/a&gt;</noscript>
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="http://www.curtismlarson.com/blog/2016/07/06/webpack-heroku-build-fails-no-error/">
+            Webpack &amp; Heroku - Build failure with no error message
+            <small><time datetime="2016-07-06T00:00:00+00:00">06 Jul 2016</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="http://www.curtismlarson.com/blog/2016/05/31/meteor-connect-to-redis/">
+            Meteor 1.3+ - Connect to Redis on the Server
+            <small><time datetime="2016-05-31T00:00:00+00:00">31 May 2016</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="http://www.curtismlarson.com/blog/2016/05/12/webpack-cannot-find-module-web-dom-iterable/">
+            Webpack - ERROR in Cannot find module '../modules/web.dom.iterable' @ multi main
+            <small><time datetime="2016-05-12T00:00:00+00:00">12 May 2016</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+      </main>
+      <footer class="footer">
+        <small>
+          © <time datetime="2016-11-06T19:51:36+00:00">2016</time> Curtis Larson. All rights reserved.
+        </small>
+      </footer>
+    </div>
+
+  
+
+<iframe style="display: none;" src="./Meteor - Reactive Location Search Engine with MongoDB and Google Maps · Curtis Larson&#39;s Blog_files/saved_resource(2).html"></iframe></body></html>

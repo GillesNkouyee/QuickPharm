@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/ -->
+<html lang="fr-FR"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width">
+<title>MeteorJs : Découverte (attention framework ultra puissant) | nicoPhil</title>
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://nicophil.wordpress.com/xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="https://s0.wp.com/wp-content/themes/pub/twentytwelve/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="nicoPhil » Flux" href="https://nicophil.wordpress.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="nicoPhil » Flux des commentaires" href="https://nicophil.wordpress.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="nicoPhil » MeteorJs : Découverte (attention framework ultra puissant) Flux des commentaires" href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/feed/">
+	<script async="" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/beacon.js"></script><script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+	<link rel="stylesheet" id="all-css-0" href="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/saved_resource" type="text/css" media="all">
+<link rel="stylesheet" id="twentytwelve-fonts-css" href="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="all-css-2" href="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/style.css" type="text/css" media="all">
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://s0.wp.com/wp-content/themes/pub/twentytwelve/css/ie.css?m=1423935238h&#038;ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<link rel="stylesheet" id="all-css-4" href="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/saved_resource(1)" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Votre souscription n'a pas abouti, veuillez r\u00e9essayer avec une adresse email valide."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/saved_resource(2)"></script>
+<link rel="stylesheet" id="all-css-0" href="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/style(1).css" type="text/css" media="all">
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s1.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://nicophil.wordpress.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Modifier dynamiquement les comportements en JavaScript" href="https://nicophil.wordpress.com/2013/08/08/modifier-dynamiquement-les-comportements-en-javascript/">
+<link rel="next" title="Les Sessions dans Meteor" href="https://nicophil.wordpress.com/2013/08/13/les-sessions-dans-meteor/">
+<meta name="generator" content="WordPress.com">
+<link rel="canonical" href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/">
+<link rel="shortlink" href="http://wp.me/p3MJNc-19">
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=json&amp;url=https%3A%2F%2Fnicophil.wordpress.com%2F2013%2F08%2F10%2Fmeteorjs-decouverte-attention-framework-ultra-puissant%2F&amp;for=wpcom-auto-discovery"><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=xml&amp;url=https%3A%2F%2Fnicophil.wordpress.com%2F2013%2F08%2F10%2Fmeteorjs-decouverte-attention-framework-ultra-puissant%2F&amp;for=wpcom-auto-discovery">
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="MeteorJs : Découverte (attention framework ultra puissant)">
+<meta property="og:url" content="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/">
+<meta property="og:description" content="Meteor entre dans cette catégorie de frameworks novateurs, qui proposent de prendre en charge la stack complète, c’est a dire en plus du code client, le code serveur ainsi que le stockage. Je…">
+<meta property="article:published_time" content="2013-08-10T20:47:01+00:00">
+<meta property="article:modified_time" content="2013-08-13T16:09:16+00:00">
+<meta property="og:site_name" content="nicoPhil">
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:site" content="@wordpressdotcom">
+<meta name="twitter:card" content="summary">
+<meta property="fb:app_id" content="249643311490">
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom">
+<link rel="shortcut icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="apple-touch-icon-precomposed" href="https://s0.wp.com/i/webclip.png">
+<link rel="openid.server" href="https://nicophil.wordpress.com/?openidserver=1">
+<link rel="openid.delegate" href="https://nicophil.wordpress.com/">
+<link rel="search" type="application/opensearchdescription+xml" href="https://nicophil.wordpress.com/osd.xml" title="nicoPhil">
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com">
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="nicoPhil"><meta name="msapplication-window" content="width=device-width;height=device-height"><meta name="msapplication-tooltip" content="JavaScript"><meta name="msapplication-task" content="name=S’abonner;action-uri=https://nicophil.wordpress.com/feed/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=S&#39;inscrire pour un blog gratuit;action-uri=http://wordpress.com/signup/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=Support WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="title" content="MeteorJs : Découverte (attention framework ultra puissant) | nicoPhil sur WordPress.com">
+<meta name="description" content="Meteor entre dans cette catégorie de frameworks novateurs, qui proposent de prendre en charge la stack complète, c&#39;est a dire en plus du code client, le code serveur ainsi que le stockage. Je pense que la séparation client/serveur s&#39;est produite naturellement à cause de la barrière des langages, mais depuis le succès de node.js ainsi…">
+		<script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/amzn_ads.js"></script>
+		<script type="text/javascript">
+		try { amznads.getAds("3033"); } catch(e) { /* ignore */ }
+		</script><script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/bid"></script>
+		<script type="text/javascript">
+		try {
+			var a9_p = amznads.getKeys(),
+			_ipw_custom = {
+				wordAds: '0',
+				adSafe: '0',
+				domain: 'nicophil.wordpress.com',
+				pageURL: 'https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/'
+			};
+			if("undefined"!=typeof a9_p&&""!=a9_p&&null!==a9_p&&"[object Array]"===Object.prototype.toString.call(a9_p)){var a="",b=0,c=a9_p.length;a9_p.sort();for(var d=0;d<c;d++){a9_p[d-b]=a9_p[d-b].replace(/a1x6p/,"a160x600p");var e=a9_p[d-b].split("p");e[0]==a&&(a9_p.splice(d-b,1),b++);a=e[0]}_ipw_custom.amznPay=a9_p};document.close();
+		} catch(e) {}
+		</script>		<!-- IPONWEB header script -->
+		<script type="text/javascript">
+			window.__ATA = {
+				scriptSrc: '//s.pubmine.com/showad.js',
+				slotPrefix: 'automattic-id-',
+				initAd: function(o) {
+					var o = o || {},
+						g = window,
+						d = g.document,
+						wr = d.write,
+						id = g.__ATA.id();
+					wr.call(d, '<div id="' + id + '" data-section="' + (o.sectionId || 0) + '"' + (o.type ? ('data-type="' + o.type + '"') : '') + ' ' + (o.forcedUrl ? ('data-forcedurl="' + o.forcedUrl + '"') : '') + ' style="width:' + (o.width || 0) + 'px; height:' + (o.height || 0) + 'px;">');
+					g.__ATA.displayAd(id);
+					wr.call(d, '</div>');
+				},
+				displayAd: function(id) {
+					window.__ATA.ids = window.__ATA.ids || {};
+					window.__ATA.ids[id] = 1;
+				},
+				customParams: _ipw_custom,
+				id: function() {
+					return window.__ATA.slotPrefix + (parseInt(Math.random() * 10000, 10) + 1 + (new Date()).getMilliseconds());
+				}
+			};
+			(function(d, ata) {
+				var pr = "https:" === d.location.protocol ? "https:" : "http:",
+					src = pr + ata.scriptSrc,
+					st = "text/javascript";
+				d.write('<scr' + 'ipt type="' + st + '" src="' + src + '"><\/scr' + 'ipt>');
+			})(window.document, window.__ATA);
+		</script><script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/showad.js"></script>
+		<script type="text/javascript">
+		jQuery(window).ready(function () {
+			jQuery("a.wpa-about").text("Concernant ces publicités");
+		});
+		</script><link rel="amphtml" href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/amp/"><link rel="stylesheet" type="text/css" href="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/shCore.css"><link rel="stylesheet" type="text/css" href="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_setDomainName', 'wordpress.com']);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script><script type="text/javascript" async="" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/ga.js"></script>
+<link rel="stylesheet" type="text/css" id="gravatar-card-css" href="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/services.css"><script src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/adrns.js" id="id_ad_rns_lqwls"></script></head>
+
+<body class="single single-post postid-71 single-format-standard mp6 customizer-styles-applied custom-font-enabled single-author highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header" role="banner">
+				<hgroup>
+			<h1 class="site-title"><a href="https://nicophil.wordpress.com/" title="nicoPhil" rel="home">nicoPhil</a></h1>
+			<h2 class="site-description">JavaScript</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle">Menu</button>
+			<a class="assistive-text" href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#content" title="Aller au contenu principal">Aller au contenu principal</a>
+			<div class="nav-menu"><ul><li><a href="https://nicophil.wordpress.com/">Accueil</a></li><li class="page_item page-item-1"><a href="https://nicophil.wordpress.com/about/">About</a></li></ul></div>
+		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-71" class="post-71 post type-post status-publish format-standard hentry category-uncategorized">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">MeteorJs : Découverte (attention framework ultra&nbsp;puissant)</h1>
+										<div class="comments-link">
+					<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#comments">1 réponse</a>				</div><!-- .comments-link -->
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<p><a href="http://www.meteor.com/" target="_blank">Meteor</a> entre dans cette catégorie de frameworks novateurs, qui proposent de prendre en charge la stack complète, c’est a dire en plus du code client, le code serveur ainsi que le stockage.</p>
+<p>Je pense que la séparation client/serveur s’est produite naturellement à cause de la barrière des langages, mais depuis le succès de node.js ainsi que les bases capable de stocker du Json (mongodb, couchdb etc…), la frontière s’efface et il est possible d’imaginer des solutions full javascript.<br>
+<a href="http://blog.mongodb.org/post/49262866911/the-mean-stack-mongodb-expressjs-angularjs-and" target="_blank">On entend par exemple parler de MEAN stack</a>, avec la puissance de gérer tout au long de la chaine du json en javascript, avec la souplesse que cela apporte.</p>
+<p>Plusieurs solutions émergent (<a href="http://derbyjs.com/" target="_blank">derbyjs</a>, <a href="http://www.socketstream.org/" target="_blank">SocketStream</a>), et sont toutes encore très tôt dans leur developpement (&lt; v1).<br>
+Néanmois Meteor ayant réalisé une <a href="http://www.presse-citron.net/developpement-web-le-framework-meteor-leve-11-2-millions-de-dollars" target="_blank">impressionante levée de fonds</a> l’année dernière, on peut s’attendre à beaucoup de progrès de leur coté.</p>
+<p>Ce post servira d’introduction, nous allons réaliser une application simple avec pour but de mettre en valeur la puissance de meteor, d’autres posts permettront d’explorer en détail les facettes du framework.</p>
+<p>Je vous recommande de télécharger <a target="_blank" href="https://github.com/nicoPhil/MeteorJsIntroduction/">les exemples de code sur github</a> qui accompagnent ce tutoriel.</p>
+<p><strong>Installation et mise en place</strong></p>
+<p>Meteor s’installe via curl:</p>
+<div><div id="highlighter_127529" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">curl <a href="https://install.meteor.com/">https://install.meteor.com</a> | /bin/sh</code></div></div></td></tr></tbody></table></div></div>
+<p>Windows n’est pas encore  <a href="https://github.com/meteor/meteor/wiki/Supported-Platforms" target="_blank">officielement supporté</a> mais c’est prévu rapidement, en attendant on peut utiliser la version <a href="http://win.meteor.com/" target="_blank">non officielle</a> qui fonctionne sans aucun souci (j’ai testé).</p>
+<p>On crée un nouveau projet via la commande:</p>
+<div><div id="highlighter_863381" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">meteor create demoProject</code></div></div></td></tr></tbody></table></div></div>
+<p>(remplacer demoProject par le nom du projet)</p>
+<p>meteor crée ainsi le squelette de l’application ainsi qu’une base de donnée mongodb locale.</p>
+<p>On peut d’ailleurs vérifier que l’application fonctionne en lançant la commande meteor dans le répertoire du projet:</p>
+<div><div id="highlighter_926313" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">cd demoProject</code></div><div class="line number2 index1 alt1"><code class="plain plain">meteor</code></div></div></td></tr></tbody></table></div></div>
+<p>A noter que meteor lance lui même un serveur, les habitués de <a href="http://gruntjs.com/" target="_blank">grunt</a> se sentiront comme chez eux.</p>
+<p>Votre projet est accessible sur <a href="http://localhost:3000/" rel="nofollow">http://localhost:3000/</a> vous pouvez vérifier que tout fonctionne comme prévu.</p>
+<p>Meteor relance le serveur et met le client à jour à chaque modification de code (livereload), un détail très pratique à l’usage.</p>
+<p><strong>Emplacement du code</strong></p>
+<p>Nous démarrons le projet le plus simple possible:</p>
+<div><div id="highlighter_862617" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">head</code><code class="xml plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">title</code><code class="xml plain">&gt;demoProject&lt;/</code><code class="xml keyword">title</code><code class="xml plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">head</code><code class="xml plain">&gt;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>et le javascript:</p>
+<div><div id="highlighter_17968" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">console.log(</code><code class="jscript string">'hello from both'</code><code class="jscript plain">);</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="jscript keyword">if</code> <code class="jscript plain">(Meteor.isClient) {</code></div><div class="line number4 index3 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">console.log(</code><code class="jscript string">'hello from client'</code><code class="jscript plain">);</code></div><div class="line number5 index4 alt2"><code class="jscript plain">}</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="jscript keyword">if</code> <code class="jscript plain">(Meteor.isServer) {</code></div><div class="line number8 index7 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">Meteor.startup(</code><code class="jscript keyword">function</code> <code class="jscript plain">() {</code></div><div class="line number9 index8 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">console.log(</code><code class="jscript string">'hello from server'</code><code class="jscript plain">);&nbsp;&nbsp; </code></div><div class="line number10 index9 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number11 index10 alt2"><code class="jscript plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>Les plus attentifs auront remarqué que le fichier html est spécial, pas de balise html, pas de script pour référencer un eventuel fichier meteor.js ou aucun javascript:<br>
+Meteor ne lance pas directement le fichier html que nous visualisons, il package systèmatiquement l’ensemble de nos fichiers et nous sert en réalité une version compilée (visible dans le repertoire .meteor\)<br>
+Il suffit d’ailleurs d’ajouter un fichier css dans le repertoire pour voir qu’il est également pris en compte.</p>
+<p>Lancons l’application:</p>
+<p>La console serveur présente :</p>
+<div><div id="highlighter_920560" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">hello from both</code></div><div class="line number2 index1 alt1"><code class="plain plain">hello from server</code></div></div></td></tr></tbody></table></div></div>
+<p>La console client présente :</p>
+<div><div id="highlighter_633649" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">hello from both</code></div><div class="line number2 index1 alt1"><code class="plain plain">hello from client</code></div></div></td></tr></tbody></table></div></div>
+<p>L’exemple parle de lui même, le javascript est executé <u>coté client et coté serveur</u>, impressionant !<br>
+Les booleens isClient et isServer permettent de n’executer du code que d’un coté.</p>
+<p><a target="_blank" href="https://github.com/nicoPhil/MeteorJsIntroduction/"></a>(Cette version est disponible dans le github: v0)</p>
+<p><strong>Template simple</strong></p>
+<p>Meteor dispose d’un système de templating, commencons par une version simple:<br>
+html:</p>
+<div><div id="highlighter_470523" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">head</code><code class="xml plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">title</code><code class="xml plain">&gt;demoProject&lt;/</code><code class="xml keyword">title</code><code class="xml plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">head</code><code class="xml plain">&gt;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{&gt; person}}</code></div><div class="line number7 index6 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div><div class="line number8 index7 alt1">&nbsp;</div><div class="line number9 index8 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">template</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"person"</code><code class="xml plain">&gt;</code></div><div class="line number10 index9 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{firstName}}</code></div><div class="line number11 index10 alt2"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{lastName}}</code></div><div class="line number12 index11 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">( {{age}} )</code></div><div class="line number13 index12 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">template</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>et le JavaScript:</p>
+<div><div id="highlighter_691864" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript keyword">if</code> <code class="jscript plain">(Meteor.isClient) {</code></div><div class="line number2 index1 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">Template.person.firstName = </code><code class="jscript keyword">function</code><code class="jscript plain">() {</code></div><div class="line number3 index2 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">return</code> <code class="jscript string">"John"</code><code class="jscript plain">;</code></div><div class="line number4 index3 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">};</code></div><div class="line number5 index4 alt2"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">Template.person.lastName = </code><code class="jscript keyword">function</code><code class="jscript plain">() {</code></div><div class="line number6 index5 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">return</code> <code class="jscript string">"Doe"</code><code class="jscript plain">;</code></div><div class="line number7 index6 alt2"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">};</code></div><div class="line number8 index7 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">Template.person.age = </code><code class="jscript keyword">function</code><code class="jscript plain">() {</code></div><div class="line number9 index8 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">return</code> <code class="jscript string">"46"</code><code class="jscript plain">;</code></div><div class="line number10 index9 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">};</code></div><div class="line number11 index10 alt2"><code class="jscript plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>Résultat:</p>
+<div><div id="highlighter_928682" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">John Doe (46)</code></div></div></td></tr></tbody></table></div></div>
+<p>J’ai retiré la section ‘Meteor.isServeur’ du code, car pour l’instant nous n’avons aucun traitement coté serveur.</p>
+<p>Dans le html nous appelons le template person dans le body via le symbole ‘&gt;’, meteor ira chercher le contenu du template person pour l’integrer dans le body.<br>
+Les champs de fusion doivent être encadrés par {{ et }}.<br>
+Meteor propose en fait la syntaxe handlebars, pour en savoir plus: <a target="_blank" href="https://nicophil.wordpress.com/2013/08/08/ember-js-part1-les-templates/">vous avez mon article sur handlebars (aussi utilisé dans ember.js)</a></p>
+<p>Le JavaScript expose des données bouchons pour l’instant, les données de binding sont exposées de cette manière en meteor, ce sont des fonctions, membre du template, qui portent le nom de la valeur à binder.<br>
+La fonction doit bien sur retourner la valeur.</p>
+<p><a target="_blank" href="https://github.com/nicoPhil/MeteorJsIntroduction/"></a>(Cette version est disponible dans le github: v1)</p>
+<p><strong>Template amélioré</strong></p>
+<p>Nous voulons afficher une liste de personnes, nous allons pour cela utiliser l’opérateur #each dans le template:</p>
+<div><div id="highlighter_322432" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">head</code><code class="xml plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">title</code><code class="xml plain">&gt;demoProject&lt;/</code><code class="xml keyword">title</code><code class="xml plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">head</code><code class="xml plain">&gt;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{&gt; personList}}</code></div><div class="line number7 index6 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div><div class="line number8 index7 alt1">&nbsp;</div><div class="line number9 index8 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">template</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"personList"</code><code class="xml plain">&gt;</code></div><div class="line number10 index9 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">ul</code><code class="xml plain">&gt;</code></div><div class="line number11 index10 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{#each persons}}</code></div><div class="line number12 index11 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">li</code><code class="xml plain">&gt;</code></div><div class="line number13 index12 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{&gt; person}}</code></div><div class="line number14 index13 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;/</code><code class="xml keyword">li</code><code class="xml plain">&gt;</code></div><div class="line number15 index14 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{/each}}</code></div><div class="line number16 index15 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;/</code><code class="xml keyword">ul</code><code class="xml plain">&gt;</code></div><div class="line number17 index16 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">template</code><code class="xml plain">&gt;</code></div><div class="line number18 index17 alt1">&nbsp;</div><div class="line number19 index18 alt2">&nbsp;</div><div class="line number20 index19 alt1"><code class="xml plain">&lt;</code><code class="xml keyword">template</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"person"</code><code class="xml plain">&gt;</code></div><div class="line number21 index20 alt2"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{firstName}}</code></div><div class="line number22 index21 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{lastName}}</code></div><div class="line number23 index22 alt2"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">( {{age}} )</code></div><div class="line number24 index23 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">template</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>– Le template person reste inchangé.<br>
+– Body reférence maintenant le template ‘personList’, au lieu de ‘person’.<br>
+– ‘personList’ boucle sur un objet ‘persons’, et appele le template ‘person’</p>
+<p>Coté JavaScript, nous allons avoir besoin d’un tableau, pour le template ‘personList’, nommé ‘persons’ (le nom qui vient après le #each).</p>
+<p>J’attire votre attention sur le fait que nous n’avons pas précisé explicitement quel était le contexte pour le template person: Meteor est assez intelligent pour passer au template ‘person’ chaque instance de person (une valeur du tableau) lorsqu’il boucle sur l’instruction #each.</p>
+<p>Nous n’avons plus qu’a exposer un tableau:</p>
+<div><div id="highlighter_788192" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript keyword">if</code> <code class="jscript plain">(Meteor.isClient) {</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">Template.personList.persons = </code><code class="jscript keyword">function</code><code class="jscript plain">() {</code></div><div class="line number4 index3 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">return</code> <code class="jscript plain">[{</code></div><div class="line number5 index4 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: </code><code class="jscript string">'John'</code><code class="jscript plain">,</code></div><div class="line number6 index5 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: </code><code class="jscript string">'Doe'</code><code class="jscript plain">,</code></div><div class="line number7 index6 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age: </code><code class="jscript string">'46'</code></div><div class="line number8 index7 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}, {</code></div><div class="line number9 index8 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: </code><code class="jscript string">'Jean'</code><code class="jscript plain">,</code></div><div class="line number10 index9 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: </code><code class="jscript string">'Dupont'</code><code class="jscript plain">,</code></div><div class="line number11 index10 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age: </code><code class="jscript string">'32'</code></div><div class="line number12 index11 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}, {</code></div><div class="line number13 index12 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: </code><code class="jscript string">'Henri'</code><code class="jscript plain">,</code></div><div class="line number14 index13 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: </code><code class="jscript string">'Lebel'</code></div><div class="line number15 index14 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}];</code></div><div class="line number16 index15 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number17 index16 alt2"><code class="jscript plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>Le résultat donnera:</p>
+<div style="border:1px solid grey;">
+<ul>
+<li>
+		John<br>
+  Doe<br>
+  ( 46 )
+		</li>
+<li>
+		Jean<br>
+  Dupont<br>
+  ( 32 )
+		</li>
+<li>
+		Henri<br>
+  Lebel<br>
+  (  )
+		</li>
+</ul>
+</div>
+<p><a target="_blank" href="https://github.com/nicoPhil/MeteorJsIntroduction/"></a>(Cette version est disponible dans le github: v2)</p>
+<p><strong>Handler d’evenement:</strong></p>
+<p>Nous pouvons enregistrer des callback pour réagir a des actions utilisateur sur nos templates.<br>
+Ajoutons par exemple un lien sur chaque ‘person’:</p>
+<p>Modification du template ‘person’:</p>
+<div><div id="highlighter_624445" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">template</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"person"</code><code class="xml plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">a</code> <code class="xml color1">href</code><code class="xml plain">=</code><code class="xml string">"#"</code><code class="xml plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{firstName}}</code></div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{lastName}}</code></div><div class="line number5 index4 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">( {{age}} )</code></div><div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;/</code><code class="xml keyword">a</code><code class="xml plain">&gt;</code></div><div class="line number7 index6 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">template</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>Chaque template meteor expose une méthode qui permet d’associer des callback aux divers événements, cette méthode attend un objet en paramètre:</p>
+<div><div id="highlighter_286865" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">Template.person.events({</code></div><div class="line number2 index1 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript string">'click a'</code><code class="jscript plain">: </code><code class="jscript keyword">function</code><code class="jscript plain">(target, item) {</code></div><div class="line number3 index2 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">alert(</code><code class="jscript string">'you clicked:'</code> <code class="jscript plain">+ item.data.firstName + </code><code class="jscript string">' '</code> <code class="jscript plain">+ item.data.lastName);</code></div><div class="line number4 index3 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number5 index4 alt2"><code class="jscript plain">});</code></div></div></td></tr></tbody></table></div></div>
+<p>Meteor travaille avec des sélecteurs css pour identifier la cible, ici nous nous intéressons au click sur la balise a:</p>
+<div><div id="highlighter_636186" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript string">'click a'</code></div></div></td></tr></tbody></table></div></div>
+<p>Nous aurions pu sélectionner le mouseover sur les éléments portant la classe myclass:</p>
+<div><div id="highlighter_251433" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">'mouseover myclass'</code></div></div></td></tr></tbody></table></div></div>
+<p>Et ainsi de suite…</p>
+<p>La méthode handler reçoit plusieurs arguments, le 1er est la cible de l’événement et le second les informations liées à l’élément bindé au template.<br>
+Ici item.data pointe sur l’objet person, nous pouvons récupérer les informations.</p>
+<p><a target="_blank" href="https://github.com/nicoPhil/MeteorJsIntroduction/"></a>(Cette version est disponible dans le github: v3)</p>
+<p><strong>Les collections :</strong></p>
+<p>Meteor propose une notion de collection très proche de ce qui existe en mongoDb, je vous invite à vous renseigner car des notions de base en mongoDb seront nécessaires pour la suite.</p>
+<p>Nous allons remplacer notre tableau par une collection:</p>
+<p>Une collection se déclare de la manière suivante:</p>
+<div><div id="highlighter_253104" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">personList = </code><code class="jscript keyword">new</code> <code class="jscript plain">Meteor.Collection(</code><code class="jscript string">'personList'</code><code class="jscript plain">);</code></div></div></td></tr></tbody></table></div></div>
+<p>(L’absence de var est volontaire, nous verrons plus tard pourquoi).<br>
+Nous modifions également notre code d’initialisation, on ajoute des éléments via la méthode insert() (syntaxe mongoDb):</p>
+<div><div id="highlighter_743619" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">personList.insert({</code></div><div class="line number2 index1 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: </code><code class="jscript string">'John'</code><code class="jscript plain">,</code></div><div class="line number3 index2 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: </code><code class="jscript string">'Doe'</code><code class="jscript plain">,</code></div><div class="line number4 index3 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age: </code><code class="jscript string">'46'</code></div><div class="line number5 index4 alt2"><code class="jscript plain">});</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="jscript plain">personList.insert({</code></div><div class="line number8 index7 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: </code><code class="jscript string">'Jean'</code><code class="jscript plain">,</code></div><div class="line number9 index8 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: </code><code class="jscript string">'Dupont'</code><code class="jscript plain">,</code></div><div class="line number10 index9 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age: </code><code class="jscript string">'32'</code></div><div class="line number11 index10 alt2"><code class="jscript plain">});</code></div><div class="line number12 index11 alt1">&nbsp;</div><div class="line number13 index12 alt2"><code class="jscript plain">personList.insert({</code></div><div class="line number14 index13 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: </code><code class="jscript string">'Henri'</code><code class="jscript plain">,</code></div><div class="line number15 index14 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: </code><code class="jscript string">'Lebel'</code></div><div class="line number16 index15 alt1"><code class="jscript plain">});</code></div></div></td></tr></tbody></table></div></div>
+<p>Enfin le code de binding pour le template, on trouve des éléments via la méthode find(), la méthode find() appelée sans arguments retourne tous les résultats:</p>
+<div><div id="highlighter_596995" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">Template.personList.persons = </code><code class="jscript keyword">function</code><code class="jscript plain">() {</code></div><div class="line number2 index1 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">return</code> <code class="jscript plain">personList.find();</code></div><div class="line number3 index2 alt2"><code class="jscript plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>Le html reste quand a lui inchangé (une des forces du Templating<img width="16" height="16" class="wp-smiley emoji" draggable="false" alt=":)" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/simple-smile.svg" style="height: 1em; max-height: 1em;"> ).</p>
+<p>Voici le listing complet du fichier JavaScript:</p>
+<div><div id="highlighter_620949" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">personList = </code><code class="jscript keyword">new</code> <code class="jscript plain">Meteor.Collection(</code><code class="jscript string">'personList'</code><code class="jscript plain">);</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="jscript keyword">if</code> <code class="jscript plain">(Meteor.isClient) {</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">personList.insert({</code></div><div class="line number6 index5 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: </code><code class="jscript string">'John'</code><code class="jscript plain">,</code></div><div class="line number7 index6 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: </code><code class="jscript string">'Doe'</code><code class="jscript plain">,</code></div><div class="line number8 index7 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age: </code><code class="jscript string">'46'</code></div><div class="line number9 index8 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number10 index9 alt1">&nbsp;</div><div class="line number11 index10 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">personList.insert({</code></div><div class="line number12 index11 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: </code><code class="jscript string">'Jean'</code><code class="jscript plain">,</code></div><div class="line number13 index12 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: </code><code class="jscript string">'Dupont'</code><code class="jscript plain">,</code></div><div class="line number14 index13 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age: </code><code class="jscript string">'32'</code></div><div class="line number15 index14 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number16 index15 alt1">&nbsp;</div><div class="line number17 index16 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">personList.insert({</code></div><div class="line number18 index17 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: </code><code class="jscript string">'Henri'</code><code class="jscript plain">,</code></div><div class="line number19 index18 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: </code><code class="jscript string">'Lebel'</code></div><div class="line number20 index19 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number21 index20 alt2">&nbsp;</div><div class="line number22 index21 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">Template.personList.persons = </code><code class="jscript keyword">function</code><code class="jscript plain">() {</code></div><div class="line number23 index22 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">return</code> <code class="jscript plain">personList.find();</code></div><div class="line number24 index23 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number25 index24 alt2">&nbsp;</div><div class="line number26 index25 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">Template.person.events({</code></div><div class="line number27 index26 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript string">'click a'</code><code class="jscript plain">: </code><code class="jscript keyword">function</code><code class="jscript plain">(target, item) {</code></div><div class="line number28 index27 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">alert(</code><code class="jscript string">'you clicked: '</code> <code class="jscript plain">+ item.data.firstName + </code><code class="jscript string">' '</code> <code class="jscript plain">+ item.data.lastName);</code></div><div class="line number29 index28 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number30 index29 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number31 index30 alt2"><code class="jscript plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p><a target="_blank" href="https://github.com/nicoPhil/MeteorJsIntroduction/"></a>(Cette version est disponible dans le github: v4)</p>
+<p>Essayons de rafraîchir la page à plusieurs reprises, nous pouvons observer un comportement inattendu:</p>
+<p>Les 3 lignes John Doe, Jean Dupont et Henri Lebel se répètent autant de fois que nous lançons l’application : Les données sont persistes.<br>
+C’est à partir de ce moment qu’on trouve meteor magique:</p>
+<p><u>Explications:</u></p>
+<p>Nous avons vu que le code est publié autant sur le serveur que sur le client.<br>
+La déclaration de la collection se passe donc des 2 cotés.</p>
+<p>Lors des appels dans le code client à cette collection: insert(), find() etc… , meteor synchronise automatiquement le serveur avec les modifications, et voila !<br>
+Nous avons une base de donnée accessible directement depuis la couche client, avec un moteur de template directement mis à jour.</p>
+<p>Pour aller plus loin je vous conseille le test suivant, toujours avec le même code:</p>
+<p>Ouvrez 2 onglets du navigateur sur le même exemple, vous verrez que la page se met à jour automatiquement :<br>
+2eme effet kiss cool, en plus de mettre à jour le serveur, meteor se charge aussi de mettre à jour tous les autres clients.</p>
+<p>Bien sur il est possible de gérer plus finement les notifications et les mises à jour, mais il faut reconnaître que le fonctionnement par défaut est plutôt impressionnant.</p>
+<p>Avant de passer à la suite, il faut noter que la commande reset permet de remettre la base de donnée à son état initial (vide), ce qui peut s’avérer pratique:</p>
+<p>(toujours dans le répertoire du projet)</p>
+<div><div id="highlighter_884449" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">meteor reset</code></div></div></td></tr></tbody></table></div></div>
+<p><strong>Ajout et suppression de données</strong></p>
+<p>Faisons évoluer notre application, pour gérer une liste de personnes il faut pouvoir en ajouter et en supprimer.</p>
+<p>On supprime la partie de code qui insère 3 personnes à chaque lancement, nous allons le remplacer par un formulaire d’ajout.</p>
+<p>Pour l’ajout nous créons un nouveau template:</p>
+<div><div id="highlighter_860943" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">template</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"addPerson"</code><code class="xml plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">firstName:&lt;</code><code class="xml keyword">input</code> <code class="xml color1">type</code><code class="xml plain">=</code><code class="xml string">"text"</code> <code class="xml color1">class</code><code class="xml plain">=</code><code class="xml string">"firstname"</code><code class="xml plain">&gt;&lt;/</code><code class="xml keyword">input</code><code class="xml plain">&gt;&lt;</code><code class="xml keyword">br</code><code class="xml plain">/&gt;</code></div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">lastName:&lt;</code><code class="xml keyword">input</code> <code class="xml color1">type</code><code class="xml plain">=</code><code class="xml string">"text"</code> <code class="xml color1">class</code><code class="xml plain">=</code><code class="xml string">"lastname"</code><code class="xml plain">&gt;&lt;/</code><code class="xml keyword">input</code><code class="xml plain">&gt;&lt;</code><code class="xml keyword">br</code><code class="xml plain">/&gt;</code></div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">age:&lt;</code><code class="xml keyword">input</code> <code class="xml color1">type</code><code class="xml plain">=</code><code class="xml string">"text"</code> <code class="xml color1">class</code><code class="xml plain">=</code><code class="xml string">"age"</code><code class="xml plain">&gt;&lt;/</code><code class="xml keyword">input</code><code class="xml plain">&gt;&lt;</code><code class="xml keyword">br</code><code class="xml plain">/&gt;</code></div><div class="line number5 index4 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">button</code><code class="xml plain">&gt;Add&lt;/</code><code class="xml keyword">button</code><code class="xml plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">template</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>Vous pouvez constater que j’ai placé des classes sur chaque input, elle sont destinées a retrouver le bon élément via sélecteur css.<br>
+Il y a plusieurs manière d’identifier les éléments, on aurait pu aussi passer par des id.</p>
+<p>Ainsi que le code permettant d’insérer les nouvelles données:</p>
+<div><div id="highlighter_582984" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">Template.addPerson.events({</code></div><div class="line number2 index1 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript string">"click button"</code><code class="jscript plain">: </code><code class="jscript keyword">function</code><code class="jscript plain">(target, templ) {</code></div><div class="line number3 index2 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">var</code> <code class="jscript plain">firstName, lastName, age;</code></div><div class="line number4 index3 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName = templ.find(</code><code class="jscript string">".firstname"</code><code class="jscript plain">).value;</code></div><div class="line number5 index4 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName = templ.find(</code><code class="jscript string">".lastname"</code><code class="jscript plain">).value;</code></div><div class="line number6 index5 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age = templ.find(</code><code class="jscript string">".age"</code><code class="jscript plain">).value;</code></div><div class="line number7 index6 alt2">&nbsp;</div><div class="line number8 index7 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">personList.insert({</code></div><div class="line number9 index8 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: firstName,</code></div><div class="line number10 index9 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: lastName,</code></div><div class="line number11 index10 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age: age</code></div><div class="line number12 index11 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number13 index12 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number14 index13 alt1"><code class="jscript plain">});</code></div></div></td></tr></tbody></table></div></div>
+<p>La seule nouveauté ici est la fonction find, appelée sur templ qui permet de passer un selector et de récupérer l’element du DOM (ici des input) via leur class dans ce cas.</p>
+<p>Nous modifions également le ‘body’ pour utiliser ce nouveau template:</p>
+<div><div id="highlighter_613060" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{&gt; addPerson}}</code></div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">hr</code><code class="xml plain">/&gt;</code></div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{&gt; personList}}</code></div><div class="line number5 index4 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>Enfin en face de chaque ligne nous affichons un bouton X (comme ‘supprimer’), en modifiant le template ‘person’ :</p>
+<div><div id="highlighter_679325" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">template</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"person"</code><code class="xml plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{firstName}}</code></div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{lastName}}</code></div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">( {{age}} )</code></div><div class="line number5 index4 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">button</code><code class="xml plain">&gt;X&lt;/</code><code class="xml keyword">button</code><code class="xml plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">template</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>Ainsi que le code permettant de supprimer l’enregistrement correspondant à la ligne cliquée:</p>
+<div><div id="highlighter_756237" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">Template.person.events({</code></div><div class="line number2 index1 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript string">'click button'</code><code class="jscript plain">: </code><code class="jscript keyword">function</code><code class="jscript plain">(target, templ) {</code></div><div class="line number3 index2 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">personList.remove({</code></div><div class="line number4 index3 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">_id: templ.data._id</code></div><div class="line number5 index4 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number6 index5 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number7 index6 alt2"><code class="jscript plain">});</code></div></div></td></tr></tbody></table></div></div>
+<p>_id représente un id automatiquement attribué par la base de donnée, pratique pour référencer un élément de manière unique.<br>
+remove permet de … supprimer un ou plusieurs éléments de la collection, en fonction des critères passés en paramètre, ici nous supprimons tous les élements ayant un _id de la valeur de l’_id de la ligne en cours (1 seul donc).</p>
+<p>Nous en avons fini !</p>
+<p>Voici le listing complet pour cette dernière version:</p>
+<p>Le html:</p>
+<div><div id="highlighter_999063" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">head</code><code class="xml plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">title</code><code class="xml plain">&gt;demoProject&lt;/</code><code class="xml keyword">title</code><code class="xml plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">head</code><code class="xml plain">&gt;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{&gt; addPerson}}</code></div><div class="line number7 index6 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">hr</code><code class="xml plain">/&gt;</code></div><div class="line number8 index7 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">{{&gt; personList}}</code></div><div class="line number9 index8 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">body</code><code class="xml plain">&gt;</code></div><div class="line number10 index9 alt1">&nbsp;</div><div class="line number11 index10 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">template</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"addPerson"</code><code class="xml plain">&gt;</code></div><div class="line number12 index11 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">firstName:&lt;</code><code class="xml keyword">input</code> <code class="xml color1">type</code><code class="xml plain">=</code><code class="xml string">"text"</code> <code class="xml color1">class</code><code class="xml plain">=</code><code class="xml string">"firstname"</code><code class="xml plain">&gt;&lt;/</code><code class="xml keyword">input</code><code class="xml plain">&gt;&lt;</code><code class="xml keyword">br</code><code class="xml plain">/&gt;</code></div><div class="line number13 index12 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">lastName:&lt;</code><code class="xml keyword">input</code> <code class="xml color1">type</code><code class="xml plain">=</code><code class="xml string">"text"</code> <code class="xml color1">class</code><code class="xml plain">=</code><code class="xml string">"lastname"</code><code class="xml plain">&gt;&lt;/</code><code class="xml keyword">input</code><code class="xml plain">&gt;&lt;</code><code class="xml keyword">br</code><code class="xml plain">/&gt;</code></div><div class="line number14 index13 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">age:&lt;</code><code class="xml keyword">input</code> <code class="xml color1">type</code><code class="xml plain">=</code><code class="xml string">"text"</code> <code class="xml color1">class</code><code class="xml plain">=</code><code class="xml string">"age"</code><code class="xml plain">&gt;&lt;/</code><code class="xml keyword">input</code><code class="xml plain">&gt;&lt;</code><code class="xml keyword">br</code><code class="xml plain">/&gt;</code></div><div class="line number15 index14 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">button</code><code class="xml plain">&gt;Add&lt;/</code><code class="xml keyword">button</code><code class="xml plain">&gt;</code></div><div class="line number16 index15 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">template</code><code class="xml plain">&gt;</code></div><div class="line number17 index16 alt2">&nbsp;</div><div class="line number18 index17 alt1"><code class="xml plain">&lt;</code><code class="xml keyword">template</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"personList"</code><code class="xml plain">&gt;</code></div><div class="line number19 index18 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">ul</code><code class="xml plain">&gt;</code></div><div class="line number20 index19 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{#each persons}}</code></div><div class="line number21 index20 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">li</code><code class="xml plain">&gt;</code></div><div class="line number22 index21 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{&gt; person}}</code></div><div class="line number23 index22 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;/</code><code class="xml keyword">li</code><code class="xml plain">&gt;</code></div><div class="line number24 index23 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{/each}}</code></div><div class="line number25 index24 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;/</code><code class="xml keyword">ul</code><code class="xml plain">&gt;</code></div><div class="line number26 index25 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">template</code><code class="xml plain">&gt;</code></div><div class="line number27 index26 alt2">&nbsp;</div><div class="line number28 index27 alt1"><code class="xml plain">&lt;</code><code class="xml keyword">template</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"person"</code><code class="xml plain">&gt;</code></div><div class="line number29 index28 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{firstName}}</code></div><div class="line number30 index29 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">{{lastName}}</code></div><div class="line number31 index30 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">( {{age}} )</code></div><div class="line number32 index31 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">button</code><code class="xml plain">&gt;X&lt;/</code><code class="xml keyword">button</code><code class="xml plain">&gt;</code></div><div class="line number33 index32 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">template</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>Et le JavaScript:</p>
+<div><div id="highlighter_629621" class="syntaxhighlighter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">personList = </code><code class="jscript keyword">new</code> <code class="jscript plain">Meteor.Collection(</code><code class="jscript string">'personList'</code><code class="jscript plain">);</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="jscript keyword">if</code> <code class="jscript plain">(Meteor.isClient) {</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">Template.addPerson.events({</code></div><div class="line number6 index5 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript string">"click button"</code><code class="jscript plain">: </code><code class="jscript keyword">function</code><code class="jscript plain">(target, templ) {</code></div><div class="line number7 index6 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">var</code> <code class="jscript plain">firstName, lastName, age;</code></div><div class="line number8 index7 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName = templ.find(</code><code class="jscript string">".firstname"</code><code class="jscript plain">).value;</code></div><div class="line number9 index8 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName = templ.find(</code><code class="jscript string">".lastname"</code><code class="jscript plain">).value;</code></div><div class="line number10 index9 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age = templ.find(</code><code class="jscript string">".age"</code><code class="jscript plain">).value;</code></div><div class="line number11 index10 alt2">&nbsp;</div><div class="line number12 index11 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">personList.insert({</code></div><div class="line number13 index12 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">firstName: firstName,</code></div><div class="line number14 index13 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">lastName: lastName,</code></div><div class="line number15 index14 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">age: age</code></div><div class="line number16 index15 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number17 index16 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number18 index17 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number19 index18 alt2">&nbsp;</div><div class="line number20 index19 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">Template.personList.persons = </code><code class="jscript keyword">function</code><code class="jscript plain">() {</code></div><div class="line number21 index20 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">return</code> <code class="jscript plain">personList.find();</code></div><div class="line number22 index21 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number23 index22 alt2">&nbsp;</div><div class="line number24 index23 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">Template.person.events({</code></div><div class="line number25 index24 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript string">'click button'</code><code class="jscript plain">: </code><code class="jscript keyword">function</code><code class="jscript plain">(target, templ) {</code></div><div class="line number26 index25 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">console.log(templ.data._id);</code></div><div class="line number27 index26 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">personList.remove({</code></div><div class="line number28 index27 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">_id: templ.data._id</code></div><div class="line number29 index28 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number30 index29 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number31 index30 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">});</code></div><div class="line number32 index31 alt1"><code class="jscript plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p><a target="_blank" href="https://github.com/nicoPhil/MeteorJsIntroduction/"></a>(Cette version est disponible dans le github: v5)</p>
+<p>Vous pouvez maintenant tester:</p>
+<p>– Il est possible d’ajouter des personnes a la liste.<br>
+– Il est possible de supprimer des personnes de la liste.<br>
+– Les données sont correctement persistées.<br>
+– En affichant la page sous 2 fenetres de navigateurs, on peut voir la mise à jour en direct.</p>
+<p><strong>Déploiement et conclusion</strong></p>
+<p>J’espere que meteor vous aura autant impressionné que moi, je reviendrai sur les fonctionnalités supplémentaires dans d’autres posts, mais ce rapide état des lieux permet de sentir la puissance de l’outil.<br>
+En comparaison, construire des applications client/serveur, avec une persistance et des notifications demande beaucoup plus de travail, il suffit de regarder le nombre de lignes de code de la version finale pour s’en convaincre.</p>
+<p>Aussi, et c’est peut être le plus excitant dans ce framework, est qu’il en est a peine à la PREVIEW 0.6.4.1 et que 7 personnes bosser à plein temps dessus, ce qui présage de très bonnes choses.</p>
+<p>Enfin, et cerise sur le gâteau, meteor propose un hébergement de test sur leurs serveurs, on peut à tout moment déployer notre application avec l’instruction:</p>
+<div><div id="highlighter_414761" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">meteor deploy monApp.meteor.com</code></div></div></td></tr></tbody></table></div></div>
+<p>(remplacer monApp par le nom de votre application…)</p>
+<p>Le gros avantage de déployer une application meteor sur internet c’est qu’on peut tester la synchronisation non plus entre plusieurs fenêtres de navigateur mais entre plusieurs ordinateurs, tout de suite + impressionnant.</p>
+<p>Attention car dans ce cas la n’importe qui peut écraser votre déploiement, vous pouvez protéger le sous domaine avec un password en utilisant l’instruction</p>
+<div><div id="highlighter_320785" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">meteor deploy -P monApp.meteor.com</code></div></div></td></tr></tbody></table></div></div>
+<p>(un mot de passe vous sera demandé).</p>
+<p>D’ailleurs la version de code final du tutoriel est disponible à l’adresse <a target="_blank" href="http://nicophil-meteor1.meteor.com/">http://nicophil-meteor1.meteor.com/</a>, c’est la même version que la v5 du github.</p>
+		<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<a class="wpa-about" href="https://wordpress.com/about-these-ads/" rel="nofollow">Concernant ces publicités</a>
+				<div class="u">
+					<script type="text/javascript">
+					(function(g){g.__ATA.initAd({sectionId:26942, width:300, height:250});})(window);
+					</script><div id="automattic-id-10327" data-section="26942" style="width:300px; height:250px;"><iframe width="300" height="250" style="border:none;width:300px;height:250px;" frameborder="0" scrolling="no" name="fif_slot_automattic-id-_automattic-id-10327" id="fif_slot_automattic-id-_automattic-id-10327" src="javascript:&quot;&lt;html&gt;&lt;body style=&#39;background:transparent;margin:0%;&#39;&gt;&lt;/body&gt;&lt;/html&gt;&quot;" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/saved_resource.html"></iframe></div>
+				</div>
+			</div>
+		</div><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled">
+<div id="jp-relatedposts" class="jp-relatedposts" style="display: block;">
+	<h3 class="jp-relatedposts-headline"><em>Sur le même thème</em></h3>
+<div class="jp-relatedposts-items jp-relatedposts-items-minimal"><p class="jp-relatedposts-post jp-relatedposts-post0" data-post-id="93" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://nicophil.wordpress.com/2013/08/20/publishsubscribecall-dans-meteorjs/" title="Publish/subscribe/call dans meteorjs
+
+Dans ce chapitre nous allons voir comment ajouter une couche de sécurité aux applications meteor. Comme indiqué dans mon post sur les packages, le projet créé par &#39;meteor create&#39; contient un certain nombre de packages par défaut, et notamment : - autopublish - insecure vous pouvez les lister avec la…" rel="nofollow" data-origin="71" data-position="0">Publish/subscribe/call dans meteorjs</a></span><span class="jp-relatedposts-post-context"></span></p><p class="jp-relatedposts-post jp-relatedposts-post1" data-post-id="86" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://nicophil.wordpress.com/2013/08/16/meteor-les-packages/" title="Meteor: Les packages
+
+Une des puissances de meteor est son système de package, que nous avons jusqu’à présent utilisé sans le savoir (Session ou autopublish en sont) Il suffit par exemple d&#39;ajouter le package coffeescript et vous pouvez développer votre application en coffescript. Si vous êtes un utilisateur régulier de npm, vous devriez…" rel="nofollow" data-origin="71" data-position="1">Meteor: Les packages</a></span><span class="jp-relatedposts-post-context">Avec 1 commentaire</span></p><p class="jp-relatedposts-post jp-relatedposts-post2" data-post-id="5" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://nicophil.wordpress.com/2013/08/03/une-introduction-a-polymer/" title="Une introduction à Polymer
+
+Polymer est une librairie très très fraîche (version pre-alpha pour le moment), elle est développée par des employés de google sur leur temps libre (par de rapport direct avec google). Le point différenciant avec les autres librairies/frameworks pour le front end est que Polymer nous fait utiliser des technologies qui émergent et des…" rel="nofollow" data-origin="71" data-position="2">Une introduction à Polymer</a></span><span class="jp-relatedposts-post-context">Dans "Polymer"</span></p></div></div></div>					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			Cette entrée a été publiée dans <a href="https://nicophil.wordpress.com/category/uncategorized/" rel="category tag">Uncategorized</a> le <a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/" title="8:47  " rel="bookmark"><time class="entry-date" datetime="2013-08-10T20:47:01+00:00">10 août 2013</time></a> <span class="by-author">par <span class="author vcard"><a class="url fn n" href="https://nicophil.wordpress.com/author/nicophil/" title="Afficher tous les articles par nicophil" rel="author">nicophil</a></span></span>.								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">Navigation des articles</h3>
+					<span class="nav-previous"><a href="https://nicophil.wordpress.com/2013/08/08/modifier-dynamiquement-les-comportements-en-javascript/" rel="prev"><span class="meta-nav">←</span> Modifier dynamiquement les comportements en&nbsp;JavaScript</a></span>
+					<span class="nav-next"><a href="https://nicophil.wordpress.com/2013/08/13/les-sessions-dans-meteor/" rel="next">Les Sessions dans&nbsp;Meteor <span class="meta-nav">→</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			Une réflexion au sujet de «&nbsp;<span>MeteorJs : Découverte (attention framework ultra&nbsp;puissant)</span>&nbsp;»		</h2>
+
+		<ol class="commentlist">
+				<li class="pingback even thread-even depth-1 highlander-comment" id="comment-2">
+		<p>Ping&nbsp;: <a href="https://nicophil.wordpress.com/2013/08/13/les-sessions-dans-meteor/" rel="external nofollow" class="url">Les Sessions dans Meteor | nicoPhil</a> </p>
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+		
+	
+					<div id="respond" class="comment-respond js">
+			<h3 id="reply-title" class="comment-reply-title">Laisser un commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#respond" style="display:none;">Annuler la réponse.</a></small></h3>				<form action="https://nicophil.wordpress.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+					<input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="fa47995744"><input type="hidden" name="_wp_http_referer" value="/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/">
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest">
+
+<div class="comment-form-field comment-textarea">
+	
+	<div id="comment-form-comment"><textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px; padding: 0px; box-sizing: content-box; word-wrap: break-word; overflow: hidden; transition: none; height: 0px !important; min-height: 0px !important; font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif; font-size: 14px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; text-decoration: none; word-spacing: 0px; text-indent: 0px; line-height: 24px; width: 602.984px;" class="autosizejs "></textarea><textarea id="comment" name="comment" title="Entrez votre commentaire..." placeholder="Entrez votre commentaire..." style="height: 44px; overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div>
+</div>
+
+<div id="comment-form-identity" style="display: none;">
+
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#comment-form-guest" id="postas-guest" title="Visiteur">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+			<li>
+			<iframe id="googleplus-sign-in" name="googleplus-sign-in" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/saved_resource(7).html" width="24" height="24" scrolling="no" allowtransparency="true" seamless="seamless" frameborder="0"></iframe>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/ad516503a11cd5ca435acc9bb6523536" alt="Gravatar" width="25" class="no-grav">
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Adresse de contact <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="text" value=""></div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/ad516503a11cd5ca435acc9bb6523536" alt="Logo WordPress.com" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="">
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> Vous commentez à l'aide de votre compte WordPress.com. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;wordpress&#39; );">Déconnexion</a>&nbsp;/&nbsp;<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/ad516503a11cd5ca435acc9bb6523536" alt="Image Twitter" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="">
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> Vous commentez à l'aide de votre compte Twitter. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;twitter&#39; );">Déconnexion</a>&nbsp;/&nbsp;<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/ad516503a11cd5ca435acc9bb6523536" alt="Photo Facebook" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="">
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> Vous commentez à l'aide de votre compte Facebook. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;facebook&#39; );">Déconnexion</a>&nbsp;/&nbsp;<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/ad516503a11cd5ca435acc9bb6523536" alt="Photo Google+" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="">
+				<p class="comment-form-posting-as pa-googleplus"><strong></strong> Vous commentez à l'aide de votre compte Google+. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;googleplus&#39; );">Déconnexion</a>&nbsp;/&nbsp;<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe" style="display: none;">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par email des nouveaux commentaires.</label></p></div>
+
+
+
+
+<p class="form-submit" style="display: none;"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire"> <input type="hidden" name="comment_post_ID" value="71" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="5f6a2b2750"></p>
+<input type="hidden" name="genseq" value="1468101909">
+<p style="display: none;"></p>				<input type="hidden" id="ak_js" name="ak_js" value="1468101928988"></form>
+					</div><!-- #respond -->
+		<div style="clear: both"></div>
+</div><!-- #comments .comments-area -->
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+								<aside id="recent-posts-3" class="widget widget_recent_entries">		<h3 class="widget-title">Articles</h3>		<ul>
+					<li>
+				<a href="https://nicophil.wordpress.com/2014/06/11/angularjs-ajouter-une-directive-dynamiquement/">AngularJs: Ajouter une directive&nbsp;dynamiquement</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2014/06/03/projet-simple-avec-react/">Projet Simple avec&nbsp;React</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2014/05/26/decouverte-de-react-js/">Découverte de React</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2013/09/16/projet-demo-sur-meteorjs/">Projet Demo sur&nbsp;MeteorJs</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2013/08/20/publishsubscribecall-dans-meteorjs/">Publish/subscribe/call dans meteorjs</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2013/08/16/meteor-les-packages/">Meteor: Les packages</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2013/08/13/les-sessions-dans-meteor/">Les Sessions dans&nbsp;Meteor</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/">MeteorJs : Découverte (attention framework ultra&nbsp;puissant)</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2013/08/08/modifier-dynamiquement-les-comportements-en-javascript/">Modifier dynamiquement les comportements en&nbsp;JavaScript</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2013/08/08/ember-js-part1-les-templates/">Ember.js : Part1 : les&nbsp;templates</a>
+						</li>
+					<li>
+				<a href="https://nicophil.wordpress.com/2013/08/03/une-introduction-a-polymer/">Une introduction à&nbsp;Polymer</a>
+						</li>
+				</ul>
+		</aside>				</div><!-- #secondary -->
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+			<a href="https://wordpress.com/themes/twentytwelve/" title="En savoir plus sur ce thème">Thème Twenty Twelve</a>.			<a href="https://wordpress.com/?ref=footer_blog">Propulsé par WordPress.com.</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<!-- wpcom_wp_footer -->
+<script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/wpgroho.js"></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d'un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l'aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/nicophil.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/nicophil.wordpress.com\/wp-login.php?action=logout&_wpnonce=50c0d9fbbd","homeURL":"https:\/\/nicophil.wordpress.com\/","postID":"71","gravDefault":"identicon","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"0","userIsLoggedIn":"","isJetpack":"0","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/saved_resource(3)"></script>
+
+	<div id="bit" class="loggedout-follow-normal" style="bottom: -252px;">
+		<a class="bsub" href="javascript:void(0)"><span id="bsub-text">Suivre</span></a>
+		<div id="bitsubscribe">
+
+					<h3><label for="loggedout-follow-field">S’abonner à “nicoPhil”</label></h3>
+
+			<form action="https://subscribe.wordpress.com/" method="post" accept-charset="utf-8" id="loggedout-follow">
+			<p>Recevez les nouvelles publications par mail.</p>
+
+			<p id="loggedout-follow-error" style="display: none;"></p>
+
+			
+			<p><input type="email" name="email" placeholder="Entrez votre adresse mail" id="loggedout-follow-field"></p>
+
+			<input type="hidden" name="action" value="subscribe">
+			<input type="hidden" name="blog_id" value="55944782">
+			<input type="hidden" name="source" value="https://nicophil.wordpress.com/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/">
+			<input type="hidden" name="sub-type" value="loggedout-follow">
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="42e1bab87c"><input type="hidden" name="_wp_http_referer" value="/2013/08/10/meteorjs-decouverte-attention-framework-ultra-puissant/">
+			<p id="bsub-subscribe-button"><input type="submit" value="Inscrivez-moi"></p>
+			</form>
+					<div id="bsub-credit"><a href="https://fr-fr.wordpress.com/?ref=lof">Construisez un site avec WordPress.com</a></div>
+		</div><!-- #bitsubscribe -->
+	</div><!-- #bit -->
+<script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/form.js"></script>
+<script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/saved_resource(4)"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?m=1363304414h&amp;ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var JetpackEmojiSettings = {"base_url":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/emoji\/twemoji\/"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/saved_resource(5)"></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<script>
+			var _comscore = _comscore || [];
+			_comscore.push({
+				c1: "2",
+				c2: "7518284"
+			});
+			(function() {
+				var s = document.createElement("script"),
+					el = document.getElementsByTagName("script")[0];
+				s.async = true;
+				s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+				el.parentNode.insertBefore(s, el);
+			})();
+		</script>
+		<noscript>
+			&lt;p class="robots-nocontent"&gt;&lt;img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=7518284&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c15=&amp;cv=2.0&amp;cj=1" alt="" style="display:none;" width="1" height="1" /&gt;&lt;/p&gt;
+		</noscript><script src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/w.js" type="text/javascript" async="" defer=""></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'55944782','blog_tz':'0','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'55944782','v':'wpcom','tz':'0','user_id':'0','post':'71','subd':'nicophil'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdTdvUG14Q2VDQTR4LlUsLi82dU1mai9BMkF2cFZwVGpsL1FOQzJENCZURi9aLGttLnNuTVExLVlUY2wySGNVWXpxUGZ2Vm5iNyVdcUFidVk5Mm9yNDZ6U2s4flhrQnFSNHhoYW9Eclc5aG11U0N1Zn44LHQrPThJJkZ6V3NSdkxXR3hqampxfmhjSmFRMi1reS9dYnxPUXlZNix2X2hsaEFTMit5Z01HQT9+VUQmWDV1RDc1NXdGcmZVMV9GcHU4YiZ0QWxTQUF4VUk9LUpPN0JrakZYaC1kUkNVYlQ5W2VaQ0MtSlp5L3QuVUlheDNMSXRYY0Q2c2FYTC1nVzBGL2d5LWd8NEpUTGw='}]);
+_stq.push([ 'clickTrackerInit', '55944782', '71' ]);
+	</script>
+<noscript>&lt;img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /&gt;</noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+<img src="./MeteorJs _ Découverte (attention framework ultra puissant) _ nicoPhil_files/g.gif" alt=":)" id="wpstats"></body></html>
