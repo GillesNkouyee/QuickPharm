@@ -1,4 +1,3 @@
-```dockerfile
 # 1️⃣ Base Node compatible avec Meteor 1.7
 FROM node:14-buster
 
@@ -23,5 +22,4 @@ EXPOSE 3000
 
 # 8️⃣ Lancer l'application
 CMD ["node", "main.js"]
-```
 
