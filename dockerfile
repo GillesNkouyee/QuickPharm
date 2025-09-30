@@ -15,6 +15,7 @@ RUN npm install --production
 # 5️⃣ Variables d’environnement Render
 WORKDIR /opt/bundle/bundle
 ENV PORT=3000
+ENV BIND_IP=0.0.0.0
 ENV ROOT_URL=https://quickpharm-1.onrender.com
 ENV MONGO_URL=mongodb+srv://<Gilles-admin>:<Oathniel@Jnmm2024>@cluster0.bgt04et.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 ENV METEOR_ALLOW_SUPERUSER=1
