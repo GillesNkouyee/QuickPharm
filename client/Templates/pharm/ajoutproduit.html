@@ -1,0 +1,325 @@
+
+<template name = "ajoutproduit">
+         <div class="ui form ">
+
+
+                  <!-- {{> quickForm collection="Productdata" id="productForm" meteormethod="ajoutproduit" type="insert"  omitFields="addedBy, updatedAt, createdAt,fileShopId"
+                  resetOnSuccess=true}} -->
+
+            <form class="form-horizontal"  id="productform">
+                <div class="form-group isPremium">
+                  <label for="price">Price: </label><br/>
+                  <span class="amount">Amount: </span><input class="priceModelInput form-control" type="Number" name="price" id="priceModelInput" placeholder="Please enter the price">
+                  <input type="checkbox" name="freeModel" value="Free"> Free
+                </div>
+                    <div class="form-group">
+                      <div class="uploadCategory form-group">
+                        <label for="category">Categorie</label>
+                        <select  class="form-control" name="category" id="category">
+                          <option value='nourrisson'>Nourisson</option>
+                          <option value='enfant'>Enfant</option>
+                          <option value='adulte'>Adulte</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="grouped fields">
+                        <label for="onpresc">Sur Ordonance uniquement</label>
+                        <div class="field">
+                          <div class="ui radio checkbox">
+                            <input type="radio" name="onpresc" id="onpresc" value="oui">
+                            <label>Oui</label>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <div class="ui radio checkbox">
+                            <input type="radio" name="onpresc" id="onpresc" value="non">
+                            <label>Non</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="tag">Classe</label>
+                            <select   id="tag" class="form-control" name ="tag"  placeholder="tag..." required>
+                                <option value=""></option>
+                                <option value='Antibiotiques'>Antibiotique</option>
+                                <option value='Antifongiques'>Antifongique</option>
+                                <option value='Antalgiques'>Antalgique</option>
+                                <option value='Antipaludeens'>Antipaludéens</option>
+                                <option value='Antiparasitaires'>Antiparasitaires</option>
+                                <option value='Antiacides'>Antiacides</option>
+                                <option value='Antidiabetiques'>Antidiabétiques</option>
+                                <option value='Antitoussifs'>Antitoussifs</option>
+                                <option value='Antihemorragiques'>Antihémorragiques</option>
+                                <option value='Antihelmintiques'>Antihelmintiques</option>
+                                <option value='Antiagregants'>Antiagrégants</option>
+                                <option value='Antianémiques'>Antianemiques</option>
+                                <option value='Antiasteniques'>Antiasténiques</option>
+                                <option value='Diuretiques'>Diurétiques</option>
+                                
+                            </select>
+                    </div>
+                    <div class="uploadCategory form-group">
+                      <label for="canal">Voie d'administration</label>
+                      <select  class="form-control" name="canal" id="canal">
+                        <option value='oculaire'>Oculaire</option>
+                        <option value='orale'>Orale</option>
+                        <option value='rectale'>Rectale</option>
+                        <option value='auriculaire'>Auriculaire</option>
+                        <option value='vaginale'>Vaginale</option>
+                        <option value='cutanee'>Cutanée</option>
+                        <option value='parenterale'>Parentérale</option>
+                        <option value='intraveineuse'>Intraveineuse</option>
+                        <option value='comprimes'>Comprimés</option>
+
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="lab">Laboratoire</label>
+                           <input type="text" class="form-control" id="lab" name ="lab"  placeholder="laboratoire..."  required>
+                    </div>
+                    <div class="form-group">
+                      <label for="desc">Description</label>
+                           <input type="text" class="form-control" id="desc" name ="desc"  placeholder="description..."  required>
+                    </div>
+                    <div class="form-group">
+                           <input type="text" class="form-control" id="brand" name ="brand"  placeholder="brand..." required>
+                    </div>
+
+                    <div class="uploadFile form-group">
+                      <label for="images">Choose files: </label>
+                      <input type="file"   name="images[]" id="images" multiple="" value="default.jpg">
+                    </div>
+
+                    <div class="form-group">
+                          <input type="submit" class="form-control  button btn-info" value='add Products' >
+                      </div>
+              </form>
+          </div>
+
+</template>
+<!-- <template name="uploader">
+  <h4 class="page-header">Upload a CSV</h4>
+
+  {{#unless uploading}}
+    <input type="file" name="uploadCSV">
+  {{else}}
+    <p><i class="fa fa-spin fa-refresh"></i> Uploading files...</p>
+  {{/unless}}
+</template> -->
+<!--  -->
+<template name="gestionShop">
+
+  <div class="ui container">
+
+    <div class="alert alert-info" role="alert" style="border-radius:2px"><h2>Dashboard <small>Manage your shop here...</small></h2></div>
+    <br />
+    <div class="panel panel-default ">
+        <div class="btn-group btn-group-justified" role="group">
+        {{#if currentUser}}
+
+                      <ul  class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"  data-toggle="tab"><a href="#add-Artcl">Inserez articles</a></li>
+                        <li role="presentation" data-toggle="tab"><a href="#modify-Artcl">Modifiez articles</a></li>
+                        <li role="presentation" data-toggle="tab"><a href="#generalset">Shop general settings</a></li>
+                      </ul>
+                      <div class="tab-content">
+                    <div class="tab-pane active" id="add-Artcl">
+                      <div class="col-xs-6 col-md-4">
+
+                  <!--{{#if new_art}}-->
+                      <div class="panel panel-success">
+                      <div class="page-header">
+                              <h4 >Ajouter des Articles </h4>
+                           </div>
+                        {{#if currentUser }}
+                                <!-- {{> ajoutproduit}} -->
+
+                            {{else}}
+                                    <div class="panel alert-info" ><h4><strong>Sorry!</strong> You must log in to add stuffs </h4></div>
+                            {{/if}}
+                      </div>
+                      <!--{{else}}
+                      <div class="tag btn btn-warning"
+                  id="btnNewArt">&plus;Add articles here</div>
+                  {{/if}}-->
+
+                    </div>
+                </div>
+                <div class="tab-pane" id="modify-Artcl">
+
+                    <div class="col-xs-12  col-md-8">
+            					<div class="panel panel-default" >
+            					 	<div class="panel-heading">
+            					 		<img  src="{{shoplogo}}" style=" height:4cm ;width:4cm ">
+            		  				</div>
+            							  <div class="panel-body">
+            							  		{{> showarticle}}
+            							  </div>
+            						<div class="panel-footer">
+            							<nav aria-label="...">
+            							  <ul class="pager">
+            							    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+            							    <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            							  </ul>
+            							</nav>
+            						</div>
+            					</div>
+            				</div>
+                </div>
+                <div class="tab-pane" id="account-settings">
+                    <form action="#" method="post" class="form-horizontal" id="accountSetForm" role="form">
+                        <div class="form-group">
+                            <label for="avatar" class="col-sm-2 control-label">Avatar</label>
+                            <div class="col-sm-10">
+                                <div class="custom-input-file">
+                                    <label class="uploadPhoto">
+                                        Edit
+                                        <input type="file" class="change-avatar" name="avatar" id="avatar">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="name" id="name" placeholder="Vilma palma">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nickName" class="col-sm-2 control-label">Nick name</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="nickName" id="nickName" placeholder="Vilma">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                              <input type="email" class="form-control" name="email" id="email" placeholder="vilma@mail.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword" class="col-sm-2 control-label">New password</label>
+                            <div class="col-sm-10">
+                              <input type="password" class="form-control" name="newPassword" id="newPassword">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="col-sm-2 control-label">Confirm password</label>
+                            <div class="col-sm-10">
+                              <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button class="btn btn-primary btn-circle text-uppercase" type="submit" id="submit">Save changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        {{/if}}
+
+        </div>
+    </div>
+  </div>
+</template>
+
+
+<!--  -->
+
+<template name='postList'>
+  <form class="form-horizontal"  id="form">
+
+  <div class="form-group">
+         <input type="text" class="form-control" id="title" name ="title"  placeholder="Post title..." required>
+  </div>
+
+  <div class="uploadFile form-group">
+    <label for="images">Choose files: </label>
+    <input type="file" class=" myFileInput"  name="file" id="images" multiple="">
+  </div>
+  <div class="form-group">
+        <input type="submit" class="form-control  button btn-info" value='add Products'>
+  </div>
+  </form>
+</template>
+<template name="uploadpdt">
+  <div class="container form-container">
+        <div class="row">
+          <div class="col-xs-12 col-md-8">
+              <div class="uploadform">
+                <h2>Upload your model</h2>
+                {{#if currentUser}}
+                <form>
+
+                    <div class="uploadTitle form-group">
+                      <label for="title">Title: </label>
+                      <input type="text" class="form-cocntrol" name="title" placeholder="Fill in the model title">
+                    </div>
+
+                    <div class="uploadFile form-group">
+                      <label for="modelfiles">Choose files: </label>
+                      <input type="file" class="form-cocntrol" accept="image/png, image/jpeg, image/gif" name="modelfiles" id="modelfile" multiple="">
+                    </div>
+
+                    <div class="uploadDescription form-group">
+                      <label for="description">Description: </label>
+                      <textarea name="description" class="form-cocntrol" placeholder="Please enter a description"></textarea>
+                    </div>
+
+                    <div class="uploadCategory form-group">
+                      <label for="category">Choose category</label>
+                      <select  class="form-cocntrol" name="category">
+                        <option>Art</option>
+                        <option>Architecture</option>
+                        <option>Characters</option>
+                        <option>Fashion</option>
+                        <option>Gadgets</option>
+                        <option>Hobby</option>
+                        <option>Jewelery</option>
+                        <option>Tools</option>
+                        <option>Toys</option>
+                      </select>
+                    </div>
+
+                    <div class="uploadImages form-group">
+                      <div class="imageUploadInfo"><span>Optimal image ratio is 4:3.</span><div class="arrowDown"></div></div>
+                      <label for="images">Choose images(optional): <i class="fa fa-info imageInfo"></i></label>
+                      <input type="file" name="images" id="modelimage" class="form-control myFileInput" multiple="">
+                    </div>
+
+                    <div class="isPremium form-group">
+                      <label for="price">Price: </label><br/>
+                      <span class="amount">Amount: </span><input class="priceModelInput" type="text" name="price" id="priceModelInput" placeholder="Please enter the price">
+                      <input type="checkbox" class="form-cocntrol" name="freeModel" value="Free"> Free
+                    </div>
+
+                    <div class="uploadCategory form-group">
+                      <label for="license">Choose License</label>
+                      <select class="licenseSelectBox form-control" name="license">
+                        <option value="0">Choose a license</option>
+                        <option value="1">Creative Commons - Zero</option>
+                        <option value="2">Creative Commons BY-NC 4.0</option>
+                        <option value="3">Creative Commons SA-BY</option>
+                        <option value="4">Commercial license</option>
+                      </select>
+                      <br>
+                      <br>
+                    </div>
+
+                    <input class="form-cocntrol" id="addarticle" type="submit" value="Upload">
+
+                </form>
+                {{else}}
+                  {{redirectUser}}
+                {{/if}}
+              </div>
+            </div>
+          </div>
+      </div>
+</template>

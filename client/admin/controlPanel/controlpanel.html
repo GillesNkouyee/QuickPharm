@@ -1,0 +1,21 @@
+<template id="userCtrlpanel" name="userCtrlpanel">
+
+    <div class="ui  container  ">
+      <br><br>
+      <br><br>
+    <div class="ui huge header">Panneau de configuration des Utilisateurs
+    </div>
+
+    <div class="ui divider"></div>
+
+    <div class="ui stackable secondary menu ">
+        <a class="item active" data-tab="first">Users Lists</a>
+        <a class="item" data-tab="second">Users Manage</a>
+        <!-- <a class="item" data-tab="third">Etablisssement</a> -->
+      </div>
+      <div class="ui  tab container segment " data-tab="first">{{> userlist}}</div>
+      <div class="ui tab segment" data-tab="second">{{> users}}</div>
+      <!-- <div class="ui bottom attached tab segment" data-tab="third">{{> formulaireEtablissement}}</div> -->
+
+      </div>
+</template>

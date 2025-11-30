@@ -1,0 +1,22 @@
+<template name="upload">
+
+  {{#if isInRole 'admin'}}
+      <h4 class="page-header">Upload a CSV</h4>
+
+            {{#unless uploading}}
+              <input type="file" name="uploadCSV" class="ui horizontal teal button">
+            {{else}}
+              <p><i class="spy icon"></i> Uploading files...</p>
+            {{/unless}}
+    {{else}}
+    <div class="ui negative message">
+        <i class="close icon"></i>
+        <div class="header">
+          We're sorry You are not allowed to enter here!
+        </div>
+        <p>Please contact your administrator !
+      </p>
+    </div>
+    {{/if}}
+
+</template>

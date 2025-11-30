@@ -1,0 +1,70 @@
+<template name="newaidesoignant">
+  <div class="ui container" style="margin-top: 60px;">
+    <div class="ui section segment" style="text-align: center; ">
+        <h2 class="ui header">Ajouter un praticien</h2>
+        <div class="panel-body">
+            <div class="ui form">
+      {{#autoForm collection="AideSoignants" id="asform" type="insert" method="ajoutAidesoignant" 
+                  omitFields="addedBy, updatedAt, createdAt" resetOnSuccess=true}}
+
+                <div class="ui segment">
+                  <div class="ui three fields">
+                    <div class="field">
+                      {{> afQuickField name='nom' label='Nom'}}
+                    </div>
+                    <div class="field">
+                      {{> afQuickField name='prenom' label='Prénom'}}
+                    </div>
+                    <div class="field">
+                      {{> afQuickField name='telephone' label='Téléphone'}}
+                    </div>
+                  </div>
+
+                  <div class="ui three fields">
+                    <div class="field">
+                      {{> afQuickField name='region' label='Région'}}
+                    </div>
+                    <div class="field">
+                      {{> afQuickField name='ville' label='Ville'}}
+                    </div>
+                    <div class="field">
+                      {{> afQuickField name='quartier' label='Quartier'}}
+                    </div>
+                  </div>
+
+                  <div class="ui three fields">
+                    <div class="field">
+                      {{> afQuickField name='specialite' label='Spécialité'}}
+                    </div>
+                    <div class="field">
+                      {{> afQuickField name='disponible' label='Disponible ?'}}
+                    </div>
+                    <div class="field">
+                      {{> afQuickField name='dernierAppel' label='Dernier appel'}}
+                    </div>
+                  </div>
+
+                 <div class="ui two fields segment field">
+                  <div class="eight wide field">
+                    {{> afQuickField name='localisation' label='localisation'}}
+                  </div>
+                  <div class="eight wide field">
+                    {{> afQuickField name='documents_perso' label='documents_perso'}}
+                  </div>
+                </div>
+                  <div class="ui divider"></div>
+
+                  <div class="ui field">
+                    <button type="submit" class="ui fluid teal button">
+                      <i class="plus icon"></i> Enregistrer
+                    </button>
+                  </div>
+                </div>
+
+          {{/autoForm}}
+        </div>
+
+      </div>          
+  </div>
+ </div> 
+</template>

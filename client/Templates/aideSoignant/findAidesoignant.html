@@ -1,0 +1,219 @@
+<template name="findAidesoignant">
+  <div class="ui container" style="margin-top: 40px;">
+    <div class="ui section" style="text-align: center; ">
+          <img src="/TextlogoQP2-Photoroom.png"  alt="MyDirectory" class="small">
+      </div>
+      <h2 class="ui header">Recherchez de  l'assistance sanitaire</h2>
+      <form class="ui form" id="search-form">
+        <div class="fields">
+            <div class="twelve wide field">
+                <input type="text" name="searchQuery" placeholder="{{getGlobal 'searchAidesoignant'}}" required>
+            </div>
+            <div class="six wide field">
+                <select class="ui dropdown" name="dispoSelect" id="dispoSelect">
+                    
+                    {{#each disponibilites}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                    
+            <!-- Ajoute d'autres specialites selon ta base -->
+                </select>
+            </div>
+            <div class="four wide field">
+              <div class="ui buttons">
+                <button class="ui primary button" type="submit">Rechercher</button>
+                <div class="or"></div>
+                <button class="ui button" type="button" id="reset-form">Réinitialiser</button>
+               </div> 
+            </div>
+          </div>
+            
+        </form>
+    
+      <!-- <div class="ui container results"> -->
+       {{#if searchResults.length}} 
+        <section class="ui grid-template-columns services">
+         {{#each searchResults}}
+            <div class="service-card column">
+                    <div class="header" style="background-color:#a3dde0; border-radius: 3px;border:4px ; border-color:#34495E">
+                        <h4 style="color:#10894E; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                          <span class="glyphicon glyphicon-plus pull-left" id="brand"></span><!--{{getGlobal 'shoptype'}}-->
+                          <span class="pull-right">{{specialite}}</span></h4>
+                    </div>
+                    <div class="ui small feed">
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                            <h5> <i class="user md icon"></i> &nbsp;<a>{{nom}}&nbsp;{{prenom}}</a> </h5>
+                            <hr>
+                            <h5><i class="map marker alternate icon"></i>
+                            &nbsp;<a>Localisation</a>
+                            </h5>
+                            {{#if localisation}}
+                            Latitude : {{localisation.lat}}, Longitude : {{localisation.lng}}
+                            {{else}}
+                            Non renseignée
+                            {{/if}}
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                            <h4><i class="unlock icon"></i>&nbsp;<span class="pull-left">{{disponible}}</span>
+                            <span class="pull-right"><button class="btn btn-warning" style="text-align: right;" role="button" data-toggle="modal" data-target="#myYangoModal">
+                              Call <i class="fas fa-car"></i>
+                            </button></span></h4>
+                          </div>
+                           
+                        </div>
+                      </div>
+                        <div class="extra content">
+                          <div class="ui three bottom attached buttons">
+                            <!-- {{#if isInRole 'basic'}} -->
+                                                       
+                            <div class="ui default button show-details" role="button"
+                            data-localisation.lat ="{{localisation.lat}}" 
+                              data-localisation.lng ="{{localisation.lng}}"
+                                data-nom="{{nom}}" 
+                                data-prenom="{{prenom}}" 
+                                data-specialite="{{specialite}}" 
+                                data-disponible="{{disponible}}" 
+                                data-telephone="{{telephone}}" data-toggle="modal" data-target="#myDetailsModal">Details</div>
+                            <a href="https://wa.me/{{telephone}}"  class="ui olive button btn-call-soignant"  target="_blank" role="button">
+                              <i class="phone icon"></i>Call
+                            </a>
+                          
+                            <div class="ui button button primary show-road" role="button" data-localisation.lat ="{{localisation.lat}}" 
+                              data-localisation.lng ="{{localisation.lng}}" data-toggle="modal" data-target="#myRoadModal">
+                              Itinéraire
+                            </div>
+                            <!-- {{/if}} -->
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+            {{/each}}
+          </section>
+     {{else}}
+          <p>Aucun résultat trouvé.</p>
+      {{/if}} 
+    <!-- </div> -->
+     <!-- Pagination -->
+     <div class="ui center aligned basic segment">
+        <div class="ui buttons">
+          <button class="ui button" id="prev-page" {{disabledPrev}}>Précédent</button>
+          <div class="or"></div>
+          <button class="ui button" id="next-page" {{disabledNext}}>Suivant</button>
+        </div>
+        <div style="margin-top: 10px;">Page actuelle : <strong>{{currentPage}}</strong></div>
+     </div>
+    
+</div>
+     <div class="modal fade" id="myDetailsModal" tabindex="-1" role="dialog" aria-labelledby="myDetailsModal">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+              <h3><b>Informations du personnel soignant</b></h3>
+            </div>
+            
+            <div class="modal-body">
+              <div class=" ui cards">
+                <div class="teal card">
+                  <div class="image">
+                    <img src="/garde.jpg" alt="healthsupport" class="img-responsive">
+                  </div>
+                </div>
+              </div>
+              <div class="ui divider"></div>
+              <p><strong>Nom :</strong> <span id="modalNom"></span></p>
+              <p><strong>Prénom :</strong> <span id="modalPrenom"></span></p>
+              <p><strong>Spécialité :</strong> <span id="modalSpecialite"></span></p>
+              <p><strong>Disponible :</strong> <span id="modalDisponible"></span></p>
+              <p><strong>Téléphone :</strong> <span id="modalTelephone"></span></p>
+            </div>
+          
+          <div class="modal-footer inline-block">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            
+          </div>
+         
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myRoadModal" tabindex="-1" role="dialog" aria-labelledby="myRoadModal">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h3><b>Carte Itinéraire</b></h3>
+        </div>
+        <div class="modal-body">
+          <div class=" ui page">
+                <strong>Evaluation de la distance</strong>
+                <button id="toggle-mode" class="btn btn-warning" style="margin-bottom: 10px;">
+                  Passer en mode piéton
+                </button>
+
+               <div style="height: 500px;" id="map"></div>
+                
+              </div>
+            </div>
+          
+          <div class="modal-footer inline-block">
+            <strong><p id="distance"></p></strong>
+            <strong><p id="duration"></p></strong>
+            <strong><p id="helPLat"></p></strong>
+            <strong><p id="helpLng"></p></strong>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            
+          </div>
+  
+        </div>
+      </div>
+    </div>
+    <!-- Yango Command Modal start here -->
+    <div class="modal fade" id="myYangoModal" tabindex="-1" role="dialog" aria-labelledby="myYangoModal">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3><b>Commander un Yango pour l’aide-soignant</b></h3>
+          </div>
+            <div class="modal-body">
+              <div class=" ui page">
+                <form class="ui form" id="yango-form">
+                  <div class="fields">
+                    <div class="field">
+                      <label>Latitude aide-soignant:</label><br>
+                        <input type="text" id="pickup-lat" value="4.0615"><br>
+                      </div>
+                      <div class="field">
+                      <label>Longitude aide-soignant:</label><br>
+                        <input type="text" id="pickup-lng" value="9.7861"><br>
+                      </div>
+                      <div class="field">
+                      <label>Latitude patient:</label><br>
+                        <input type="text" id="dropoff-lat" value="4.0700"><br>
+                      </div>
+                      <div class="field">
+                      <label>Longitude patient:</label><br>
+                        <input type="text" id="dropoff-lng" value="9.7800"><br><br>
+                      </div>
+                  </div>
+                  <button type="submit" class="btn btn-default">Commander un Yango</button>
+                </form>
+                <div id="result"></div>
+              </div>
+            </div>
+            
+          <div class="modal-footer inline-block">
+              
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              
+          </div>
+  
+        </div>
+      </div>
+    </div>
+</template>

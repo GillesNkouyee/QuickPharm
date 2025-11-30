@@ -1,0 +1,46 @@
+<template name="dashboard">
+  <header style="background-color: rgb(61, 80, 108);">
+    Dashboard QuickPharm
+  </header>
+  <section class="card">
+    {{> visitsToday}}
+  </section>
+  <section class="dashboard">
+    {{#if history}} 
+    <div class="card">
+      <h2>Appels d'etablissements sanitaires</h2>
+      <div class="number">{{history.calledFacility}}</div>
+    </div>
+    <div class="card">
+      <h2>Visites de pharmacie</h2>
+      <div class="number">{{history.visitedPharmacy}}</div>
+    </div>
+    <div class="card">
+      <h2>Demandes d'assistance</h2>
+      <div class="number">{{history.calledPersonnel}}</div>
+    </div>
+    <div class="card">
+      <h2>Recherches de médicaments</h2>
+      <div class="number">{{history.searchedDrug}}</div>
+    </div>
+    <div class="card">
+      <h2>Comparaisons de prix</h2>
+      <div class="number">{{history.comparedPrices}}</div>
+    </div>
+    {{else}}
+      <div class="ui message">Aucune interaction enregistrée pour le moment.</div>
+{{/if}}
+  </section>
+
+  <section class="dashboard">
+    <div class="card">
+      <h2>Évolution hebdomadaire</h2>
+      <canvas id="lineChart"></canvas>
+    </div>
+    <div class="card">
+      <h2 style="color:#48605B;">Historique des interactions </h2>
+      <canvas id="pieChart"></canvas>
+    </div>
+     
+  </section>
+</template>

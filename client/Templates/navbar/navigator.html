@@ -1,0 +1,280 @@
+<template name="navigator">
+<div class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-fluid">
+
+         
+                <a class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile_nav" aria-controls="mobile_nav" aria-expanded="false" aria-label="Toggle navigation" href="/" style="background-color:#fdfdfeaf">
+                    <span class="navbar-toggler-icon"></span>
+                </a>
+           
+       <!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile_nav" aria-controls="mobile_nav" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"><img src="/monlogofin.svg" alt=""   width="120" height="auto" style="max-height: 60px;"></span> 
+        </button> -->
+        <div class="collapse navbar-collapse" id="mobile_nav">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0 float-md-right">
+        </ul>
+        <ul class="navbar-nav navbar-light pull-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/shoplist" data-toggle="tooltip" data-placement="top" title="Voir les pharmacies">
+                    <!-- {{getGlobal 'shoptype'}} -->
+                    <i class="plus square icon"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/findaidesoignant" data-toggle="tooltip" data-placement="top" title="Voir le personnel soignant">
+                    <i class="user md icon"></i>
+                    <!-- {{getGlobal 'caregiver'}} -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/searchMedicaments" data-toggle="tooltip" data-placement="top" title="Chercher un médicament">
+                <!-- {{getGlobal 'navsearchtip'}} -->
+                    <i class="pills icon"></i>  
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/searchEtablissement" data-toggle="tooltip" data-placement="top" title="Chercher un etablissement sanitaire">
+                    <i class="hospital symbol icon"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav navbar-light">
+            <li class="nav-item"><a class="nav-link" href="#">Accueil</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">A propos de nous</a></li>
+
+                {{#if isInRole 'admin,manager'}}
+            <li class="nav-item">    
+                <a class="nav-link" href="/Addshop" data-toggle="tooltip" data-placement="top" title="Configurations">
+                    <i class="wrench icon"></i>
+                </a>
+            </li>
+                {{/if}}
+        
+            <!-- <li class="nav-item dmenu dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Services
+                </a>
+                <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Conseils</a>
+                    <a class="dropdown-item" href="#">Humanitaire</a>
+                    <a class="dropdown-item" href="#">Application Mobile</a>
+                    <a class="dropdown-item" href="#">Partenariat & Business Process</a>
+                    
+                </div>
+            </li>
+        
+            <li class="nav-item"><a class="nav-link" href="">Portfolio</a></li>
+            <li class="nav-item"><a class="nav-link" href="">Carierres</a></li>
+            <li class="nav-item"><a class="nav-link" href="">Contactez-nous</a></li>
+ -->   
+        </ul>
+        
+    
+    <ul class="navbar-nav navbar-light">
+        <li class="nav-item">
+        <a class="nav-link" href="#" role="button" onclick="return show('Cart','Main');" data-toggle="modal" data-target="#myCartModal1">
+
+          <i class="cart icon"></i>
+        </a>
+        </li>
+       
+        {{#if currentUser}}
+        <li class="nav-item simple dropdown ">
+
+            <a href="#" class="nav-link dropdown-toggle"  data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                  <img src="{{profilepic}}" class ="img-circle" alt="..." style="width:mm ; height: 6mm">
+                      {{name}}<i class="dropdown icon"></i></a>
+              <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdown">
+                <a href="{{pathFor route='Profile'}}" class="nav-link"><i class="user icon"></i> User Profile</a>
+                {{#if isInRole 'admin'}}
+                <a href="{{pathFor route='userCtrlpanel'}}" class="nav-link"><i class="users icon"></i> Users Control Panel</a>
+                <a href="/updateshop" class="btn-success nav-link"><i class="database icon"></i>Manage Data</a>
+                {{/if}}
+                <a href="/" class="nav-link" id="logout"><i class="sign out icon"></i>Logout</a>
+                <div class="divider"></div>
+                <div class="header"></div>
+                <div class="item">
+                  <i class="dropdown icon"></i>
+                  Sub Menu
+                  <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdown">
+                    {{#if isInRole 'admin'}}
+                    <a href="{{pathFor route='editsite'}}" class="nav-link"> <i class="glyphicon glyphicon-cog"></i></a>
+                    {{/if}}
+                    <a class="nav-link" href="#">Link Item</a>
+                  </div>
+                </div>
+                  <a class="nav-link" href="#">Click here to change your password:{{> loginButtons}}</a>
+              </div>
+            </li>
+            {{else}}
+                             <a class="nav-link" href="#"> {{>loginDropDown align="center"}}</a>
+         {{/ if}}
+    </ul>
+</div>
+</div>
+
+<div class="modal fade " id="myCartModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+        <div class="modal-body">
+        
+            <div class="ui page">
+                <div class=" ui form ">
+                    <div class="ui header" style="background-color:#F0F3F4 ">
+                      <h4 class="h4-responsive" style="color:#10894B;  padding: 18px 18px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif;">
+                        Online Prescription</h4>
+                    </div>
+                    <table id="tableau" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Medicaments</th>
+                                <th>Qte</th>
+                                <th>Prix unitaire</th>
+                                <th>Prix de la ligne</th>
+                                <th>Supprimer</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <br><label>Montant total du panier </label> : <label id = "prixTotal">&nbsp;FCFA</label>
+                    <label id = "nbreLignes" hidden>0</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer inline-block">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success btm-md">Save changes</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+</div>
+
+
+
+<script type="text/javascript">
+    function LignePanier (code, qte, prix)
+{
+
+    this.codeArticle = code;
+    this.qteArticle = qte;
+    this.prixArticle = prix;
+    this.ajouterQte = function(qte)
+    {
+        this.qteArticle += qte;
+    }
+    this.getPrixLigne = function()
+    {
+        var resultat = this.prixArticle * this.qteArticle;
+        return resultat;
+    }
+    this.getCode = function()
+    {
+        return this.codeArticle;
+    }
+}
+function Panier()
+{
+    this.liste = [];
+    this.ajouterArticle = function(code, qte, prix)
+    {
+        var index = this.getArticle(code);
+        //var dede = this.liste.indexOf(code);
+        if (index == -1) this.liste.push(new LignePanier(code, qte, prix));
+        else this.liste[index].ajouterQte(qte);
+    }
+    this.getPrixPanier = function()
+    {
+        var total = 0;
+        for(var i = 0 ; i < this.liste.length ; i++)
+            total += this.liste[i].getPrixLigne();
+        return total;
+    }
+    this.getArticle = function(code)
+    {
+        for(var i = 0 ; i <this.liste.length ; i++)
+            if (code == this.liste[i].getCode()) return i;
+        return -1;
+    }
+    this.supprimerArticle = function(code)
+    {
+        var index = this.getArticle(code);
+        if (index > -1) this.liste.splice(index, 1);
+    }
+}
+  function ajouter()
+  {
+
+      var code =document.getElementById("brand").innerHTML;
+      var qte = parseInt(document.getElementById("qte").value);
+      var prix = parseInt(document.getElementById("price").innerHTML);
+      var monPanier = new Panier();
+      monPanier.ajouterArticle(code, qte, prix);
+      var tableau = document.getElementById("tableau");
+      var longueurTab = parseInt(document.getElementById("nbreLignes").innerHTML);
+      if (longueurTab > 0)
+      {
+          for(var i = longueurTab ; i > 0  ; i--)
+          {
+              monPanier.ajouterArticle(tableau.rows[i].cells[0].innerHTML, parseInt(tableau.rows[i].cells[1].innerHTML), parseInt(tableau.rows[i].cells[2].innerHTML));
+              tableau.deleteRow(i);
+          }
+      }
+      var longueur = monPanier.liste.length;
+      for(var i = 0 ; i < longueur ; i++)
+      {
+          var ligne = monPanier.liste[i];
+          var ligneTableau = tableau.insertRow(-1);
+          var colonne1 = ligneTableau.insertCell(0);
+          colonne1.innerHTML += ligne.getCode();
+          var colonne2 = ligneTableau.insertCell(1);
+          colonne2.innerHTML += ligne.qteArticle;
+          var colonne3 = ligneTableau.insertCell(2);
+          colonne3.innerHTML += ligne.prixArticle;
+          var colonne4 = ligneTableau.insertCell(3);
+          colonne4.innerHTML += ligne.getPrixLigne();
+          var colonne5 = ligneTableau.insertCell(4);
+          colonne5.innerHTML += "<button class=\"btn btn-primary\" type=\"submit\" onclick=\"supprimer(this.parentNode.parentNode.cells[0].innerHTML)\"><span class=\"glyphicon glyphicon-remove\"></span> Retirer</button>";
+      }
+      document.getElementById("prixTotal").innerHTML = monPanier.getPrixPanier();
+      document.getElementById("nbreLignes").innerHTML = longueur;
+  }
+
+  function supprimer(code)
+  {
+      var monPanier = new Panier();
+      var tableau = document.getElementById("tableau");
+      var longueurTab = parseInt(document.getElementById("nbreLignes").innerHTML);
+      if (longueurTab > 0)
+      {
+          for(var i = longueurTab ; i > 0  ; i--)
+          {
+              monPanier.ajouterArticle(tableau.rows[i].cells[0].innerHTML, parseInt(tableau.rows[i].cells[1].innerHTML), parseInt(tableau.rows[i].cells[2].innerHTML));
+              tableau.deleteRow(i);
+          }
+      }
+      monPanier.supprimerArticle(code);
+      var longueur = monPanier.liste.length;
+      for(var i = 0 ; i < longueur ; i++)
+      {
+          var ligne = monPanier.liste[i];
+          var ligneTableau = tableau.insertRow(-1);
+          var colonne1 = ligneTableau.insertCell(0);
+          colonne1.innerHTML += ligne.getCode();
+          var colonne2 = ligneTableau.insertCell(1);
+          colonne2.innerHTML += ligne.qteArticle;
+          var colonne3 = ligneTableau.insertCell(2);
+          colonne3.innerHTML += ligne.prixArticle;
+          var colonne4 = ligneTableau.insertCell(3);
+          colonne4.innerHTML += ligne.getPrixLigne();
+          var colonne5 = ligneTableau.insertCell(4);
+          colonne5.innerHTML += "<button class=\"btn btn-primary\" type=\"submit\" onclick=\"supprimer(this.parentNode.parentNode.cells[0].innerHTML)\"><span class=\"glyphicon glyphicon-remove\"></span> Retirer</button>";
+      }
+      document.getElementById("prixTotal").innerHTML = monPanier.getPrixPanier();
+      document.getElementById("nbreLignes").innerHTML = longueur;
+  }
+</script>
+</template>

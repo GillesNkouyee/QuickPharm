@@ -1,0 +1,39 @@
+<template name="addFournisseur">
+
+    <button id="btn_now" class="ui button btn-sm btn-default" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <span class="glyphicon glyphicon-pencil pull-left" id="brand"></span>
+          </button>
+    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="fsrCreation">
+      <div class="panel-body">
+        <div class="ui form ">
+
+         {{#autoForm collection="Fournisseurs" id="fsrform"  type="insert"  method="addFournisseur"
+          omitFields="createdBy, lastUpdate, createdAt" resetOnSuccess=true}}
+
+                   <div class="ui three fields segment field">
+                     <div class=" field">
+                       {{> afQuickField name='name'}}
+                     </div>
+                     <div class=" field">
+                       {{> afQuickField name='mobile'}}
+                     </div>
+                     <div class=" field">
+                       {{> afQuickField name='website'}}
+                     </div>
+                   </div>
+                   <div class=" field">
+                     {{> afQuickField name='adress'}}
+                   </div>
+                   <div class="eight wide field ">
+                     {{> afQuickField name='emails'}}
+                   </div>
+
+                 <div class="ui segment">
+                   <input type="submit" class="ui button teal" value="Insert"/>
+                 </div>
+
+           {{/autoForm}}
+         </div>
+       </div>
+     </div>
+</template>

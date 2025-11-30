@@ -1,0 +1,29 @@
+<template name="userlist">
+<div class="floating ui red label">There is {{usercount}}users in system's db</div>
+
+<div class="ui connected items cards  stackable four column grid">
+    {{#each   userlistitem}}
+
+
+  <div class="ui card">
+    <div class="image">
+        <img  src="{{profile.avatar_url}}">
+        <a class="star ui corner label">
+        <i class="star icon">{{#if isCurrentUser _id}}<label class="label label-warning">You!</label>{{/if}}</i>
+      </a>
+    </div>
+    <div class="content">
+
+      <a class="ui green ribbon label {{role}}">{{roles}}</a>
+
+      <div class="name">{{profile.name}}</div>
+      <p class="description">{{profile.occupation}}</p>
+    </div>
+    <div class="extra">
+        <!-- {{profile.status}}<br> -->
+        {{emails.[0].address}}
+    </div>
+  </div>
+    {{/each}}
+  </div>
+</template>

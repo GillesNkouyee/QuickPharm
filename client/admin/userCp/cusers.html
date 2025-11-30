@@ -1,0 +1,39 @@
+<template name="users">
+  {{#if isInRole 'admin'}}
+    <!-- {{> sendInvitationModal}} -->
+
+    <h4 class="page-header">Users</h4>
+    <table class="ui grey celled  table ">
+      <thead>
+        <tr>
+          <th>Email Address</th>
+          <th class="text-center">Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+          <tr>
+            <td class="text-left text-middle">{{#if isCurrentUser _id}}<label class="label label-success">You!</label>{{/if}}
+              {{emails.[0].address}}</td>
+            <td>
+              <select {{disableIfAdmin _id}} name="userRole" class="form-control">
+                <option selected="{{selected roles.[0] 'admin'}}" value="admin">Admin</option>
+                <option selected="{{selected roles.[0] 'manager'}}" value="manager">Manager</option>
+                <option selected="{{selected roles.[0] 'caregiver'}}" value="basic">Personnel soignant</option>
+                <option selected="{{selected roles.[0] 'basic'}}" value="basic">Basic</option>
+                <option selected="{{selected roles.[0] 'inactive'}}" value="inactive">Non Autorisé</option>
+              </select>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    [...]
+  {{/if}}
+</template>
+<template name="basic">
+  <h3>Basic</h3>
+</template>
+<template name="managers">
+  <h3>Managers</h3>
+</template>

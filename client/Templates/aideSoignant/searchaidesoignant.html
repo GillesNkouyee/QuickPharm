@@ -1,0 +1,160 @@
+<template name="searchAidesoignant">
+    <div class="ui container">
+      <div class="ui section" style="text-align: center; ">
+        <h2 style="color:#ccc; border-radius: 3px; font-family: 'Open Sans', sans-serif; "></h2>
+         <img src="/monlogofin.png"  alt="QuickPharm" class="img-responsive">
+            <!-- <h4 style="border-radius: 7px; font-family: 'Open Sans', sans-serif; ">{{getGlobal 'searchinputslogan'}}</h4> -->
+        </div>
+          <!--linebreaker-->
+  
+          <!--  -->
+          <div class="ui equal width center aligned padded grid">
+                   
+                    <div class="row">
+                      <div class=" column">
+                      
+                        <form class="ui form ">
+
+                          <input type="search" class="form-control"  placeholder="{{getGlobal 'searchAidesoignant'}}" id="search" value="{{search}}">
+                          <i class="search icon"></i>
+              
+                      </form>
+                      <!-- <div class="ui divider "></div> -->
+                    </div>
+                    </div>
+                    
+                  <div class="row">
+                      <div class="black column">
+                        <h4 style="color:#fff;font-family: 'Open Sans', sans-serif; ">
+                          Exemples : Urgentiste</h4>
+                    </div>
+                    <div class="blue column  header leresultat " id="leresultat">
+                      <h4 style="color:#fff; height:12px; font-family: 'Open Sans', sans-serif; ">
+                        ...Resultats de la recherche</h4>
+                    </div>
+                  </div>
+  
+          </div>
+          <!--  -->
+  
+      <div class="ui container results" >
+        <h3>Search Results</h3>
+        {{#if search}}
+        <div class="ui cards stackable three columns grid center row" id="searchmedocs">
+          
+          <!-- <div class="ui cards stackable three columns grid center row" id="searchmedocs"> -->
+            {{#each searchResults}}
+           
+                  <div class="ui card column">
+                    <div class="header" style="background-color:#a3dde0; border-radius: 3px;border:4px ; border-color:#34495E">
+                        <h4 style="color:#10894E; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                          <span class="glyphicon glyphicon-plus pull-left" id="brand"></span><!--{{getGlobal 'shoptype'}}-->
+                          <span class="pull-right">{{specialite}}</span></h4>
+                    </div>
+                    <div class="ui small feed">
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                            <h5> <i class="user md icon"></i> &nbsp;<a>{{nom}}&nbsp;{{prenom}}</a> </h5>
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                            <h4><i class="unlock icon"></i>&nbsp;{{disponible}}</h4>
+                          </div>
+                        </div>
+                      </div>
+                        <div class="extra content">
+                          <div class="ui two buttons show-details'">
+                            <!-- {{#if isInRole 'basic'}} -->
+                            <a class="inverted item" href="#" role="button" onclick="return show('Cart','Main');" data-toggle="modal" data-target="#myCartModal1">
+                              <i class="cart icon"></i>
+                            </a>                            
+                            <div class="ui default button show-details" role="button"
+                                data-nom="{{nom}}" 
+                                data-prenom="{{prenom}}" 
+                                data-specialite="{{specialite}}" 
+                                data-disponible="{{disponible}}" 
+                                data-telephone="{{telephone}}" data-toggle="modal" data-target="#myDetailsModal">Details</div>
+                            <div class="ui basic green button"><a href="https://wa.me/{{telephone}}" target="_blank">
+                              <i class="phone icon"></i>
+                            </a></div>
+                            <!-- {{/if}} -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+                {{/each}}
+          <!-- </div> -->
+        </div>
+        {{/if}}
+      </div>
+      <div class="ui divider"></div>
+				<div class="extra content">
+					<div class="ui buttons">
+						<button class="prev-page ui labeled icon button">
+							<i class="left chevron icon"></i>
+							Back
+						  </button>
+						<div class="ui button disabled"><span>Page {{page}}</span></div>
+						
+						<button class="next-page ui right labeled icon button">
+							<i class="right chevron icon"></i>
+							Next
+						  </button>
+					</div>
+				</div>
+      </div>
+      <!-- Details modal -->
+    <br>
+   
+    <div class="modal fade" id="myDetailsModal" tabindex="-1" role="dialog" aria-labelledby="myDetailsModal">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+              <h3><b>Informations du personnel soignant</b></h3>
+            </div>
+            
+            <div class="modal-body">
+              <div class=" ui cards">
+                <div class="teal card">
+                  <div class="image">
+                    <img src="/garde.jpg" alt="healthsupport" class="img-responsive">
+                  </div>
+                </div>
+              </div>
+              <div class="ui divider"></div>
+              <p><strong>Nom :</strong> <span id="modalNom"></span></p>
+              <p><strong>Prénom :</strong> <span id="modalPrenom"></span></p>
+              <p><strong>Spécialité :</strong> <span id="modalSpecialite"></span></p>
+              <p><strong>Disponible :</strong> <span id="modalDisponible"></span></p>
+              <p><strong>Téléphone :</strong> <span id="modalTelephone"></span></p>
+            </div>
+          
+          <div class="modal-footer inline-block">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  
+    <script type="text/javascript">
+    function testResults (form) {
+        var TestVar = form.searchValue.value;
+        if(!TestVar)
+        {
+          toastr.warning ("Veuillez préciser votre recherche svp...");
+        }else{
+          toastr.info ("You want information about: " + TestVar);
+        }
+  
+    }
+    </script>
+</template>
+  

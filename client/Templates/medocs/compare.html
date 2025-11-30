@@ -1,0 +1,174 @@
+<template name="compare">
+  <!-- <div class="container">
+  	<div class="row">  -->
+      <!-- <div class="col-xs-12"> -->
+        <div class="ui container ">
+          <div class="ui header text-left" style="margin-top: 30px;">
+            <h3><i class="tags icon"></i> &nbsp; Résultat(s) comparatif(s) de la recherche sur le Prix de<strong>&nbsp;{{brand}}</strong>
+                <small>&nbsp;-&nbsp;Médicament &nbsp;{{desc}}</small></h3>
+
+            <h4 class="h4-responsive" style=" padding: 18px 18px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+              <i  class="tags icon"  style="opacity:1px">&nbsp;
+              </i><a href="#" data-toggle="tooltip" data-placement="top" title="Laboratoire">{{lab}}</a>&nbsp;|&nbsp;
+              <a href="#" data-toggle="tooltip" data-placement="top" title="Classe médicamenteuse">{{tag}}</a> |&nbsp; <span data-toggle="tooltip" data-placement="top" title="Voie d'administration">
+                <bold>{{canal}}</bold></span>
+              <span data-toggle="tooltip" data-placement="top" title="Catégorie"><small>{{category}}</small></span>
+            </h4>
+
+              <div class="ui button  btn-sm btn-outline btn-purple pull-right"  style=" padding: 10px 10px 10px; border-radius: 3px; font-family: 'Open Sans', sans-serif; ">
+                <table id="prixmoy">
+                  <tr>
+
+                  </tr>
+
+               </table>
+
+              </div>
+            </div>
+
+        </div>
+        <div class="ui container">
+
+          <div class="col-xs-12 col-md-5 col-sm-6" >
+            {{#with comparemedoc}}
+
+                  <div class=" 9 wide stackable columns  " id="Items">
+                  <div class="shoplistbox ">
+                  <div class="ui form add-to-cart" action="cart" method="post">
+                    <div class="card-header" style="background-color:#F0F3F4; border-radius: 3px;">
+                      <h4 style="color:#10894E; padding: 18px 18px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                          <span  class="glyphicon glyphicon-plus  pull-left" name="brand" id="brand">
+                            {{brand}}</span><!--{{getGlobal 'shoptype'}}-->
+
+                         <span class="glyphicon glyphicon-grain  pull-right" name="price" id="price">{{price}}</span>
+                         <span class="pull-right ;padding: 18px 18px 20px;">FCFA</span>
+                       </h4><br/>
+                      </div>
+                        <div class="card-body" >
+                          
+                          {{# with medocpicture}}
+                          <div class="mag">
+                          <img src="{{url}}" alt="No picture available..." data-toggle="magnify" class="img-responsive"/>
+                        </div>
+                          {{/ with}}
+
+                              <br/>
+
+                              Description:{{desc}}
+                              <hr>
+                              <h4 class="h4-responsive"><span class="glyphicon glyphicon-map-marker pull-left">Pharmacie :</span>{{showlocation fileShopId}}{{location}}</h4>
+                              <div class="for-border">
+
+                                  <div class="ui two bottom attached fields">
+                              			<div class="field">
+
+                                				<input type="Number" name="qte" id="qte" class="qty" value="1" placeholder="Quantity"/>
+                              			</div>
+                                    <div class="field">
+                                      <a href=""  class="ui button button success pull-right"  role="button" type="submit" onclick="ajouter()"><i class="add to cart icon"></i>
+
+                                      Add to my list</a>
+                                    </div>
+                              		</div>
+
+
+                              </div>
+                        </div>
+
+                    </div>
+                  </div>
+                  <br>
+                </div>
+            {{/with}}
+          </div>
+          <div class="col-xs-12 col-md-7 col-sm-6">
+            <div class="header">
+              <h4 class="h4-responsive">Sélection des 5 meilleurs prix pour :<strong>{{brand}}</strong></h4>
+            </div>
+            {{# each sortmedoc}}
+
+            <div class="media selectable">
+              <div class="media-body text-center">
+                <a href="/shop/{{fileShopId}}" data-toggle="tooltip" title="AccédeZ á l'espace de {{showPharmName fileShopId}}{{pharmName}}!"  data-placement="top">
+                <h4 class="h4-responsive pull-left" ><i  class="plus icon  pull-left"></i>
+                  <strong>{{showPharmName fileShopId}}{{pharmName}}</strong></h4></a>
+                située á :<span class="glyphicon glyphicon-map-marker "></span>{{showlocation fileShopId}}{{location}}
+                <span class="glyphicon glyphicon-phone"></span>: {{showPharmTel fileShopId}}{{pharmTel}}
+                <br>
+                Prix: {{currency price}}
+              </div>
+              <hr>
+            </div>
+          {{/each}}
+          </div>
+        </div>
+
+        <div class="container ">
+          <div class="col-xs-12" style="text-align: justify; background-color:#EBF0E8; border-radius:3px">
+            <h4 class="pull-left"  style="color:#000; padding: 18px 18px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+              <span class="glyphicon glyphicon-text-background  pull-left"></span>Posologie</h4><hr>
+              <p style="font-family: 'Open Sans', sans-serif; ">
+             {{desc}}
+              </p>
+
+          </div>
+
+            &nbsp;<br/><br/>
+
+            <div class="col-xs-12" style="text-align: justify; background-color:#EBF0E8; border-radius:3px">
+              <h4 class="pull-left" style="color:#000; padding: 18px 18px 20px; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                <span class="glyphicon glyphicon-warning-sign  pull-left"></span>Attention</h4><hr>
+                <p style="font-family: 'Open Sans', sans-serif; ">
+               {{getGlobal 'warningText'}}
+                </p>
+            </div>
+        </div>
+        <div class="container" >
+          <div class="col-xs-12">
+            <div class="header " id="allresults">
+              <h5 style="color:#110E0D; padding: 18px 18px 12px; border-radius: 7px; height:12px; font-family: 'Open Sans', sans-serif; ">
+                ...consulter tout les resultats de la recherche</h5>
+            </div>
+            <div id="stripedTable" class="body collapse in">
+                <table id="allresults" class="table " name="table">
+                    <!-- <caption>Titre du tableau</caption> -->
+                  <thead>
+                    <tr class="success" style=" font-family: 'Open Sans', sans-serif;">
+                      <th>#</th>
+                      <th style="text-align:right; font-family: 'Open Sans', sans-serif;">Marque</th>
+                      <th style="text-align:center; font-family: 'Open Sans', sans-serif;">Localisation</th>
+                      <th style="text-align:right; font-family: 'Open Sans', sans-serif;">PrixFCFA</th>
+
+                    </tr>
+                  </thead>
+                  {{#each allresults}}
+                  <tbody>
+
+                    <tr style=" color:#151515; font-family: 'Open Sans', sans-serif; ">
+                      <td id="numerotation" style="text-align:left; font-family: 'Open Sans', sans-serif;"></td>
+                      <td  style="text-align:right; color:#151515; font-family: 'Open Sans', sans-serif; ">{{brand}}</td>
+                      <td  style="text-align:center; color:#151515; font-family: 'Open Sans', sans-serif; ">{{showPharmName fileShopId}}{{pharmName}}</td>
+                      <td style="text-align:right; color:#151515; font-family: 'Open Sans', sans-serif; ">{{price}}</td>
+                    </tr>
+                  </tbody>
+                  {{/each}}
+
+                </table>
+
+              </div>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          &nbsp;
+          <br/><br/><br/>
+        </div>
+      <!-- </div> -->
+    <!-- </div>
+  </div> -->
+  <section class="col-xs-12 ">
+
+  </section>
+  <!-- Modal -->
+
+
+</template>

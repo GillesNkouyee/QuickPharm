@@ -1,0 +1,427 @@
+<!-- <template name="voiceRecognition">
+  <div class="ui container" style="margin-top: 40px;">
+    <div class="ui section" style="text-align: center; ">
+          <img src="/TextlogoQP2-Photoroom.png"  alt="MyDirectory" class="small">
+      </div>
+    <button class="ui positive basic button" id="start-rec">🎤 Démarrer la reconnaissance vocale</button>
+    <p>Texte reconnu :</p>
+    <div id="voice-result" style="font-weight: bold;"></div>
+    <h3>Résultats :</h3>
+    
+      <section class="services">
+        
+        {{#each results}}
+       
+        <div class="service-card" id="pharmacies">
+            <p>{{shopname}} - {{shopadress}}</p>
+            <button class="ui teal button btn-small " value="Details"><i class="icon plus"></i></button>
+            <a href="https://wa.me/{{shoptel}}"  class="ui olive button btn-call-soignant"  target="_blank" role="button">
+                              <i class="phone icon"></i>Call
+                            </a>
+        </div>
+          
+        <div class="service-card" id="personnelSoignant">
+            <p>{{nom}} - {{prenom}}</p>
+            <p>{{ville}} - {{specialite}} - {{telephone}}</p>
+             <button class="ui teal button btn-small " value="Details"><i class="icon plus"></i></button>
+            <a href="https://wa.me/{{telephone}}"  class="ui olive button btn-call-soignant"  target="_blank" role="button">
+              <i class="phone icon"></i>Call
+            </a>
+        </div>
+      
+        <div class="service-card" id="etablissementSanitaire">
+        
+            <p>{{nom}} - {{specialite}}</p>
+            <p>{{brand}}</p>
+            <p>{{telephone}} - {{ville}} - {{quartier}} - {{region}}</p>
+            <button class="ui teal button btn-small " value="Details"><i class="icon plus"></i></button>
+            <a href="https://wa.me/{{telephone}}"  class="ui olive button btn-call-soignant"  target="_blank" role="button">
+              <i class="phone icon"></i>Call
+            </a>
+        </div>
+   
+        {{/each}}
+    </section>
+    
+  </div>
+</template> -->
+<template name="voiceRecognition"> 
+  <div class="ui container" style="margin-top: 40px;">
+    <div class="ui section" style="text-align: center;">
+      <img src="/TextlogoQP2-Photoroom.png" alt="MyDirectory" class="small">
+    </div>
+
+    <div class="ui center aligned basic segment">
+      <button id="start-rec" class="ui primary button">
+        <i class="microphone icon"></i>  🎤 Démarrer la reconnaissance vocale
+      </button>
+      <button id="stop-rec" class="ui red button">
+        <i class="stop icon"></i> Arrêter
+      </button>
+    </div>
+    <p>Texte reconnu :</p>
+    <div id="voice-result" style="font-weight: bold;"></div>
+
+    <h3>Résultats :</h3>
+    <section class="services">
+
+      {{#if isPharmacy}}
+        {{#each results}}
+          <div class="service-card">
+            
+            
+            <div class="ui fluid card" style="box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-top: 3px solid #00C896;">
+              <div class="card header">
+                <a class="ui {{pharmstatusClass}} ribbon teal label">De garde</a>
+                <a href="https://wa.me/{{shoptel}}" class="ui olive button" target="_blank">
+                  <i class="phone icon"></i>
+                </a>
+              </div>
+              <div class="content">
+                
+                <div class="header" style="color: #00B5AD;">{{shopname}}</div>
+                <div class="meta" style="color: #888;">{{shopcategory}}</div>
+                <div class="description">
+                  <p><i class="map marker alternate icon"></i> {{shopadress}}</p>
+                </div>
+              </div>
+              <div class="extra content">
+                <div class="ui buttons">
+                  <a href="#" class="ui icon button teal" title="Like">
+                    <i class="thumbs up icon"></i>
+                  </a>
+                  <a class="ui basic teal label">{{votes}}</a>
+                  <a href="{{pathFor route='shopinfo'}}" class="ui icon button blue" title="Visitez notre espace">
+                    <i class="eye icon"></i>
+                  </a>
+                  <a class="ui icon button green" title="Commentaires">
+                    <i class="comments icon"></i> {{> count}}
+                  </a>
+                  <a class="ui icon button olive" title="Articles">
+                    <i class="file alternate icon"></i> {{> ArticleCount}}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      {{/if}}
+
+      {{#if isPersonnel}}
+        {{#each results}}
+          <div class="service-card">
+           
+                    <div class="header" style="background-color:#a3dde0; border-radius: 3px;border:4px ; border-color:#34495E">
+                        <h4 style="color:#10894E; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                          <span class="glyphicon glyphicon-plus pull-left" id="brand"></span>
+                          <span class="pull-right">{{specialite}}</span></h4>
+                    </div>
+                    <div class="ui small feed">
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                            <h5> <i class="user md icon"></i> &nbsp;<a>{{nom}}&nbsp;{{prenom}}</a> </h5>
+                            <hr>
+                            <h5><i class="map marker alternate icon"></i>
+                            &nbsp;<a>Localisation</a>
+                            </h5>
+                            {{#if localisation}}
+                            Latitude : {{localisation.lat}}, Longitude : {{localisation.lng}}
+                            {{else}}
+                            Non renseignée
+                            {{/if}}
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                            <h4><i class="unlock icon"></i>&nbsp;<span class="pull-left">{{disponible}}</span>
+                            <span class="pull-right"><button class="btn btn-warning" style="text-align: right;" role="button" data-toggle="modal" data-target="#myYangoModal">
+                              Call <i class="fas fa-car"></i>
+                            </button></span></h4>
+                          </div>
+                           
+                        </div>
+                      </div>
+                        <div class="extra content">
+                          <div class="ui three bottom attached buttons">
+                            <!-- {{#if isInRole 'basic'}} -->
+                                                       
+                            <div class="ui default button show-details" role="button"
+                            data-localisation.lat ="{{localisation.lat}}" 
+                              data-localisation.lng ="{{localisation.lng}}"
+                                data-nom="{{nom}}" 
+                                data-prenom="{{prenom}}" 
+                                data-specialite="{{specialite}}" 
+                                data-disponible="{{disponible}}" 
+                                data-telephone="{{telephone}}" data-toggle="modal" data-target="#myDetailsModal">Details</div>
+                            <a href="https://wa.me/{{telephone}}"  class="ui olive button btn-call-soignant"  target="_blank" role="button">
+                              <i class="phone icon"></i>Call
+                            </a>
+                          
+                            <div class="ui button button primary show-road" role="button" data-localisation.lat ="{{localisation.lat}}" 
+                              data-localisation.lng ="{{localisation.lng}}" data-toggle="modal" data-target="#myRoadModal">
+                              Itinéraire
+                            </div>
+                            <!-- {{/if}} -->
+                          </div>
+                        </div>
+                      </div>
+            
+        
+       
+          </div>
+        {{/each}}
+      {{/if}}
+
+      {{#if isFacility}}
+        {{#each results}}
+          <div class="service-card">
+                    <div class="header" style="background-color:#a3dde0; border-radius: 3px;border:4px ; border-color:#34495E">
+                        <h4 style="color:#10894E; border-radius: 7px; font-family: 'Open Sans', sans-serif; ">
+                          <span class="glyphicon glyphicon-plus pull-left" id="brand"></span><!--{{getGlobal 'shoptype'}}-->
+                          <span class="pull-right">{{type}}</span></h4>
+                    </div>
+
+                <div class="content">
+                  <h3 style="color:#012b4b; padding: 10px;">
+                    <i class="thumbtack icon"></i> {{nom}}
+                  </h3>
+                </div>
+
+                <div class="content">
+                  <h4>Ville & Quartier : <span>{{ville}} - {{quartier}}</span></h4>
+                </div>
+
+                <div class="extra content">
+                  <div class="ui three buttons">
+                    <button class="ui button show-details"
+                      data-localisation.lat="{{localisation.lat}}"
+                      data-localisation.lng="{{localisation.lng}}"
+                      data-nom="{{nom}}"
+                      data-quartier="{{quartier}}"
+                      data-ville="{{ville}}"
+                      data-siteWeb="{{siteWeb}}"
+                      data-type="{{type}}"
+                      data-telephone="{{telephone}}"
+                      data-toggle="modal" data-target="#myDetailsModal1">
+                      Détails
+                    </button>
+
+                    <a href="https://wa.me/{{telephone}}" target="_blank" class="ui olive button btn-call-facility">
+                      <i class="phone icon"></i> Call
+                    </a>
+
+                    <button class="ui primary button show-road"
+                      data-localisation.lat="{{localisation.lat}}"
+                      data-localisation.lng="{{localisation.lng}}"
+                      data-toggle="modal" data-target="#myRoadModal1">
+                      Itinéraire
+                    </button>
+                  </div>
+                </div>
+          </div>
+        {{/each}}
+      {{/if}}
+
+      {{#if isDrug}}
+        {{#each results}}
+          <div class="service-card">
+      
+            <div class="ui fluid card" style="box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-top: 3px solid #1db3cd;">
+              <div class="card header" style="color: #6c9bb3;">
+                      <span class="pull-left"><h2>{{brand}}</h2></span>
+                        <span class="pull-right">{{currency price}}</span>
+                      
+                </div>
+                    <div class="content" >
+                      <div class="header" style="color: #00B5AD;">
+                        {{truncate desc}}
+                      </div>
+                        
+                        <h2 style="color: #00B5AD;"><i class="glyphicon glyphicon-map-marker ">Pharmacie:&nbsp;</i>{{showlocation fileShopId}}{{location}}</h2>
+                        <h2 style="color: #00B5AD;">Ordonnance exigée&nbsp;:<a class="ui label">{{onpresc}}</a></h2>
+                  </div>
+                   <div class="devided header "></div> 
+                    <div class="extra content show-details">
+                      <!-- {{#if isInRole 'basic'}} -->
+                      <a href="{{pathFor route='compare'}}" type="button" class="ui button btn-success  btn-call-comparison"  name="button">Comparer</a>
+                      <!-- {{/if}} -->
+                    </div>
+
+            </div>
+          </div>
+        {{/each}}
+      {{/if}}
+
+    </section>
+<!--  -->
+       
+        <div class="modal fade" id="myDetailsModal" tabindex="-1" role="dialog" aria-labelledby="myDetailsModal">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+              <h3><b>Informations du personnel soignant</b></h3>
+            </div>
+            
+            <div class="modal-body">
+              <div class=" ui cards">
+                <div class="teal card">
+                  <div class="image">
+                    <img src="/garde.jpg" alt="healthsupport" class="img-responsive">
+                  </div>
+                </div>
+              </div>
+              <div class="ui divider"></div>
+              <p><strong>Nom :</strong> <span id="modalNom"></span></p>
+              <p><strong>Prénom :</strong> <span id="modalPrenom"></span></p>
+              <p><strong>Spécialité :</strong> <span id="modalSpecialite"></span></p>
+              <p><strong>Disponible :</strong> <span id="modalDisponible"></span></p>
+              <p><strong>Téléphone :</strong> <span id="modalTelephone"></span></p>
+            </div>
+          
+          <div class="modal-footer inline-block">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            
+          </div>
+         
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myRoadModal" tabindex="-1" role="dialog" aria-labelledby="myRoadModal">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h3><b>Carte Itinéraire</b></h3>
+        </div>
+        <div class="modal-body">
+          <div class=" ui page">
+                <strong>Evaluation de la distance</strong>
+                <button id="toggle-mode" class="btn btn-warning" style="margin-bottom: 10px;">
+                  Passer en mode piéton
+                </button>
+
+               <div style="height: 500px;" id="map"></div>
+                
+              </div>
+            </div>
+          
+          <div class="modal-footer inline-block">
+            <strong><p id="distance"></p></strong>
+            <strong><p id="duration"></p></strong>
+            <strong><p id="helPLat"></p></strong>
+            <strong><p id="helpLng"></p></strong>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            
+          </div>
+  
+        </div>
+      </div>
+    </div>
+    <!-- Yango Command Modal start here -->
+    <div class="modal fade" id="myYangoModal" tabindex="-1" role="dialog" aria-labelledby="myYangoModal">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3><b>Commander un Yango pour l’aide-soignant</b></h3>
+          </div>
+            <div class="modal-body">
+              <div class=" ui page">
+                <form class="ui form" id="yango-form">
+                  <div class="fields">
+                    <div class="field">
+                      <label>Latitude aide-soignant:</label><br>
+                        <input type="text" id="pickup-lat" value="4.0615"><br>
+                      </div>
+                      <div class="field">
+                      <label>Longitude aide-soignant:</label><br>
+                        <input type="text" id="pickup-lng" value="9.7861"><br>
+                      </div>
+                      <div class="field">
+                      <label>Latitude patient:</label><br>
+                        <input type="text" id="dropoff-lat" value="4.0700"><br>
+                      </div>
+                      <div class="field">
+                      <label>Longitude patient:</label><br>
+                        <input type="text" id="dropoff-lng" value="9.7800"><br><br>
+                      </div>
+                  </div>
+                  <button type="submit" class="btn btn-default">Commander un Yango</button>
+                </form>
+                <div id="result"></div>
+              </div>
+            </div>
+            
+          <div class="modal-footer inline-block">
+              
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              
+          </div>
+  
+        </div>
+      </div>
+    </div>
+<!--  -->
+
+     <div class="modal fade" id="myDetailsModal1" tabindex="-1" role="dialog" aria-labelledby="myDetailsModal1">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h3><b>Informations sur l'établissement</b></h3>
+                </div>
+                <div class="modal-body">
+                <div class="ui cards">
+                    <div class="teal card">
+                    <img src="/pharmacy-bgdesign.jpg" alt="healthsupport" class="img-responsive">
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <p><strong>Nom :</strong> <span id="modalNom"></span></p>
+                <p><strong>Adresse :</strong> <span id="modalQuartier"></span> ; <span id="modalVille"></span></p>
+                <p><strong>Site Web :</strong> <span id="modalSiteweb"></span></p>
+                <p><strong>Spécialité :</strong> <span id="modalSpecialite"></span></p>
+                <p><strong>Téléphone :</strong> <span id="modalTelephone"></span></p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Modal : Carte itinéraire -->
+        <div class="modal fade" id="myRoadModal1" tabindex="-1" role="dialog" aria-labelledby="myRoadModal1">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h3><b>Carte Itinéraire</b></h3>
+                </div>
+                <div class="modal-body">
+                <div class="ui page">
+                    <strong>Évaluation de la distance</strong>
+                    
+                    <button id="toggle-mode" class="btn btn-warning" style="margin-bottom: 10px;">
+                    Passer en mode piéton
+                    </button>
+                    <div id="map" style="height: 500px;"></div>
+                    
+                </div>
+        </div>
+        <div class="modal-footer">
+            <div class="mt-2">
+              <p id="distance_estime">Distance : -</p>
+              <p id="duration_estime">Durée estimée : -</p>
+            </div>
+            <strong><p id="helpLatitud"></p></strong>
+            <strong><p id="helpLongitud"></p></strong>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</template>
+

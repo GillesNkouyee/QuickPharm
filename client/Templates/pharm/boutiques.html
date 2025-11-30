@@ -1,0 +1,58 @@
+<template name="boutiques">
+<!-- <div class="ui container"> -->
+
+
+  <div class="app-page-title">
+    <h4 >Tickets listing</h4>
+  </div>
+  <div class="ui divider"></div>
+  <section>
+      <div class="ui fluid icon input form">
+        <input type="search" class="form-control"  placeholder="{{getGlobal 'searchinputslogan'}}" id="search" value="{{search}}">
+        <i class="inverted circular search link icon"></i>
+
+      </div>
+
+      <br>
+        {{#if search}}
+        <div class="search-results">
+          <!-- <div class="small header"><h3>{{resultnber}}{{search}} &nbsp; {{pluralize search result}} pour cette recherche...</h3></div> -->
+          <div class="ui cards four wide field grid ">
+          {{#each searchResults}}
+
+            <div class="card">
+
+              <div class="content">
+               <a class="ui red ribbon label {{pharmstatusClass}} ">De garde</a>{{shopname}}</div>
+             <h3 class="title">{{shopadress}}</h3>
+             <h2 class="sub_title">{{> shareit}}</h2>
+
+             <p class="description">{{shopslogan}}</p><hr>
+             <div class="post-meta">
+               <a href="#"  role=button class="upvotable btn-primary btn-sm"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a>
+                <a  href="#" role="button">{{votes}}<span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a>
+                <a href="{{pathFor route='shopinfo'}}" data-toggle="tooltip" title="Allez a notre espace!"  data-placement="left" class="button btn-warning btn-sm">
+                 <i class="picture icon" aria-hidden="true"></i></a>
+                 <span class="comments"><i class="fa fa-comments"></i><a href="#">{{> count}}</a></span>
+                 <a href="#" class="button btn-sm btn-info "><span class="glyphicon glyphicon-paperclip"></span> {{> ArticleCount}}</a>
+
+             </div>
+             </div>
+          {{/each}}
+          </div>
+      </div>
+      {{else}}
+
+        <div class="ui container" style="text-align:center">
+          <h2 class="disabled header">No result request pending...</h2>
+            <br>
+          <p style="text-align:center"><img src="/issue.png"  alt="MyIssue" width="50px" height="50px" class="img-circle"></p>
+          <!-- <h5 class=" huge disabled header" style="text-align:center">Démarrez la recherche en saisissant un client, un projet, ou un titre d'incident...</h5> -->
+        </div>
+
+      {{/if}}
+
+    </section>
+
+    <!-- </div> -->
+</template>

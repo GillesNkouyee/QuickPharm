@@ -1,0 +1,109 @@
+<template name="search">
+  <div class="ui container">
+
+
+    <div class="loginbox center aligned" style="border-radius:2px; align:center">
+      <h2 style="color:#ccc; border-radius: 3px; font-family: 'Open Sans', sans-serif; "></h2>
+           <img src="/monlogofin.png"  alt="MyDirectory" class="img-responsive">
+    </div>
+    <br>
+        <div class="ui fluid action input form" id="search-form">
+
+            <input type="search" class="form-control"  placeholder="{{getGlobal 'searchinputslogan'}}" id="search" value="{{search}}">
+            <button class="ui button">Search</button>
+
+        </div>
+        <br>
+        <!-- <div class="ui equal width center aligned padded grid">
+          <div class="row">
+            <div class=" column">
+              <h3 style=" font-family: 'Open Sans', sans-serif; border-radius:4px;">
+                <i class="compass icon"></i>Orientation</h3>
+              <div class="ui divider "></div>
+              <p style=" font-family: 'Open Sans', sans-serif; border-radius:4px;">
+                {{getGlobal 'OrientationText'}}</p>
+            </div>
+            <div class="grey column">
+              <h3 style=" font-family: 'Open Sans', sans-serif; border-radius:4px;">
+                <i class="info circle icon"></i>Conseils</h3>
+              <div class="ui divider"></div>
+              <p style=" font-family: 'Open Sans', sans-serif; border-radius:4px;">
+                {{getGlobal 'ConseilsText'}}</p>
+            </div>
+          </div>
+
+          <div class="row">
+              <div class="black column">
+                <h4 style="color:#fff;font-family: 'Open Sans', sans-serif; ">
+                  Exemples : Ranferon...</h4>
+            </div>
+            <div class="green column  header leresultat " id="leresultat">
+              <h4 style="color:#fff; height:12px; font-family: 'Open Sans', sans-serif; ">
+                ...Resultats de la recherche</h4>
+            </div>
+          </div>
+        </div> -->
+          <div class="container">
+          {{#if search}}
+          <div class="search-results">
+            <h3>Search Results</h3>
+            <div class="ui cards list-items stackable">
+            {{#each searchResults}}
+              <div class=" ui  loginbox list-item col-sm-6 col-md-4">
+                <!-- <div class="ui cards items stackable col-sm-6 col-md-4 center searchmedocbox " >
+                  <div class="ui  link card "> -->
+
+                          <div class=" header "><h3>{{brand}}&nbsp;by {{lab}}&nbsp;&nbsp;</h3>Voie:&nbsp; {{canal}}</div>
+                          <div class="ui divider"></div>
+                          <div class="content">
+                            <a class="ui right green horizontal label">{{currency price}}</a>
+                              <h4 class="ui sub header">Categorie : <a class="summary">{{category}}</a></h4><br>
+                              <!-- <div class="ui small feed"> -->
+
+                                <!-- <div class="event"> -->
+                                  <div class="content">
+                                    <h4 class="ui sub header">Description :&nbsp;<a class="summary">{{desc}}</a></h4>
+                                    
+                                  </div><br>
+                                  <div class="content">
+                                    <h4>Ordonnance exigée:&nbsp;<a class="summary">{{onpresc}}</a></h4>
+                                    
+                                  </div><br>
+                                <!-- </div> -->
+                                <!-- <div class="event"> -->
+                                  <div class="content">
+                                    <h4 class="ui sub header">Famille :&nbsp;<a class="summary">{{tag}}</a></h4>
+                                  </div>
+                                <!-- </div> -->
+                              <!-- </div> -->
+                            </div>
+
+
+                        <div class="ui divider "></div>
+                          <a href="{{pathFor route='compare'}}" type="button" class="button small btn-warning pull-right"  name="button">Comparer</a>
+                        </div>
+
+                <!-- </div>
+              </div> -->
+            {{/each}}
+            </div>
+        </div>
+        {{/if}}
+        </div>
+        <div class="extra content">
+          <div class="ui buttons">
+            <button class="prev-page ui labeled icon button">
+              <i class="left chevron icon"></i>
+              Back
+              </button>
+            <div class="ui button disabled"><span>Page</span>{{page}}</div>
+            
+            <button class="next-page ui right labeled icon button">
+              <i class="right chevron icon"></i>
+              Next
+              </button>
+          </div>
+        </div>
+        
+  </div>
+</template>

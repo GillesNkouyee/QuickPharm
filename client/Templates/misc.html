@@ -1,0 +1,123 @@
+
+<template name="confirm">
+  {{#if show}}
+   {{text}}
+   <button class="cancel">cancel</button>
+   <button class="confirm">{{action}}</button>
+ {{/if}}
+</template>
+<template name="accessDenied">
+    <div class="ui segment jumbotron">
+        <h2>Accès refusé</h2>
+        <p>Vous ne pouvez pas accéder à cette page ! Veuillez vous inscrire ou vous connecter.</p>
+    </div>
+</template>
+<template name="notFound">
+<div class="ui container">
+  <div class="segment jumbotron">
+    You are lost, there's no records here !
+  </div>
+</div>
+</template>
+<template name="Loading">
+  <div class="ui container">
+    <div class="row text-center">
+      <div class="col-md-9 col-sm-6 center spinner center">
+            <br><br><br><br>
+          {{> spinner}}
+
+      </div>
+    </div>
+    <!-- <div class="circle">
+     <div class="borderCircle"></div>
+     <div class="borderCircle2"></div>
+     <div class="borderCircle3"></div>
+     <div class="innerCircle">
+         <p>Loading...</p>
+     </div>
+     <div class="outerCirlce"></div>
+   </div> -->
+  </div>
+
+</template>
+
+<template name="myComments">
+    <ul>
+        {{#each comment}}
+            ...
+            <li>{{content}}</li>
+            ...
+        {{/each}}
+    </ul>
+</template>
+
+<!-- <template name="myLoading">
+    <div class="loading-spinner"></div>
+</template> -->
+
+<template name="SinglePost">
+<div class="ui form">
+  <div class="col-xs-12">
+      {{#if currentUser}}
+          {{> addComment}}
+      {{else}}
+              <div class="container alert-message-warning" dismissable=true><h3><strong>Oups!</strong> Sorry! You must be logged in to comment</h3></div>
+      {{/if}}
+  </div>
+</div>
+
+    <div class="col-xs-12">
+
+            {{#each comments}}
+                {{> SingleComment}}
+            {{/each}}
+
+   </div>
+
+</template>
+<!-- <div class="loginbox">
+
+  <div  class="ui form" id="addCommentForm">
+      <div class="form-group">
+             <textarea type="text" class="form-control" id="addComment" name ="addComment" rows="2" placeholder="insert comments here..." required></textarea>
+      </div>
+      <div class="form-group">
+          <button type="submit" class="ui button button-success" >Submit Comment</button>
+      </div>
+  </div>
+  </div> -->
+<template name="addComment">
+  <div class="shoplistbox">
+
+    <form class="form-horizontal" id="addCommentForm">
+        <div class="form-group">
+               <textarea type="text" class="form-control" id="addComment" name ="addComment" rows="2" placeholder="insert comments here..." required></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-sm btn-outline-rounded " >Submit Comment</button>
+        </div>
+    </form>
+    </div>
+</template>
+<template name="SingleComment">
+     <div class="box content">
+    <div class="row">
+        <div class="col-xs-12 ">
+          <div class="ui relaxed list">
+            <div class="item">
+              <img class="ui avatar image" src="{{AuthorPic}}">
+              <div class="content">
+                <a class="header">{{Author}}</a>
+                <div class="description">{{Message}} <a><b>Arrested Development</b></a>{{humanReadableDate submitted}}&nbsp;
+                {{#if commentDeleteRights}}
+                  <button class="btn btn-danger btn-xs list-unstyled" id="deleteComment">  Delete</button>
+               {{/if}}
+               </div>
+             </div><br>
+            </div>
+          </div>
+
+        </div>
+    </div>
+</div>
+</template>

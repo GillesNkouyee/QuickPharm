@@ -1,0 +1,256 @@
+<template name="updateshop">
+	
+   
+<div class="ui container">
+
+	
+				<div class="ui huge header" style="border-radius:0px ; background-color:#F0F3F4">
+					<h3 style="color:#326351;  font-family: 'Open Sans', sans-serif; padding: 18px; border-radius: 7px;">
+					Dashboard <small>See all stats here...</small></h3>
+				</div>
+        <br/>
+
+<div class="ui top attached tabular menu">
+  <a class="item active" data-tab="Statistics"><i class="pie chart icon"></i>Statistics</a>
+  <a class="item" data-tab="Pharmlist"><i class="list layout icon"></i>Pharmlist</a>
+  <a class="item" data-tab="ManageData"><i class="database icon"></i>Manage products</a>
+</div>
+<div class="ui bottom attached tab segment active" data-tab="Statistics">
+  Statistics
+	<hr>
+	<div class="ui equal width center aligned padded grid">
+		<div class="row">
+			<div class="olive column"><strong></strong>
+				<div class="value">
+	      <i class="fa fa-users fa-fw fa-3x"></i>
+      {{usercount}}
+    </div>
+    <div class="label">
+      Utilisateurs
+    </div></div>
+			<div class="green column"><i class="hospital icon"></i><strong>Plus de {{shopcounter}}</strong>{{getGlobal 'shoptype'}}</div>
+			<div class="black column"><i class="fa fa-comments fa-fw fa-3x"></i><strong>{{commentcounter}}</strong>Comments</div>
+			<div class="blue column"><i class="fa fa-shopping-cart fa-fw fa-3x"></i><strong>{{drugscounter}}</strong>Produits</div>
+		</div>
+ </div>
+
+</div>
+<div class="ui bottom attached tab segment" data-tab="Pharmlist">
+  Pharmlist
+	<hr>
+	<div class="panel panel-info filterable table-responsive">
+						<div class="panel-heading">
+								<h3 class="panel-title">Nos {{getGlobal 'shoptype'}}</h3>
+								<div class="pull-right">
+										<button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+								</div>
+						</div>
+										<table   id="shopliste" class="green table table-hover table-responsive ">
+							<thead class="thead-inverse">
+									<tr class="filters">
+											<th ><input type="text" class="form-control" placeholder="#" ></th>
+											<th ><input type="text" class="form-control" placeholder="Label" ></th>
+											<th ><input type="text" class="form-control" placeholder="Email" ></th>
+											<th ><input type="text" class="form-control" placeholder="Adresse" ></th>
+											<th ><input type="text" class="form-control" placeholder="Phone" ></th>
+											<th ><input type="text" class="form-control" placeholder="Ville" ></th>
+											<th ><input type="text" class="form-control" placeholder="Region" ></th>
+											<th>Edit</th>
+											<th>Del</th>
+
+									</tr>
+						 </thead>
+
+							<tbody>
+
+							{{#each shopliste}}
+									<tr>
+											<td>{{_id}}</td>
+											<td>{{shopname}}</td>
+											<td>{{shopmail}}</td>
+											<td>{{shopadress}}</td>
+											<td>{{shoptel}}</td>
+											<td>{{ville}}</td>
+											<td>{{region}}</td>
+											<td>{{#linkTo route='EditShop'}}<i role="button"  class="edit icon " aria-hidden="true"></i>{{/linkTo}}</td>
+											<!-- <td>{{#quickRemoveButton collection='Shop' _id=this._id onError = onError
+												onSucces= onSucces beforRemove=beforRemove}}<i class="fa fa-trash"></i>{{/quickRemoveButton}} -->
+												<td><button class="delete"><i class="fa fa-trash"></i></button>
+											</td>
+									</tr>
+				{{/each}}
+					{{> confirm}}
+					</tbody>
+			</table>
+	</div>
+</div>
+<div class="ui bottom attached tab segment" data-tab="ManageData">
+  Manage Data
+	<hr>
+	<div class="ui segment jumbotron">
+		<!-- {{> upload}} -->
+		<div class="ui cards stackable four grid center" >
+
+	          {{#each drugslistitem}}
+	              <div class=" card" id="siteID">
+	                <div class="content ui form" >
+										<form id="adpic" class="ui form" action="index.html" method="post">
+
+											<label>{{brand}}</label>
+											<div class="ui field">
+		                    <br>
+												<input class="ui action input" type="file"   name="images[]" id="images"  multiple="">
+
+		                  </div>
+
+											<div class="ui bottom attached buttons">
+	                          <button class="ui button" type="submit">Submit</button>
+	                    </div>
+											</form>
+
+	                </div>
+
+
+	              </div>
+
+	            {{/each}}
+
+	          </div>
+ 		</div>
+
+	</div>
+
+
+<br/>
+</div>
+
+</template>
+
+<template name="EditShop">
+  <div class="container" id="editshop">
+	<div class="page-header">
+              <div class="infobox" role="alert" style="border-radius:4px; padding: 18px; border-radius: 7px; background-color:#F0F3F4">
+				<h2 style="color:#48605B;">Dashboard <small>Manage your shop here...</small></h2></div>
+        </div>
+				<div class="panel panel-default ">
+						<div class="btn-group btn-group-justified" role="group">
+						{{#if currentUser}}
+				  <!-- Nav tabs -->
+				  <ul class="nav nav-tabs" role="tablist">
+				    <li role="presentation" class="active"><a href="#add-Artcl" aria-controls="adding" role="tab" data-toggle="tab">
+							<span class="glyphicon glyphicon-plus"></span>{{getGlobal 'stufftype'}}</a></li>
+				    <li role="presentation"><a href="#modify-Artcl" aria-controls="modify" role="tab" data-toggle="tab">
+							<span class="glyphicon glyphicon-expand"></span>{{getGlobal 'stufftype'}}</a></li>
+						<li role="presentation"><a href="#modify-ArtPic" aria-controls="addpic" role="tab" data-toggle="tab">
+								<span class="glyphicon glyphicon-expand"></span>Add Picture</a></li>
+				    <li role="presentation"><a href="#messages" aria-controls="#" role="tab" data-toggle="tab">
+							<span class="glyphicon glyphicon-tags"></span>{{getGlobal 'stufftype'}}</a></li>
+				    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">
+							<span class="glyphicon glyphicon-cog"></span>Settings</a></li>
+				  </ul>
+
+				  <!-- Tab panes -->
+				  <div class="tab-content">
+				    <div role="tabpanel" class="tab-pane active" id="add-Artcl">
+							<!-- <div class="col-xs-12  col-md-8"> -->
+					<!--{{#if new_art}}-->
+					<div class="row col-md-12 col-md-offset-3 top-space">
+			      <div class="col-xs-12  col-md-6 ">
+							<div class="page-header">
+											<h4 style="color: darkgrey; padding: 20px 20px 0px; border-radius: 7px ;font-family: 'Open Sans', sans-serif ">Ajouter des {{getGlobal 'stufftype'}} </h4>
+
+									 </div>
+								{{#if currentUser }}
+												{{> ajoutproduit}}
+												<!-- {{> addStuff}} -->
+										{{else}}
+														<div class="panel alert-info" ><h4><strong>Sorry!</strong> You must log in to add stuffs </h4></div>
+										{{/if}}
+							</div>
+						</div>
+							<!--{{else}}
+							<div class="tag btn btn-warning"
+					id="btnNewArt">&plus;Add articles here</div>
+					{{/if}}-->
+
+
+						</div>
+				    <div role="tabpanel" class="tab-pane" id="modify-Artcl">
+
+							<div class="col-xs-12  col-md-8">
+								<div class="panel panel-default" >
+
+											<div class="panel-body">
+													{{> showarticle}}
+											</div>
+									<div class="panel-footer">
+										<nav aria-label="...">
+											<ul class="pager">
+												<li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+												<li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+											</ul>
+										</nav>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div role="tabpanel" class="tab-pane" id="modify-ArtPic">
+							<div class="col-xs-12  col-md-8">
+								<!-- <div class="panel panel-default" > -->
+
+											<div class="ui cards stackable four grid center">
+													{{#each shopdrugslist}}
+													<div class=" card" >
+														<div class="content ui form" >
+															<form id="addpic" class="ui form" action="index.html" method="post">
+
+																<label>{{brand}}</label>
+																<div class="ui field">
+																	<br>
+																	<input class="ui action input" type="file"   name="images[]" id="images"  multiple="" required>
+
+																</div>
+
+																<div class="ui bottom attached buttons">
+																			<button class="ui button" type="submit">Submit</button>
+																</div>
+																</form>
+
+														</div>
+
+
+													</div>
+													{{/each}}
+											</div>
+								<!-- </div> -->
+							</div>
+						</div>
+				    <div role="tabpanel" class="tab-pane" id="messages">
+							{{#if isInRole 'admin'}}
+							Manage Data
+							<hr>
+							<div class="ui segment jumbotron">
+								{{> upload}}
+						 </div>
+							{{/if}}
+						</div>
+				    <div role="tabpanel" class="tab-pane" id="settings">
+							{{#if isInRole 'admin'}}
+							<div class="row col-md-12 col-md-offset-3 top-space">
+								<div class="fields col-xs-12  col-md-9 ">
+						 {{> quickForm collection="Shop" doc=this id="editShopForm" type="update" buttonContent="Update" keepEmptyValues=true omitFields="shoptel" autosave=true}}
+
+								</div>
+						</div>
+						{{/ if}}
+					</div>
+				  </div>
+						{{/if}}
+				</div>
+			</div>
+
+	</div>
+
+
+</template>

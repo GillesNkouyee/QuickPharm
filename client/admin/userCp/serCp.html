@@ -1,0 +1,142 @@
+<template name="userProfile">
+  <div class="ui container" style="margin-top: 40px; font-family: 'Open Sans', sans-serif;">
+
+    <!-- Profile Header Card -->
+    <div class="ui fluid card" style="border-radius:20px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);">
+      <div class="content" style="text-align:center; padding: 30px;">
+        <img class="ui circular centered image" 
+             src="{{imageURL}}" 
+             style="width:120px; height:120px; border:4px solid #2185d0; object-fit:cover;" 
+             alt="Profile Image">
+
+        <h2 class="ui header" style="margin-top: 15px;">
+          {{name}} {{profile.lastname}}
+          <div class="sub header">{{profile.occupation}}</div>
+        </h2>
+
+        <div class="ui horizontal relaxed list" style="margin-top: 20px;">
+          <div class="item"><i class="phone icon blue"></i> {{profile.mobile}}</div>
+          <div class="item"><i class="birthday cake icon pink"></i> {{profile.birthday}}</div>
+          <div class="item"><i class="tag icon teal"></i> {{role}}</div>
+        </div>
+      </div>
+      <div class="extra content" style="text-align:center;">
+        <button class="ui circular blue button" id="editProfileBtn">
+          <i class="edit icon"></i> Edit Profile
+        </button>
+        <button class="ui circular grey button">
+          <i class="setting icon"></i> Settings
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabs Section -->
+    <div class="ui top attached tabular menu" style="margin-top:30px;">
+      <a class="active item" data-tab="info"><i class="address card icon"></i> Info</a>
+      <a class="item" data-tab="messages"><i class="mail outline icon"></i> Messages</a>
+      <a class="item" data-tab="friends"><i class="users icon"></i> Friends</a>
+      <a class="item" data-tab="settings"><i class="cog icon"></i> Settings</a>
+    </div>
+
+    <!-- Info Tab -->
+    <div class="ui bottom attached active tab segment" data-tab="info" style="border-radius: 0 0 20px 20px;">
+      {{#if $.Session.get 'editMode'}}
+      <form class="ui large form" id="changeProf">
+        <div class="two fields">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" name="usrname" value="{{profile.name}}">
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" name="usrlastname" value="{{profile.lastname}}">
+          </div>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Mobile</label>
+            <input type="text" name="usrmobile" value="{{profile.mobile}}">
+          </div>
+          <div class="field">
+            <label>Occupation</label>
+            <input type="text" name="usroccupation" value="{{profile.occupation}}">
+          </div>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Birthday</label>
+            <input type="date" name="usrbirthday" value="{{profile.birthday}}">
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <textarea name="usrstatus">{{profile.status}}</textarea>
+          </div>
+        </div>
+        <div class="field">
+          <label>Biography</label>
+          <textarea name="usrbio">{{profile.bio}}</textarea>
+        </div>
+        <button class="ui blue fluid button"><i class="save icon"></i> Save Changes</button>
+      </form>
+      {{else}}
+      <div class="ui teal message">
+        <i class="info circle icon"></i> Profile information is up to date.
+      </div>
+      {{/if}}
+    </div>
+
+    <!-- Messages Tab -->
+    <div class="ui bottom attached tab segment" data-tab="messages">
+      <h4 class="ui header"><i class="mail icon"></i> Messages</h4>
+      <div class="ui statistics">
+        <div class="statistic">
+          <div class="value"><i class="envelope icon"></i> 22</div>
+          <div class="label">New Messages</div>
+        </div>
+        <div class="statistic">
+          <div class="value"><i class="paper plane icon"></i> 14</div>
+          <div class="label">Sent</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Friends Tab -->
+    <div class="ui bottom attached tab segment" data-tab="friends">
+      <h4 class="ui header"><i class="users icon"></i> Friends</h4>
+      <div class="ui two stackable cards">
+        <div class="card">
+          <div class="content">
+            <img class="right floated mini ui image" src="/img/avatar.png">
+            <div class="header">John Doe</div>
+            <div class="meta">Developer</div>
+            <div class="description">Loves coding & open source.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="content">
+            <img class="right floated mini ui image" src="/img/avatar.png">
+            <div class="header">Jane Smith</div>
+            <div class="meta">Designer</div>
+            <div class="description">Passionate about UI/UX.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div class="ui bottom attached tab segment" data-tab="settings">
+      <h4><i class="upload icon"></i> Upload Profile Picture</h4>
+      <div class="ui action input">
+        <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview">
+        <button class="ui blue button">Upload</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activate Semantic UI Tabs -->
+  <script>
+    $('.menu .item').tab();
+  </script>
+</template>
+
+
