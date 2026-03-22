@@ -1,0 +1,4 @@
+node_modules/
+client/node_modules/
+.meteor/local/
+.DS_Store

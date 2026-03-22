@@ -1,0 +1,6 @@
+.git
+.gitignore
+node_modules
+client/node_modules
+deploy/bundle/bundle/programs/server/npm/node_modules
+npm-debug.log*
